@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {}
+    "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {}
   },
   "projects": {
-    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {
+    "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
+        "projectUniqueName": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
         "projectName": "ParkingManagement",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\obj\\",
+        "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,9 +40,23 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.3, )"
+              "version": "[6.3.1, )"
             }
           },
           "imports": [
