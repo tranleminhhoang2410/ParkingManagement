@@ -17,10 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\DTO\" />
-    <Folder Include="Service\Implement\" />
     <Folder Include="Utils\Authentication\" />
-    <Folder Include="Utils\Mapper\" />
   </ItemGroup>
 
 </Project>
