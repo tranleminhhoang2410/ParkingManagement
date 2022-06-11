@@ -26,7 +26,7 @@ namespace ParkingManagement.Controllers
         public async Task<ActionResult<DistrictDTO>> GetDistricts(int Id)
         {
             DistrictDTO district = await districtService.GetDistrictById(Id);
-            if (district == null) return BadRequest("snot found");
+            if (district == null) return BadRequest("not found");
             return Ok(district);
         }
 

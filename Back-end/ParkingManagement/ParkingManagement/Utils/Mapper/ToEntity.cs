@@ -5,5 +5,6 @@ namespace ParkingManagement.Utils.Mapper
 {
     public static class ToEntity
     {
+      
     }
 }

@@ -61,7 +61,8 @@ namespace ParkingManagement.Utils.Mapper
                     VehicleBrand = vehicle.VehicleBrand,
                     VehicleName = vehicle.VehicleName,
                     VehicleTypeId = vehicle.VehicleTypeId,
-                    VehicleType = Map(vehicle.VehicleType)
+                    VehicleType = Map(vehicle.VehicleType),
+                    IsParking = vehicle.IsParking
                 };
 
                 foreach (Invoice invoice in vehicle.Invoices)
@@ -83,6 +84,9 @@ namespace ParkingManagement.Utils.Mapper
                 {
                     Id = vehicleType.Id,
                     PricePerHour = vehicleType.PricePerHour,
+                    PricePerDay = vehicleType.PricePerDay,
+                    PricePerMonth = vehicleType.PricePerMonth,
+                    PricePerWeek = vehicleType.PricePerWeek,
                     TypeName = vehicleType.TypeName
                 };
 
@@ -104,7 +108,8 @@ namespace ParkingManagement.Utils.Mapper
                     CheckoutTime = invoice.CheckoutTime,
                     SlotId = invoice.SlotId,
                     VehicleId = invoice.VehicleId,
-                    Slot = Map(invoice.Slot)
+                    Slot = Map(invoice.Slot),
+                    TotalPaid = invoice.TotalPaid
                 };
             }
 
@@ -119,7 +124,8 @@ namespace ParkingManagement.Utils.Mapper
             {
                 slotDTO = new SlotDTO
                 {
-                    Id = slot.Id,
+                    SlotGroup = slot.Id.Trim().ToCharArray().GetValue(0).ToString(),
+                    SlotPos = slot.Id.Trim().ToCharArray().GetValue(1).ToString(),
                     Status = slot.Status,
                     VehicleType = Map(slot.VehicleType),
                     VehicleTypeId = slot.VehicleTypeId

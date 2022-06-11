@@ -20,5 +20,6 @@ namespace ParkingManagement.Model
         public int VehicleTypeId { get; set; }
         public VehicleType VehicleType { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
+        public Boolean IsParking { get; set; }
     }
 }

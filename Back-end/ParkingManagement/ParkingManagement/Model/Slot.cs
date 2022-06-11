@@ -9,9 +9,8 @@ namespace ParkingManagement.Model
         {
             this.Invoices = new HashSet<Invoice>();
         }
-
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public Boolean Status { get; set; }
         public int VehicleTypeId { get; set; }
         public VehicleType VehicleType { get; set; }

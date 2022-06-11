@@ -12,8 +12,8 @@ using ParkingManagement.Data;
 namespace ParkingManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220604085745_addDB_1")]
-    partial class addDB_1
+    [Migration("20220610121742_add_8")]
+    partial class add_8
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,14 +96,17 @@ namespace ParkingManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CheckinTime")
+                    b.Property<DateTime?>("CheckinTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CheckoutTime")
+                    b.Property<DateTime?>("CheckoutTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SlotId")
-                        .HasColumnType("int");
+                    b.Property<string>("SlotId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("TotalPaid")
+                        .HasColumnType("float");
 
                     b.Property<string>("VehicleId")
                         .HasColumnType("nvarchar(450)");
@@ -119,11 +122,8 @@ namespace ParkingManagement.Migrations
 
             modelBuilder.Entity("ParkingManagement.Model.Slot", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -171,6 +171,9 @@ namespace ParkingManagement.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("IsParking")
+                        .HasColumnType("bit");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -200,7 +203,16 @@ namespace ParkingManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<double>("PricePerDay")
+                        .HasColumnType("float");
+
                     b.Property<double>("PricePerHour")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PricePerMonth")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PricePerWeek")
                         .HasColumnType("float");
 
                     b.Property<string>("TypeName")
@@ -258,9 +270,7 @@ namespace ParkingManagement.Migrations
                 {
                     b.HasOne("ParkingManagement.Model.Slot", "Slot")
                         .WithMany("Invoices")
-                        .HasForeignKey("SlotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SlotId");
 
                     b.HasOne("ParkingManagement.Model.Vehicle", "Vehicle")
                         .WithMany("Invoices")

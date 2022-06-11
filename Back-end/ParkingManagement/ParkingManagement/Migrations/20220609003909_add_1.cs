@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParkingManagement.Migrations
 {
-    public partial class addDB_1 : Migration
+    public partial class add_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -99,8 +99,7 @@ namespace ParkingManagement.Migrations
                 name: "Slots",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -171,7 +170,7 @@ namespace ParkingManagement.Migrations
                     CheckinTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CheckoutTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VehicleId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SlotId = table.Column<int>(type: "int", nullable: false)
+                    SlotId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -180,8 +179,7 @@ namespace ParkingManagement.Migrations
                         name: "FK_Invoices_Slots_SlotId",
                         column: x => x.SlotId,
                         principalTable: "Slots",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invoices_Vehicles_VehicleId",
                         column: x => x.VehicleId,
