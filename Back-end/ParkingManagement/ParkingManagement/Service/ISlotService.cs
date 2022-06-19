@@ -8,6 +8,7 @@ namespace ParkingManagement.Service
         public Task<IEnumerable<SlotDTO>> GetAll();
         public Task<IEnumerable<SlotDTO>> GetAllByTypeId(int typeId);
         public Task<SlotDTO> GetByID(string id);
-        public Task<Boolean> UpdateSlot(SlotDTO slot); 
+        public Task<Boolean> UpdateSlot(SlotDTO slot);
+        public Task<string> SetParkingSlotStatus(string id, bool status);
     }
 }

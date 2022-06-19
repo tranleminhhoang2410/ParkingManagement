@@ -39,6 +39,24 @@ namespace ParkingManagement.Service.Implement
             return slot;
         }
 
+        public async Task<string> SetParkingSlotStatus(string id, bool status)
+        {
+            try
+            {
+                Slot? s = await _db.Slots.FirstOrDefaultAsync(c => c.Id.Equals(id));
+                if (s == null) throw new Exception("no slot found");
+
+                s.Status = status;
+
+                await _db.SaveChangesAsync();
+                return "slot status update susscess! ";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
         public async Task<Boolean> UpdateSlot(SlotDTO slot)
         {
             string slotId = (slot.SlotGroup + slot.SlotPos).Trim();

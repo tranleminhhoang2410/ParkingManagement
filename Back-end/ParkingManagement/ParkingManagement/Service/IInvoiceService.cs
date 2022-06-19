@@ -8,7 +8,9 @@ namespace ParkingManagement.Service
         public Task<IEnumerable<InvoiceDTO>> GetByVehicleId(string vehicleId);
         public Task<IEnumerable<InvoiceDTO>> GetByUserId(int userId);
         public Task<InvoiceDTO> GetById(int Id);
-        public Task<Boolean> AddNewInvoice(InvoiceDTO invoiceDTO);
-        public Task<Boolean> UpdateInvoice(InvoiceDTO invoiceDTO);
+        public Task<InvoiceDTO> GetIsParkingInvoiceBySlot(string slotId);
+        public Task<string> AddNewInvoice(InvoiceDTO invoiceDTO);
+        public Task<string> UpdateInvoice(InvoiceDTO invoiceDTO);
+        public Task<int[]> CalculateparkingTime(DateTime? checkin, DateTime? checkout);
     }
 }
