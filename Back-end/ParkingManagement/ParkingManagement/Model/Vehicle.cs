@@ -15,7 +15,7 @@ namespace ParkingManagement.Model
         //public string? VehicleCode { get; set; }
         public string? VehicleName { get; set; }
         public string? VehicleBrand { get; set; }
-
+        public int UserID { get; set; }
         public User User { get; set; }
         public int VehicleTypeId { get; set; }
         public VehicleType VehicleType { get; set; }

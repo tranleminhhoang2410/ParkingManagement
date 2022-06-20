@@ -8,5 +8,6 @@
         public double PricePerDay { get; set; }
         public double PricePerWeek { get; set; }
         public double PricePerMonth { get; set; }
+        public double PricePerYear { get; set; }
     }
 }

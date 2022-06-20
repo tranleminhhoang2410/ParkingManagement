@@ -6,5 +6,6 @@ namespace ParkingManagement.Service
     {
         public Task<IEnumerable<VehicleTypeDTO>> GetAll();
         public Task<VehicleTypeDTO> GetById(int id);
+        public Task<Boolean> Update(VehicleTypeDTO vehicleTypeDTO);
     }
 }

@@ -38,7 +38,7 @@ namespace ParkingManagement.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<ActionResult<IEnumerable<SlotDTO>>> UpdateBook(SlotDTO slot)
+        public async Task<ActionResult<IEnumerable<SlotDTO>>> UpdateSlot(SlotDTO slot)
         {
             Boolean updated = await slotService.UpdateSlot(slot);
             if (updated)

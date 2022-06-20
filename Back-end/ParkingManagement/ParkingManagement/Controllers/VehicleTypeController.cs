@@ -29,5 +29,20 @@ namespace ParkingManagement.Controllers
             if (type == null) return BadRequest("not found");
             return Ok(type);
         }
+
+        [HttpPut("Update")]
+        public async Task<ActionResult<IEnumerable<VehicleTypeDTO>>> Update(VehicleTypeDTO vehicleTypeDTO)
+        {
+            Boolean updated = await vehicleTypeService.Update(vehicleTypeDTO);
+            if (updated)
+            {
+                return Ok(await vehicleTypeService.GetAll());
+            }
+            else
+            {
+                return BadRequest("update fail");
+            }
+
+        }
     }
 }

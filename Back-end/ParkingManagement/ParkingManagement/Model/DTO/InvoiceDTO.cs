@@ -7,7 +7,7 @@
         public DateTime? CheckoutTime { get; set; }
         public string? VehicleId { get; set; }
         public string SlotId { get; set; }
-        public SlotDTO Slot { get; set; }
+        //public SlotDTO Slot { get; set; }
         public double TotalPaid { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingManagement.Data;
 
@@ -11,9 +12,10 @@ using ParkingManagement.Data;
 namespace ParkingManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220613075335_add_9")]
+    partial class add_9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,11 +146,8 @@ namespace ParkingManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DistrictId")
-                        .HasColumnType("int");
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -162,16 +161,7 @@ namespace ParkingManagement.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WardId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("DistrictId");
-
-                    b.HasIndex("WardId");
 
                     b.ToTable("Users");
                 });
@@ -184,7 +174,7 @@ namespace ParkingManagement.Migrations
                     b.Property<bool>("IsParking")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("VehicleBrand")
@@ -198,7 +188,7 @@ namespace ParkingManagement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VehicleTypeId");
 
@@ -305,32 +295,11 @@ namespace ParkingManagement.Migrations
                     b.Navigation("VehicleType");
                 });
 
-            modelBuilder.Entity("ParkingManagement.Model.User", b =>
-                {
-                    b.HasOne("ParkingManagement.Model.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("ParkingManagement.Model.District", "District")
-                        .WithMany()
-                        .HasForeignKey("DistrictId");
-
-                    b.HasOne("ParkingManagement.Model.Ward", "Ward")
-                        .WithMany()
-                        .HasForeignKey("WardId");
-
-                    b.Navigation("City");
-
-                    b.Navigation("District");
-
-                    b.Navigation("Ward");
-                });
-
             modelBuilder.Entity("ParkingManagement.Model.Vehicle", b =>
                 {
                     b.HasOne("ParkingManagement.Model.User", "User")
                         .WithMany("Vehicles")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

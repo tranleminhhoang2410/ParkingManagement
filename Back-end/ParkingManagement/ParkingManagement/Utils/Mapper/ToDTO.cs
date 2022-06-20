@@ -34,10 +34,15 @@ namespace ParkingManagement.Utils.Mapper
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    Address = user.Address,
                     Name = user.Name,
                     Feedback = user.Feedback,
                     Phone = user.Phone,
+                    CityId = user.CityId,
+                    City = user.City.Name,
+                    DistrictId = user.DistrictId,
+                    District = user.District.Name,
+                    WardId = user.WardId,
+                    Ward = user.Ward.Name
                 };
 
                 foreach (Vehicle vehicle in user.Vehicles)
@@ -87,6 +92,7 @@ namespace ParkingManagement.Utils.Mapper
                     PricePerDay = vehicleType.PricePerDay,
                     PricePerMonth = vehicleType.PricePerMonth,
                     PricePerWeek = vehicleType.PricePerWeek,
+                    PricePerYear = vehicleType.PricePerYear,
                     TypeName = vehicleType.TypeName
                 };
 
@@ -108,7 +114,7 @@ namespace ParkingManagement.Utils.Mapper
                     CheckoutTime = invoice.CheckoutTime,
                     SlotId = invoice.SlotId,
                     VehicleId = invoice.VehicleId,
-                    Slot = Map(invoice.Slot),
+                    //Slot = Map(invoice.Slot),
                     TotalPaid = invoice.TotalPaid
                 };
             }
