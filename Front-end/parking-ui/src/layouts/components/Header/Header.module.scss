@@ -1,0 +1,41 @@
+.wrapper,
+.logo-and-nav,
+.social-and-login{
+    display: flex;
+    align-items: center;
+}
+
+.wrapper{
+    height: var(--default-header-height);
+    background-color: var(--white-color);
+    justify-content: space-between;
+    max-width: var(--default-layout-max-width);
+    margin: 0 auto;
+}
+
+.nav-link{
+    margin-left: 16px;
+
+    .nav-link-item{
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0 8px;
+    }
+}
+
+.nav-social{
+    margin-right: 16px;
+
+    .social-link{
+        font-size: 2.8rem;
+    }
+
+    .social-icon{
+        margin: 0 4px;
+        font-size: 2.4rem;
+    }
+}
+
+

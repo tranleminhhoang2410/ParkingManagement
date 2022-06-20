@@ -1,0 +1,4 @@
+.wrapper{
+    height: calc(100vh - var(--default-header-height) - var(--default-background-height));
+    background-color: #333;
+}

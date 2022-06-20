@@ -1,7 +1,5 @@
-function Parking() {
-    return ( 
-        <h1>Parking Page</h1>
-     );
+function Parking () {
+    return <h1>Parking Page</h1>;
 }
 
-export default Parling;
+export default Parking;

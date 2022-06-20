@@ -2,7 +2,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap');
 
 :root{
-    --primary-color: #F1C50E;
+    //Colors
+    --primary-color: #f1c50e;
+    --white-color: #fff;
+    --text-color: #333;
+
+    //Width
+    --default-layout-max-width: 1200px;
+
+    //Height
+    --default-header-height: 52px;
+    --default-background-height: 80vh;
+
+    //Fonts
+    --font-family: 'Poppins', sans-serif;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 html{
@@ -10,8 +29,33 @@ html{
 }
 
 body{
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
+}
+
+//Overlay scroll bar
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+button, input, [tabindex]{
+    border: none;
+    outline: none;
+}
+
+a{
+    text-decoration: none;
 }
