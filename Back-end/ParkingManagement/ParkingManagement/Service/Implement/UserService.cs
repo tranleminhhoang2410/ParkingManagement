@@ -17,6 +17,14 @@ namespace ParkingManagement.Service.Implement
             throw new NotImplementedException();
         }
 
+        public async Task<IEnumerable<UserDTO>> GetAll()
+        {
+            List<UserDTO?> users = await _db.Users
+                .Select(c => ToDTO.Map(c))
+                .ToListAsync();
+            return users;
+        }
+
         public async Task<UserDTO> GetUserByEmail(string email)
         {
             UserDTO? user = ToDTO.Map(await _db.Users

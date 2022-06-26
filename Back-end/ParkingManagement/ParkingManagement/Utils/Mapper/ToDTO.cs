@@ -38,11 +38,8 @@ namespace ParkingManagement.Utils.Mapper
                     Feedback = user.Feedback,
                     Phone = user.Phone,
                     CityId = user.CityId,
-                    City = user.City.Name,
                     DistrictId = user.DistrictId,
-                    District = user.District.Name,
-                    WardId = user.WardId,
-                    Ward = user.Ward.Name
+                    WardId = user.WardId
                 };
 
                 foreach (Vehicle vehicle in user.Vehicles)
@@ -133,7 +130,6 @@ namespace ParkingManagement.Utils.Mapper
                     SlotGroup = slot.Id.Trim().ToCharArray().GetValue(0).ToString(),
                     SlotPos = slot.Id.Trim().ToCharArray().GetValue(1).ToString(),
                     Status = slot.Status,
-                    VehicleType = Map(slot.VehicleType),
                     VehicleTypeId = slot.VehicleTypeId
                 };
             }

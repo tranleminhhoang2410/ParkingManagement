@@ -59,3 +59,5 @@ D:\ParkingManagement\ParkingManagement\Back-end\ParkingManagement\ParkingManagem
 D:\ParkingManagement\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\obj\Debug\net6.0\ParkingManagement.pdb
 D:\ParkingManagement\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\obj\Debug\net6.0\ParkingManagement.genruntimeconfig.cache
 D:\ParkingManagement\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\obj\Debug\net6.0\ref\ParkingManagement.dll
+D:\ParkingManagement\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\ParkingManagement\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
