@@ -12,12 +12,14 @@ namespace ParkingManagement.Controllers
         private readonly IVehicleService vehicleService;
         private readonly IInvoiceService invoiceService;
         private readonly ISlotService slotService;
+        private readonly IVehicleTypeService vehicleTypeService;
 
-        public VehicleController(IVehicleService vehicleService, IInvoiceService invoiceService, ISlotService slotService)
+        public VehicleController(IVehicleService vehicleService, IInvoiceService invoiceService, ISlotService slotService, IVehicleTypeService vehicleTypeService)
         {
             this.vehicleService = vehicleService;
             this.invoiceService = invoiceService;
             this.slotService = slotService;
+            this.vehicleTypeService = vehicleTypeService;
         }
 
         [HttpPost("AddVehicle")]
@@ -106,7 +108,7 @@ namespace ParkingManagement.Controllers
 
                 int[] parkingTime = await invoiceService.CalculateparkingTime(invoiceDTO.CheckinTime, invoiceDTO.CheckoutTime);
 
-                VehicleTypeDTO parkingType = (await slotService.GetByID(SlotId)).VehicleType;
+                VehicleTypeDTO parkingType = await vehicleTypeService.GetById((await slotService.GetByID(SlotId)).VehicleTypeId);
 
                 invoiceDTO.TotalPaid = parkingTime[0] * parkingType.PricePerHour
                                         + parkingTime[1] * parkingType.PricePerDay
