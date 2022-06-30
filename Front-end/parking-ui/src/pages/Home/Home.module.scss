@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    max-width: var(--default-layout-max-width);
+    margin: 0 auto;
+
+    .introduction-title{
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        color: #fbc4a6;
+        font-size: 6rem;
+        font-weight: 600;
+    }
+
+
+    .nav-item-list{
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+}
+

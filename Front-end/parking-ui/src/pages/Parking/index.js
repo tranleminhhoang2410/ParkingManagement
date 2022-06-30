@@ -1,5 +1,1 @@
-function Parking () {
-    return <h1>Parking Page</h1>;
-}
-
-export default Parking;
+export { default } from './Parking';
