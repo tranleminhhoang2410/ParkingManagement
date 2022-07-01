@@ -1,6 +1,16 @@
 .wrapper{
     max-width: var(--default-layout-max-width);
     height: 100%;
-    padding: 16px;
+    padding: 16px 0;
     margin: auto;
+
+    .parking-area{
+        display: flex;
+        padding: 16px;
+        height: 100%;
+        border: 1px solid #fff;
+        border-right: none;
+        
+    }
+
 }

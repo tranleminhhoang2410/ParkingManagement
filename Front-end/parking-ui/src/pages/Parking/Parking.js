@@ -1,15 +1,20 @@
 import classNames from 'classnames/bind';
 import styles from './Parking.module.scss';
 
-import Row from '~/components/ParkingArea/Row/Row';
+import ParkingArea from '~/components/ParkingArea';
 
 const cx = classNames.bind(styles);
 
 function Parking () {
     return (
         <div className={cx('wrapper')}>
-            <Row number="1" />
-            <Row number="2" />
+            <div className={cx('parking-area')}>
+                <ParkingArea area="A" type="CAR" numberOfRows={19} className={cx('parking-area-item')} />
+                <ParkingArea area="B" type="CAR" numberOfRows={19} className={cx('parking-area-item')} />
+                <ParkingArea area="C" type="CAR" numberOfRows={19} className={cx('parking-area-item')} />
+                <ParkingArea area="D" type="TRUCK" numberOfRows={19} className={cx('parking-area-item')} />
+                <ParkingArea area="E" type="BUS" numberOfRows={19} className={cx('parking-area-item')} />
+            </div>
         </div>
     );
 }

@@ -1,0 +1,58 @@
+.wrapper{
+    width: 15vh;
+    margin: 0 32px;
+    
+    .area,
+    .type,
+    .cells{
+        display: block;
+    }
+
+    .area{
+        margin-bottom: 8px;
+    }
+
+    .area-text,
+    .type-text{
+        display: block;
+        text-align: center;
+    }
+
+    .area-text{
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--white-color);
+    }
+
+    .type-text{
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    .cells{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top: 1px solid var(--white-color);
+        border-bottom: 1px solid var(--white-color);
+    }
+
+    .cell-odd,
+    .cell-even{
+        width: 100%;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: var(--white-color);
+    }
+
+    .cell-odd{
+        border-right: 1px solid var(--white-color);
+    }
+
+}
+
+.type-text{
+    background-color: var(--white-color);
+}
