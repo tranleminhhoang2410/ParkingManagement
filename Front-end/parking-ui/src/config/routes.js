@@ -5,6 +5,7 @@ const routes = {
     price: '/price',
     parking: '/parking',
     feedback: '/feedback',
+    forgot: '/forgot',
 };
 
 export default routes;

@@ -155,7 +155,9 @@ function Header () {
                                         </label>
                                     </div>
                                     <div className={cx('forgot')}>
-                                        <Link to="/forgot">Forgot password?</Link>
+                                        <Link to="/forgot" onClick={closeModal} className={cx('forgot-link')}>
+                                            Forgot password?
+                                        </Link>
                                     </div>
                                 </div>
                                 <Button className={cx('action-btn')} primary>

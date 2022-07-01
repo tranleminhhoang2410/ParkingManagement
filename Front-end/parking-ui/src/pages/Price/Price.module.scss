@@ -1,0 +1,22 @@
+.price-table{
+    display: flex;
+    height: 100%;
+
+    table{
+        margin: auto;
+        width: 80vw;
+        height: 60vh;
+        border-collapse: collapse;
+    }
+
+    th{
+        padding: 12px;
+    }
+
+    th,tr,td{
+        color: var(--white-color);
+        border: 1px solid var(--white-color);
+        text-align: center;
+    }
+}
+
