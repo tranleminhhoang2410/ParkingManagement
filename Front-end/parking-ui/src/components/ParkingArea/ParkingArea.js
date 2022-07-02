@@ -3,26 +3,107 @@ import styles from './ParkingArea.module.scss';
 
 const cx = classNames.bind(styles);
 
-function ParkingArea ({ area, type, numberOfRows }) {
-    // const renderCells = () => {
-    //     for (let i = 0; i < numberOfRows * 2 - 1; i++) {
-    //         return (
-    //             <div className={cx('cells')}>
-    //                 {i % 2 === 0 ? (
-    //                     <span className={cx('cell-odd')}>
-    //                         {area}
-    //                         {i + 1}
-    //                     </span>
-    //                 ) : (
-    //                     <span className={cx('cell-even')}>
-    //                         {area}
-    //                         {i + 1}
-    //                     </span>
-    //                 )}
-    //             </div>
-    //         );
-    //     }
-    // };
+function ParkingArea ({ area, type }) {
+    const cells = [
+        {
+            type: 'CAR',
+            area: 'A',
+            rows: [
+                {
+                    number: 1,
+                    isParked: true,
+                },
+                {
+                    number: 2,
+                    isParked: false,
+                },
+            ],
+        },
+        {
+            type: 'CAR',
+            area: 'A',
+            rows: [
+                {
+                    number: 3,
+                    isParked: false,
+                },
+                {
+                    number: 4,
+                    isParked: false,
+                },
+            ],
+        },
+        {
+            type: 'CAR',
+            area: 'A',
+            rows: [
+                {
+                    number: 5,
+                    isParked: true,
+                },
+                {
+                    number: 6,
+                    isParked: false,
+                },
+            ],
+        },
+        {
+            type: 'CAR',
+            area: 'A',
+            rows: [
+                {
+                    number: 7,
+                    isParked: true,
+                },
+                {
+                    number: 8,
+                    isParked: false,
+                },
+            ],
+        },
+        {
+            type: 'BUS',
+            area: 'B',
+            rows: [
+                {
+                    number: 1,
+                    isParked: true,
+                },
+                {
+                    number: 2,
+                    isParked: false,
+                },
+            ],
+        },
+        {
+            type: 'CAR',
+            area: 'A',
+            rows: [
+                {
+                    number: 1,
+                    isParked: true,
+                },
+                {
+                    number: 2,
+                    isParked: false,
+                },
+            ],
+        },
+        {
+            type: 'BUS',
+            area: 'B',
+            rows: [
+                {
+                    number: 1,
+                    isParked: true,
+                },
+                {
+                    number: 2,
+                    isParked: false,
+                },
+            ],
+        },
+    ];
 
     return (
         <div className={cx('wrapper')}>
@@ -32,83 +113,34 @@ function ParkingArea ({ area, type, numberOfRows }) {
             <div className={cx('type')}>
                 <span className={cx('type-text')}>{type}</span>
             </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A1</span>
-                <span className={cx('cell-even')}>A2</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A3</span>
-                <span className={cx('cell-even')}>A4</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A5</span>
-                <span className={cx('cell-even')}>A6</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A7</span>
-                <span className={cx('cell-even')}>A8</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A1</span>
-                <span className={cx('cell-even')}>A2</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A3</span>
-                <span className={cx('cell-even')}>A4</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A5</span>
-                <span className={cx('cell-even')}>A6</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A7</span>
-                <span className={cx('cell-even')}>A8</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A1</span>
-                <span className={cx('cell-even')}>A2</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A3</span>
-                <span className={cx('cell-even')}>A4</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A5</span>
-                <span className={cx('cell-even')}>A6</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A7</span>
-                <span className={cx('cell-even')}>A8</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A1</span>
-                <span className={cx('cell-even')}>A2</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A3</span>
-                <span className={cx('cell-even')}>A4</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A5</span>
-                <span className={cx('cell-even')}>A6</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A7</span>
-                <span className={cx('cell-even')}>A8</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A5</span>
-                <span className={cx('cell-even')}>A6</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A7</span>
-                <span className={cx('cell-even')}>A8</span>
-            </div>
-            <div className={cx('cells')}>
-                <span className={cx('cell-odd')}>A7</span>
-                <span className={cx('cell-even')}>A8</span>
-            </div>
-            {/* {renderCells} */}
+            {cells.map((cell, index) => {
+                return (
+                    <div
+                        key={index}
+                        className={cx('cells')}
+                        style={area === cell.area && type === cell.type ? { display: 'flex' } : { display: 'none' }}
+                    >
+                        {area === cell.area &&
+                            type === cell.type &&
+                            cell.rows.map((row, index) => {
+                                return (
+                                    <span
+                                        key={index}
+                                        className={row.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
+                                        style={
+                                            row.isParked
+                                                ? { backgroundColor: 'var(--parked-color)' }
+                                                : { backgroundColor: 'none' }
+                                        }
+                                    >
+                                        {cell.area}
+                                        {row.number}
+                                    </span>
+                                );
+                            })}
+                    </div>
+                );
+            })}
         </div>
     );
 }
