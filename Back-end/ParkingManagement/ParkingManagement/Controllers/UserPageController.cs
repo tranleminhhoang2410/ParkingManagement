@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingManagement.Filter;
 using ParkingManagement.Model.DTO;
+using ParkingManagement.Model.ViewModel;
 using ParkingManagement.Service;
+using System.Security.Claims;
 
 namespace ParkingManagement.Controllers
 {
@@ -20,8 +24,11 @@ namespace ParkingManagement.Controllers
         private readonly ICityService cityService;
         private readonly IWardService wardService;
 
+        private readonly IHttpContextAccessor httpContextAccessor;
+
         public UserPageController(ISlotService slotService, IVehicleTypeService vehicleTypeService, IVehicleService vehicleService, 
-            IUserService userService, IInvoiceService invoiceService, IDistrictService districtService, ICityService cityService, IWardService wardService)
+            IUserService userService, IInvoiceService invoiceService, IDistrictService districtService, ICityService cityService, IWardService wardService,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.slotService = slotService;
             this.vehicleTypeService = vehicleTypeService;
@@ -31,32 +38,88 @@ namespace ParkingManagement.Controllers
             this.districtService = districtService;
             this.cityService = cityService;
             this.wardService = wardService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
-        [HttpGet("ParkingLot")]
+        [HttpGet("ParkingLot"), AllowAnonymous]
         public async Task<ActionResult> GetAllParkingLot()
         {
             try
             {
                 IEnumerable<SlotDTO> slots = await slotService.GetAll();
-                
+
+                List<SlotDTO> A = slots.Where(c => c.Area == "A").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> B = slots.Where(c => c.Area == "B").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> C = slots.Where(c => c.Area == "C").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> D = slots.Where(c => c.Area == "D").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> E = slots.Where(c => c.Area == "E").OrderBy(c => c.Position).ToList();
+
+                List<LotArea> parkingArea = new List<LotArea>
+                {
+                    slotService.toView(A),
+                    slotService.toView(B),
+                    slotService.toView(C),
+                    slotService.toView(E)
+                };
+
                 return Ok(new
                 {
-                    Slots = slots,
-                    User = "user is here"
+                    Slots = parkingArea
                 });
             }
             catch (Exception ex)
             {
                 return BadRequest(new
                 {
-                    Error = ex.Message
+                    Error = ex
                 });
             }
             
         }
 
-        [HttpGet("PriceTable")]
+        [AuthorizationFilter]
+        [Authorize(Roles = "User")]
+        [HttpGet("ParkingLot/User")]
+        public async Task<ActionResult> GetAllParkingLot2()
+        {
+            try
+            {
+                IEnumerable<SlotDTO> slots = await slotService.GetAll();
+
+                List<SlotDTO> A = slots.Where(c => c.Area == "A").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> B = slots.Where(c => c.Area == "B").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> C = slots.Where(c => c.Area == "C").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> D = slots.Where(c => c.Area == "D").OrderBy(c => c.Position).ToList();
+                List<SlotDTO> E = slots.Where(c => c.Area == "E").OrderBy(c => c.Position).ToList();
+
+                List<LotArea> parkingArea = new List<LotArea>
+                {
+                    slotService.toView(A),
+                    slotService.toView(B),
+                    slotService.toView(C),
+                    slotService.toView(E)
+                };
+
+                int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                UserDTO user = await userService.GetUserById(userid);
+
+                return Ok(new
+                {
+                    Slots = slots,
+                    LoggedUser = user
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Error = ex
+                });
+            }
+
+        }
+
+        [HttpGet("PriceTable"), AllowAnonymous]
         public async Task<ActionResult> GetAllVehicleTypes()
         {
             try
@@ -77,12 +140,65 @@ namespace ParkingManagement.Controllers
             }
         }
 
-        [HttpGet("UserFeedback")]
+        [AuthorizationFilter]
+        [Authorize(Roles = "User")]
+        [HttpGet("PriceTable/User"), AllowAnonymous]
+        public async Task<ActionResult> GetAllVehicleTypes2()
+        {
+            try
+            {
+                IEnumerable<VehicleTypeDTO> types = await vehicleTypeService.GetAll();
+
+                int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                UserDTO user = await userService.GetUserById(userid);
+
+                return Ok(new
+                {
+                    Types = types,
+                    LoggedUser = user
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Error = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("UserFeedback"), AllowAnonymous]
         public async Task<ActionResult> UserFeedback()
         {
             try
             {
                 IEnumerable<UserDTO> users = await userService.GetAll();
+
+                return Ok(new
+                {
+                    Types = users
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Error = ex.Message
+                });
+            }
+        }
+
+        [AuthorizationFilter]
+        [Authorize(Roles = "User")]
+        [HttpGet("UserFeedback/User"), AllowAnonymous]
+        public async Task<ActionResult> UserFeedback2()
+        {
+            try
+            {
+                IEnumerable<UserDTO> users = await userService.GetAll();
+
+                int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                UserDTO user = await userService.GetUserById(userid);
 
                 return Ok(new
                 {

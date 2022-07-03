@@ -2,6 +2,7 @@
 using ParkingManagement.Data;
 using ParkingManagement.Model;
 using ParkingManagement.Model.DTO;
+using ParkingManagement.Model.ViewModel;
 using ParkingManagement.Utils.Mapper;
 
 namespace ParkingManagement.Service.Implement
@@ -57,9 +58,49 @@ namespace ParkingManagement.Service.Implement
             }
         }
 
+        public LotArea toView(List<SlotDTO> slotDTOs)
+        {
+
+            SlotDTO temp = new SlotDTO();
+            LotArea lotArea = new LotArea();
+
+            foreach (SlotDTO slot in slotDTOs)
+            {
+                if (slot.Position % 2 == 1)
+                {
+                    temp = slot;
+                }
+                else
+                {
+                    LotRow row = new LotRow
+                    {
+                        area = slot.Area[0],
+                        type = slot.VehicleTypeName,
+                        cells = new List<LotCell>
+                        {
+                            new LotCell
+                            {
+                                isParked = temp.Status,
+                                number = temp.Position
+                            },
+                            new LotCell
+                            {
+                                isParked = slot.Status,
+                                number = slot.Position
+                            }
+                        }
+                    };
+
+                    lotArea.lotRows.Add(row);
+                }
+            }
+
+            return lotArea;
+        }
+
         public async Task<Boolean> UpdateSlot(SlotDTO slot)
         {
-            string slotId = (slot.SlotGroup + slot.SlotPos).Trim();
+            string slotId = (slot.Area + slot.Position).Trim();
 
             Slot? _slot = await _db.Slots.FirstOrDefaultAsync(c => c.Id.Equals(slotId));
             if (_slot == null) return false;

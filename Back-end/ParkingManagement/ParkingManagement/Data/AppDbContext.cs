@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ParkingManagement.Authentication.AuthModel;
 using ParkingManagement.Model;
 
 namespace ParkingManagement.Data
@@ -24,5 +25,7 @@ namespace ParkingManagement.Data
         public DbSet<District> Districts { get; set; }
         public DbSet<Ward> Wards { get; set; }
 
+
+        public DbSet<Token> ValidTokens { get; set; }
     }
 }

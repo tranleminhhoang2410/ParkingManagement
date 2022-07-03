@@ -25,7 +25,10 @@ namespace ParkingManagement.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CityDTO>>> GetCities()
         {
-            return Ok(await cityService.GetAllCities());
+            return Ok(new
+            {
+                Cities = await cityService.GetAllCities()
+            });
         }
 
         [HttpGet("Get/{Id}")]

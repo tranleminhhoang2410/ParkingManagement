@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using ParkingManagement.Model;
 using ParkingManagement.Model.DTO;
+using ParkingManagement.Model.ViewModel;
 using ParkingManagement.Service;
+using System.Collections.Generic;
 
 namespace ParkingManagement.Controllers
 {
@@ -18,9 +20,24 @@ namespace ParkingManagement.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<SlotDTO>>> GetAllSlot()
+        public async Task<IActionResult> GetAllSlot()
         {
-            return Ok(await slotService.GetAll());
+            IEnumerable<SlotDTO> slots = await slotService.GetAll();
+
+            List<LotArea> parkingArea = new List<LotArea>();
+
+            List<SlotDTO> A = slots.Where(c => c.Area == "A").OrderBy(c => c.Position).ToList();
+            List<SlotDTO> B = slots.Where(c => c.Area == "B").OrderBy(c => c.Position).ToList();
+            List<SlotDTO> C = slots.Where(c => c.Area == "C").OrderBy(c => c.Position).ToList();
+            List<SlotDTO> D = slots.Where(c => c.Area == "D").OrderBy(c => c.Position).ToList();
+            List<SlotDTO> E = slots.Where(c => c.Area == "E").OrderBy(c => c.Position).ToList();
+
+            LotArea a = slotService.toView(E);
+
+            return Ok(new
+            {
+                Area = a
+            });
         } 
         
         [HttpGet("GetAll/{typeId}")]

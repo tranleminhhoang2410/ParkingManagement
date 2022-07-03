@@ -1,5 +1,6 @@
 ﻿using ParkingManagement.Model;
 using ParkingManagement.Model.DTO;
+using System.Collections;
 
 namespace ParkingManagement.Utils.Mapper
 {
@@ -125,12 +126,16 @@ namespace ParkingManagement.Utils.Mapper
 
             if(slot != null)
             {
+                string area = slot.Id.Substring(0, 1);
+                string position = slot.Id.Substring(1);
+
                 slotDTO = new SlotDTO
                 {
-                    SlotGroup = slot.Id.Trim().ToCharArray().GetValue(0).ToString(),
-                    SlotPos = slot.Id.Trim().ToCharArray().GetValue(1).ToString(),
+                    Area = area,
+                    Position = int.Parse(position),
                     Status = slot.Status,
-                    VehicleTypeId = slot.VehicleTypeId
+                    VehicleTypeId = slot.VehicleTypeId,
+                    VehicleTypeName = slot.VehicleType.TypeName
                 };
             }
             

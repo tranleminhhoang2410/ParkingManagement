@@ -2,6 +2,7 @@
 using ParkingManagement.Data;
 using ParkingManagement.Model;
 using ParkingManagement.Model.DTO;
+using ParkingManagement.Utils.Mapper;
 
 namespace ParkingManagement.Service.Implement
 {
@@ -42,9 +43,16 @@ namespace ParkingManagement.Service.Implement
             }            
         }
 
-        public Task<AccountDTO> GetAccount(AccountDTO accountDTO)
+        public async Task<AccountDTO> GetAccount(string username, string password)
         {
-            throw new NotImplementedException();
+            AccountDTO accountDTO = ToDTO.Map(await _db.Accounts.Include(c => c.User).FirstOrDefaultAsync(c => c.Username.Equals(username) && c.Password.Equals(password)));
+            return accountDTO;
+        }
+
+        public async Task<AccountDTO> GetAccountByUser(string username)
+        {
+            AccountDTO accountDTO = ToDTO.Map(await _db.Accounts.Include(c => c.User).FirstOrDefaultAsync(c => c.Username.Equals(username)));
+            return accountDTO;
         }
 
         public Task<string> UpdateAccount(AccountDTO accountDTO)

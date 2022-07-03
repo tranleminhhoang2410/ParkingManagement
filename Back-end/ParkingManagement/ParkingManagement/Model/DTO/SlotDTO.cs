@@ -2,9 +2,10 @@
 {
     public class SlotDTO
     {
-        public string SlotGroup { get; set; }
-        public string SlotPos { get; set; }
+        public string Area { get; set; }
+        public int Position { get; set; }
         public Boolean Status { get; set; }
         public int VehicleTypeId { get; set; }
+        public string VehicleTypeName { get; set; }
     }
 }
