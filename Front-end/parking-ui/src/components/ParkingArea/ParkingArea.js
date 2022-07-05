@@ -4,11 +4,11 @@ import styles from './ParkingArea.module.scss';
 const cx = classNames.bind(styles);
 
 function ParkingArea ({ area, type }) {
-    const cells = [
+    const lotRows = [
         {
             type: 'CAR',
             area: 'A',
-            rows: [
+            cells: [
                 {
                     number: 1,
                     isParked: true,
@@ -22,7 +22,7 @@ function ParkingArea ({ area, type }) {
         {
             type: 'CAR',
             area: 'A',
-            rows: [
+            cells: [
                 {
                     number: 3,
                     isParked: false,
@@ -36,7 +36,7 @@ function ParkingArea ({ area, type }) {
         {
             type: 'CAR',
             area: 'A',
-            rows: [
+            cells: [
                 {
                     number: 5,
                     isParked: true,
@@ -50,7 +50,7 @@ function ParkingArea ({ area, type }) {
         {
             type: 'CAR',
             area: 'A',
-            rows: [
+            cells: [
                 {
                     number: 7,
                     isParked: true,
@@ -64,7 +64,7 @@ function ParkingArea ({ area, type }) {
         {
             type: 'BUS',
             area: 'B',
-            rows: [
+            cells: [
                 {
                     number: 1,
                     isParked: true,
@@ -78,7 +78,7 @@ function ParkingArea ({ area, type }) {
         {
             type: 'CAR',
             area: 'A',
-            rows: [
+            cells: [
                 {
                     number: 1,
                     isParked: true,
@@ -92,7 +92,7 @@ function ParkingArea ({ area, type }) {
         {
             type: 'BUS',
             area: 'B',
-            rows: [
+            cells: [
                 {
                     number: 1,
                     isParked: true,
@@ -113,28 +113,28 @@ function ParkingArea ({ area, type }) {
             <div className={cx('type')}>
                 <span className={cx('type-text')}>{type}</span>
             </div>
-            {cells.map((cell, index) => {
+            {lotRows.map((lotRow, index) => {
                 return (
                     <div
                         key={index}
-                        className={cx('cells')}
-                        style={area === cell.area && type === cell.type ? { display: 'flex' } : { display: 'none' }}
+                        className={cx('cell')}
+                        style={area === lotRow.area && type === lotRow.type ? { display: 'flex' } : { display: 'none' }}
                     >
-                        {area === cell.area &&
-                            type === cell.type &&
-                            cell.rows.map((row, index) => {
+                        {area === lotRow.area &&
+                            type === lotRow.type &&
+                            lotRow.cells.map((cell, index) => {
                                 return (
                                     <span
                                         key={index}
-                                        className={row.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
+                                        className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
                                         style={
-                                            row.isParked
+                                            cell.isParked
                                                 ? { backgroundColor: 'var(--parked-color)' }
                                                 : { backgroundColor: 'none' }
                                         }
                                     >
-                                        {cell.area}
-                                        {row.number}
+                                        {lotRow.area}
+                                        {cell.number}
                                     </span>
                                 );
                             })}

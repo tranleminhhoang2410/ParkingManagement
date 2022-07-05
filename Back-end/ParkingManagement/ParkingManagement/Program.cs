@@ -60,6 +60,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//Show UseCors with CorsPolicyBuilder
+app.UseCors(builder =>
+{
+    builder
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+});
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
