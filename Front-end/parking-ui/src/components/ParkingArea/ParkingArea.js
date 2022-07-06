@@ -6,7 +6,7 @@ import { getAllSlotsApi } from '~/services/slotService';
 
 const cx = classNames.bind(styles);
 
-function ParkingArea ({ area, type }) {
+function ParkingArea ({ area, type, lotRows = [] }) {
     // const lotRows = [
     //     {
     //         type: 'CAR',
@@ -110,16 +110,6 @@ function ParkingArea ({ area, type }) {
 
     // console.log(lotRows);
 
-    const [lotRows, setLotRows] = useState([]);
-
-    useEffect(() => {
-        fetchSlotsData();
-    }, []);
-
-    const fetchSlotsData = async () => {
-        setLotRows(await getAllSlotsApi());
-    };
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('area')}>
@@ -129,30 +119,26 @@ function ParkingArea ({ area, type }) {
                 <span className={cx('type-text')}>{type}</span>
             </div>
             {lotRows.map((lotRow, index) => {
+                console.log(lotRow);
                 return (
-                    <div
-                        key={index}
-                        className={cx('cell')}
-                        style={area === lotRow.area && type === lotRow.type ? { display: 'flex' } : { display: 'none' }}
-                    >
-                        {area === lotRow.area &&
-                            type === lotRow.type &&
-                            lotRow.cells.map((cell, index) => {
-                                return (
-                                    <span
-                                        key={index}
-                                        className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
-                                        style={
-                                            cell.isParked
-                                                ? { backgroundColor: 'var(--parked-color)' }
-                                                : { backgroundColor: 'none' }
-                                        }
-                                    >
-                                        {lotRow.area}
-                                        {cell.number}
-                                    </span>
-                                );
-                            })}
+                    <div key={index} className={cx('cell')} style={{ display: 'flex' }}>
+                        {lotRow.cells.map((cell, index) => {
+                            console.log(cell);
+                            return (
+                                <span
+                                    key={index}
+                                    className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
+                                    style={
+                                        cell.isParked
+                                            ? { backgroundColor: 'var(--parked-color)' }
+                                            : { backgroundColor: 'none' }
+                                    }
+                                >
+                                    {lotRow.area}
+                                    {cell.number}
+                                </span>
+                            );
+                        })}
                     </div>
                 );
             })}
