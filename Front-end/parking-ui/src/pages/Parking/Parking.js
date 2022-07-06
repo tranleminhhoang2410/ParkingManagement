@@ -10,7 +10,10 @@ function Parking () {
         <div className={cx('wrapper')}>
             <div className={cx('parking-area')}>
                 <ParkingArea area="A" type="CAR" className={cx('parking-area-item')} />
-                <ParkingArea area="B" type="BUS" className={cx('parking-area-item')} />
+                <ParkingArea area="B" type="CAR" className={cx('parking-area-item')} />
+                <ParkingArea area="C" type="CAR" className={cx('parking-area-item')} />
+                <ParkingArea area="D" type="BUS" className={cx('parking-area-item')} />
+                <ParkingArea area="E" type="TRUCK" className={cx('parking-area-item')} />
             </div>
         </div>
     );

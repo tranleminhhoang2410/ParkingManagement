@@ -45,6 +45,11 @@
         font-size: 1.4rem;
         font-weight: 500;
         color: var(--white-color);
+        cursor: pointer;
+
+        &:hover{
+            background-color: #ccc;
+        }
     }
 
     .cell-odd{

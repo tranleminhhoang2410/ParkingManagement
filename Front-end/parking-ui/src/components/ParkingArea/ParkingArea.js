@@ -1,109 +1,124 @@
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ParkingArea.module.scss';
+
+import { getAllSlotsApi } from '~/services/slotService';
 
 const cx = classNames.bind(styles);
 
 function ParkingArea ({ area, type }) {
-    const lotRows = [
-        {
-            type: 'CAR',
-            area: 'A',
-            cells: [
-                {
-                    number: 1,
-                    isParked: true,
-                },
-                {
-                    number: 2,
-                    isParked: false,
-                },
-            ],
-        },
-        {
-            type: 'CAR',
-            area: 'A',
-            cells: [
-                {
-                    number: 3,
-                    isParked: false,
-                },
-                {
-                    number: 4,
-                    isParked: false,
-                },
-            ],
-        },
-        {
-            type: 'CAR',
-            area: 'A',
-            cells: [
-                {
-                    number: 5,
-                    isParked: true,
-                },
-                {
-                    number: 6,
-                    isParked: false,
-                },
-            ],
-        },
-        {
-            type: 'CAR',
-            area: 'A',
-            cells: [
-                {
-                    number: 7,
-                    isParked: true,
-                },
-                {
-                    number: 8,
-                    isParked: false,
-                },
-            ],
-        },
-        {
-            type: 'BUS',
-            area: 'B',
-            cells: [
-                {
-                    number: 1,
-                    isParked: true,
-                },
-                {
-                    number: 2,
-                    isParked: false,
-                },
-            ],
-        },
-        {
-            type: 'CAR',
-            area: 'A',
-            cells: [
-                {
-                    number: 1,
-                    isParked: true,
-                },
-                {
-                    number: 2,
-                    isParked: false,
-                },
-            ],
-        },
-        {
-            type: 'BUS',
-            area: 'B',
-            cells: [
-                {
-                    number: 1,
-                    isParked: true,
-                },
-                {
-                    number: 2,
-                    isParked: false,
-                },
-            ],
-        },
-    ];
+    // const lotRows = [
+    //     {
+    //         type: 'CAR',
+    //         area: 'A',
+    //         cells: [
+    //             {
+    //                 number: 1,
+    //                 isParked: true,
+    //             },
+    //             {
+    //                 number: 2,
+    //                 isParked: false,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         type: 'CAR',
+    //         area: 'A',
+    //         cells: [
+    //             {
+    //                 number: 3,
+    //                 isParked: false,
+    //             },
+    //             {
+    //                 number: 4,
+    //                 isParked: false,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         type: 'CAR',
+    //         area: 'A',
+    //         cells: [
+    //             {
+    //                 number: 5,
+    //                 isParked: true,
+    //             },
+    //             {
+    //                 number: 6,
+    //                 isParked: false,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         type: 'CAR',
+    //         area: 'A',
+    //         cells: [
+    //             {
+    //                 number: 7,
+    //                 isParked: true,
+    //             },
+    //             {
+    //                 number: 8,
+    //                 isParked: false,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         type: 'BUS',
+    //         area: 'D',
+    //         cells: [
+    //             {
+    //                 number: 1,
+    //                 isParked: true,
+    //             },
+    //             {
+    //                 number: 2,
+    //                 isParked: false,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         type: 'CAR',
+    //         area: 'A',
+    //         cells: [
+    //             {
+    //                 number: 1,
+    //                 isParked: true,
+    //             },
+    //             {
+    //                 number: 2,
+    //                 isParked: false,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         type: 'BUS',
+    //         area: 'D',
+    //         cells: [
+    //             {
+    //                 number: 1,
+    //                 isParked: true,
+    //             },
+    //             {
+    //                 number: 2,
+    //                 isParked: false,
+    //             },
+    //         ],
+    //     },
+    // ];
+
+    // console.log(lotRows);
+
+    const [lotRows, setLotRows] = useState([]);
+
+    useEffect(() => {
+        fetchSlotsData();
+    }, []);
+
+    const fetchSlotsData = async () => {
+        setLotRows(await getAllSlotsApi());
+    };
 
     return (
         <div className={cx('wrapper')}>
