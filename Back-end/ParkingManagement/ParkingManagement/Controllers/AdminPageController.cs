@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ParkingManagement.Controllers
 {
-    [Route("ParkingManagement")]
+    [Route("api/ParkingManagement")]
     [ApiController]
     public class AdminPageController : ControllerBase
     {

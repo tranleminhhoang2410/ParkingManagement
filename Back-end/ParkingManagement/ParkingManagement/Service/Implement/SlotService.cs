@@ -58,11 +58,11 @@ namespace ParkingManagement.Service.Implement
             }
         }
 
-        public LotArea toView(List<SlotDTO> slotDTOs)
+        public IEnumerable<LotRow> toView(List<SlotDTO> slotDTOs)
         {
 
             SlotDTO temp = new SlotDTO();
-            LotArea lotArea = new LotArea();
+            List<LotRow> ListRows = new List<LotRow>(); 
 
             foreach (SlotDTO slot in slotDTOs)
             {
@@ -91,11 +91,11 @@ namespace ParkingManagement.Service.Implement
                         }
                     };
 
-                    lotArea.lotRows.Add(row);
+                    ListRows.Add(row);
                 }
             }
 
-            return lotArea;
+            return ListRows;
         }
 
         public async Task<Boolean> UpdateSlot(SlotDTO slot)

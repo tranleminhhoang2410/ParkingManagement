@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace ParkingManagement.Controllers
 {
-    [Route("ParkingManagement")]
+    [Route("api/ParkingManagement")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {

@@ -11,6 +11,6 @@ namespace ParkingManagement.Service
         public Task<SlotDTO> GetByID(string id);
         public Task<Boolean> UpdateSlot(SlotDTO slot);
         public Task<string> SetParkingSlotStatus(string id, bool status);
-        public LotArea toView(List<SlotDTO> slotDTOs);
+        public IEnumerable<LotRow> toView(List<SlotDTO> slotDTOs);
     }
 }

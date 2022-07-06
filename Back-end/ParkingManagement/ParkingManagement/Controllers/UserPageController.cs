@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace ParkingManagement.Controllers
 {
-    [Route("ParkingManagement")]
+    [Route("api/ParkingManagement")]
     [ApiController]
     public class UserPageController : ControllerBase
     {
@@ -58,17 +58,17 @@ namespace ParkingManagement.Controllers
                 List<SlotDTO> D = slots.Where(c => c.Area == "D").OrderBy(c => c.Position).ToList();
                 List<SlotDTO> E = slots.Where(c => c.Area == "E").OrderBy(c => c.Position).ToList();
 
-                List<LotArea> parkingArea = new List<LotArea>
-                {
-                    slotService.toView(A),
-                    slotService.toView(B),
-                    slotService.toView(C),
-                    slotService.toView(E)
-                };
+                List<LotRow> lotRows = new List<LotRow>();
+
+                foreach(LotRow r in slotService.toView(A)) lotRows.Add(r);
+                foreach(LotRow r in slotService.toView(B)) lotRows.Add(r);
+                foreach(LotRow r in slotService.toView(C)) lotRows.Add(r);
+                foreach(LotRow r in slotService.toView(D)) lotRows.Add(r);
+                foreach(LotRow r in slotService.toView(E)) lotRows.Add(r);
 
                 return Ok(new
                 {
-                    Slots = parkingArea
+                    Slots = lotRows
                 });
             }
             catch (Exception ex)
@@ -100,20 +100,20 @@ namespace ParkingManagement.Controllers
                 List<SlotDTO> D = slots.Where(c => c.Area == "D").OrderBy(c => c.Position).ToList();
                 List<SlotDTO> E = slots.Where(c => c.Area == "E").OrderBy(c => c.Position).ToList();
 
-                List<LotArea> parkingArea = new List<LotArea>
-                {
-                    slotService.toView(A),
-                    slotService.toView(B),
-                    slotService.toView(C),
-                    slotService.toView(E)
-                };
+                List<LotRow> lotRows = new List<LotRow>();
+
+                foreach (LotRow r in slotService.toView(A)) lotRows.Add(r);
+                foreach (LotRow r in slotService.toView(B)) lotRows.Add(r);
+                foreach (LotRow r in slotService.toView(C)) lotRows.Add(r);
+                foreach (LotRow r in slotService.toView(D)) lotRows.Add(r);
+                foreach (LotRow r in slotService.toView(E)) lotRows.Add(r);
 
                 int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 UserDTO user = await userService.GetUserById(userid);
 
                 return Ok(new
                 {
-                    Slots = slots,
+                    Slots = lotRows,
                     LoggedUser = user
                 });
             }

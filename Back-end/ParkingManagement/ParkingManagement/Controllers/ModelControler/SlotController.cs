@@ -32,12 +32,9 @@ namespace ParkingManagement.Controllers
             List<SlotDTO> D = slots.Where(c => c.Area == "D").OrderBy(c => c.Position).ToList();
             List<SlotDTO> E = slots.Where(c => c.Area == "E").OrderBy(c => c.Position).ToList();
 
-            LotArea a = slotService.toView(E);
+            IEnumerable<LotRow> a = slotService.toView(E);
 
-            return Ok(new
-            {
-                Area = a
-            });
+            return Ok(a);
         } 
         
         [HttpGet("GetAll/{typeId}")]
