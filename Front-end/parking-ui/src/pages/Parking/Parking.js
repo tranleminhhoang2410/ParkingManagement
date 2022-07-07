@@ -7,7 +7,7 @@ import { getAllSlotsApi } from '~/services/slotService';
 
 const cx = classNames.bind(styles);
 
-function Parking () {
+function Parking() {
     const [lotRows, setLotRows] = useState([]);
 
     useEffect(() => {

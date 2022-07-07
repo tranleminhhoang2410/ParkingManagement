@@ -10,7 +10,17 @@ instance.interceptors.response.use(
         return response.data;
     },
     (error) => {
-        console.log(error);
+        switch (error.response.status) {
+            case 401:
+                const message401 = error.response.data.error;
+                return Promise.reject(message401);
+            case 400:
+                const message400 = error.response.data.fail;
+                return Promise.reject(message400);
+
+            default:
+                break;
+        }
     },
 );
 

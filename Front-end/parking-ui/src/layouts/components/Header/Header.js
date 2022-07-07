@@ -1,17 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitterSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
+import { signIn, signUp } from '~/services/authService';
+import { AuthContext } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function Header () {
+function Header() {
+    //To be Better, handle this logic from other component, not UI like Header
+    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
+    const [errorMsg, setErrorMsg] = useState('');
+    const navigate = useNavigate();
+
     //Icon Besid Login Button
     const socialIcons = [
         {
@@ -51,12 +58,12 @@ function Header () {
     //Modal
     const [isOpen, setIsOpen] = useState(false);
 
-    function openModal () {
+    function openModal() {
         setIsOpen(true);
         toggleTab(1);
     }
 
-    function closeModal () {
+    function closeModal() {
         setIsOpen(false);
     }
 
@@ -67,6 +74,40 @@ function Header () {
     const toggleTab = (index) => {
         setToggleState(index);
     };
+
+    //handle auth
+    function handleSignIn(e) {
+        e.preventDefault();
+        const [{ value: username }, { value: password }] = e.target;
+        const data = { username, password };
+        signIn(data)
+            .then((response) => {
+                setIsLoggedIn(true);
+                closeModal();
+                navigate('/parking', { replace: true, state: 'test' });
+            })
+            .catch((err) => {
+                setErrorMsg(err);
+            });
+    }
+
+    function handleSignUp(e) {
+        e.preventDefault();
+        const [{ value: username }, { value: password }, { value: ConfirmPassword }] = e.target;
+        const data = { username, password, ConfirmPassword };
+        signUp(data)
+            .then(() => {
+                toggleTab(1);
+            })
+            .catch((err) => {
+                setErrorMsg(err);
+            });
+    }
+
+    function handleLogout() {
+        setIsLoggedIn(false);
+        navigate('/');
+    }
 
     return (
         <>
@@ -101,9 +142,18 @@ function Header () {
                             );
                         })}
                     </nav>
-                    <Button className={cx('login-btn')} primary onClick={openModal}>
-                        Log in
-                    </Button>
+                    {isLoggedIn ? (
+                        <div>
+                            <FontAwesomeIcon icon={faUser} className={cx('social-icon')} />
+                            <Button className={cx('login-btn')} danger onClick={handleLogout}>
+                                Log out
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button className={cx('login-btn')} primary onClick={openModal}>
+                            Log in
+                        </Button>
+                    )}
                 </div>
             </div>
 
@@ -115,7 +165,7 @@ function Header () {
                         <FontAwesomeIcon icon={faXmark} className={cx('close-btn-content')} />
                     </Button>
                 )}
-                <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+                <Modal ariaHideApp={false} isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
                     {/* UI Tabs */}
                     <div className={cx('tab-title')}>
                         <Button
@@ -134,7 +184,7 @@ function Header () {
                     <div className={cx('tab-content')}>
                         {/* Login Form */}
                         <div className={toggleState === 1 ? cx('content', 'active-content') : cx('content')}>
-                            <form id="login-form" className={cx('main-form')}>
+                            <form id="login-form" className={cx('main-form')} onSubmit={handleSignIn}>
                                 <div className={cx('input-group')}>
                                     <label htmlFor="username" className={cx('input-label')}>
                                         Username
@@ -160,14 +210,14 @@ function Header () {
                                         </Link>
                                     </div>
                                 </div>
-                                <Button className={cx('action-btn')} primary>
+                                <Button className={cx('action-btn')} primary type="submit">
                                     Log in
                                 </Button>
                             </form>
                         </div>
                         {/* Signup Form */}
                         <div className={toggleState === 2 ? cx('content', 'active-content') : cx('content')}>
-                            <form id="signup-form" className={cx('main-form')}>
+                            <form id="signup-form" className={cx('main-form')} onSubmit={handleSignUp}>
                                 <div className={cx('input-group')}>
                                     <label htmlFor="username" className={cx('input-label')}>
                                         Username
@@ -186,12 +236,14 @@ function Header () {
                                     </label>
                                     <input type="password" className={cx('input-text')} />
                                 </div>
-                                <Button className={cx('action-btn')} primary>
+                                <Button className={cx('action-btn')} primary type="submit">
                                     Sign up
                                 </Button>
                             </form>
                         </div>
                     </div>
+                    {/* PLEASE CUSTOM CSS FOR THIS MESSAGE */}
+                    <div style={{ color: 'red' }}>{errorMsg}</div>
                 </Modal>
             </div>
         </>

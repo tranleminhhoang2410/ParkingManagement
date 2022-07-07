@@ -5,10 +5,11 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button ({
+function Button({
     to,
     href,
     primary = false,
+    danger = false,
     disabled = false,
     rounded = false,
     small = false,
@@ -46,6 +47,7 @@ function Button ({
     const classes = cx('wrapper', {
         [className]: className,
         primary,
+        danger,
         disabled,
         rounded,
         small,

@@ -7,7 +7,7 @@ import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
 
 const cx = classNames.bind(styles);
 
-function Price () {
+function Price() {
     // const data = useMemo(
     //     () => [
     //         {
