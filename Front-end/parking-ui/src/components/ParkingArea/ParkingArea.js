@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ParkingArea.module.scss';
-
-import { getAllSlotsApi } from '~/services/slotService';
 
 const cx = classNames.bind(styles);
 
@@ -130,7 +127,7 @@ function ParkingArea ({ area, type, lotRows = [] }) {
                                     className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
                                     style={
                                         cell.isParked
-                                            ? { backgroundColor: 'var(--parked-color)' }
+                                            ? { backgroundColor: 'var(--parked-color)', cursor: 'default' }
                                             : { backgroundColor: 'none' }
                                     }
                                 >
