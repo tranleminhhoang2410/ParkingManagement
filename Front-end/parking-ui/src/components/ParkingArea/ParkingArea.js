@@ -119,23 +119,31 @@ function ParkingArea ({ area, type, lotRows = [] }) {
                 console.log(lotRow);
                 return (
                     <div key={index} className={cx('cell')} style={{ display: 'flex' }}>
-                        {lotRow.cells.map((cell, index) => {
-                            console.log(cell);
-                            return (
-                                <span
-                                    key={index}
-                                    className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
-                                    style={
-                                        cell.isParked
-                                            ? { backgroundColor: 'var(--parked-color)', cursor: 'default' }
-                                            : { backgroundColor: 'none' }
-                                    }
-                                >
-                                    {lotRow.area}
-                                    {cell.number}
-                                </span>
-                            );
-                        })}
+                        {lotRow.type.toUpperCase() === type && lotRow.area === area ? (
+                            lotRow.cells.map((cell, index) => {
+                                {
+                                    /* console.log(cell); */
+                                }
+                                console.log('Type API: ', lotRow.type.toUpperCase());
+                                console.log('Type Props: ', type);
+                                return (
+                                    <span
+                                        key={index}
+                                        className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
+                                        style={
+                                            cell.isParked
+                                                ? { backgroundColor: 'var(--parked-color)', cursor: 'default' }
+                                                : { backgroundColor: 'none' }
+                                        }
+                                    >
+                                        {lotRow.area}
+                                        {cell.number}
+                                    </span>
+                                );
+                            })
+                        ) : (
+                            <></>
+                        )}
                     </div>
                 );
             })}
