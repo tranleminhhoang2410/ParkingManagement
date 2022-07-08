@@ -1,6 +1,5 @@
 .wrapper{
-    width: 15vh;
-    margin: 0 32px;
+    margin: 16px 32px;
     
     .area,
     .type,
@@ -31,10 +30,8 @@
     }
 
     .cells{
-        display: flex;
         align-items: center;
         justify-content: center;
-        border-top: 1px solid var(--white-color);
         border-bottom: 1px solid var(--white-color);
     }
 

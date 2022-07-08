@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ParkingArea.module.scss';
 
@@ -108,7 +109,7 @@ function ParkingArea ({ area, type, lotRows = [] }) {
     // console.log(lotRows);
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} style={type === 'CAR' ? { width: '8vw' } : { width: '10vw' }}>
             <div className={cx('area')}>
                 <span className={cx('area-text')}>{area}</span>
             </div>
@@ -117,22 +118,40 @@ function ParkingArea ({ area, type, lotRows = [] }) {
             </div>
             {lotRows.map((lotRow, index) => {
                 return (
-                    <div key={index} className={cx('cell')} style={{ display: 'flex' }}>
+                    <div
+                        key={index}
+                        className={cx('cells')}
+                        style={
+                            lotRow.type.toUpperCase() === type && lotRow.area === area
+                                ? { display: 'flex' }
+                                : { display: 'none' }
+                        }
+                    >
                         {lotRow.type.toUpperCase() === type && lotRow.area === area ? (
                             lotRow.cells.map((cell, index) => {
+                                const parking_id = lotRow.area + cell.number;
                                 return (
-                                    <span
+                                    <Link
                                         key={index}
+                                        to={!cell.isParked && `/parking/${parking_id}`}
                                         className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
                                         style={
-                                            cell.isParked
-                                                ? { backgroundColor: 'var(--parked-color)', cursor: 'default' }
-                                                : { backgroundColor: 'none' }
+                                            !cell.isParked
+                                                ? {
+                                                      backgroundColor: 'none',
+                                                  }
+                                                : {
+                                                      display: 'block',
+                                                      backgroundColor: 'var(--parked-color)',
+                                                      cursor: 'default',
+                                                  }
                                         }
                                     >
-                                        {lotRow.area}
-                                        {cell.number}
-                                    </span>
+                                        <span>
+                                            {lotRow.area}
+                                            {cell.number}
+                                        </span>
+                                    </Link>
                                 );
                             })
                         ) : (
