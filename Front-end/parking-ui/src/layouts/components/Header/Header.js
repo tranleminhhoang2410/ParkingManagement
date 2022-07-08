@@ -31,7 +31,7 @@ function Header () {
         {
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
             title: 'Log out',
-            onClick: handleLogout,
+            logout: handleLogout,
         },
     ];
 
