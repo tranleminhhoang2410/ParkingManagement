@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitterSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
-import { faXmark, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
@@ -24,10 +24,12 @@ function Header () {
     //User menu
     const userMenu = [
         {
+            icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View Profile',
             to: '/',
         },
         {
+            icon: <FontAwesomeIcon icon={faRightFromBracket} />,
             title: 'Log out',
             onClick: handleLogout,
         },
