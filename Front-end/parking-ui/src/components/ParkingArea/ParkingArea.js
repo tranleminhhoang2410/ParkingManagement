@@ -116,16 +116,13 @@ function ParkingArea ({ area, type, lotRows = [] }) {
                 <span className={cx('type-text')}>{type}</span>
             </div>
             {lotRows.map((lotRow, index) => {
-                console.log(lotRow);
+                {
+                    /* console.log(lotRow); */
+                }
                 return (
                     <div key={index} className={cx('cell')} style={{ display: 'flex' }}>
                         {lotRow.type.toUpperCase() === type && lotRow.area === area ? (
                             lotRow.cells.map((cell, index) => {
-                                {
-                                    /* console.log(cell); */
-                                }
-                                console.log('Type API: ', lotRow.type.toUpperCase());
-                                console.log('Type Props: ', type);
                                 return (
                                     <span
                                         key={index}

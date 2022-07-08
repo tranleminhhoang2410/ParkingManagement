@@ -7,14 +7,13 @@ import { getAllSlotsApi } from '~/services/slotService';
 
 const cx = classNames.bind(styles);
 
-function Parking() {
+function Parking () {
     const [lotRows, setLotRows] = useState([]);
 
     useEffect(() => {
         const fetchSlotsData = async () => {
             const lotRows = await getAllSlotsApi();
             setLotRows(lotRows);
-            console.log('useEffect', lotRows);
         };
         fetchSlotsData();
     }, []);

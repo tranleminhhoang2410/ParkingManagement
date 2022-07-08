@@ -6,20 +6,34 @@ import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitterSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
 import { faXmark, faUser } from '@fortawesome/free-solid-svg-icons';
+import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
+import Menu from '~/components/Popper/Menu';
 import { signIn, signUp } from '~/services/authService';
 import { AuthContext } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function Header() {
+function Header () {
     //To be Better, handle this logic from other component, not UI like Header
     const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
     const [errorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
 
-    //Icon Besid Login Button
+    //User menu
+    const userMenu = [
+        {
+            title: 'View Profile',
+            to: '/',
+        },
+        {
+            title: 'Log out',
+            onClick: handleLogout,
+        },
+    ];
+
+    //Icon Beside Login Button
     const socialIcons = [
         {
             name: faFacebookSquare,
@@ -58,12 +72,12 @@ function Header() {
     //Modal
     const [isOpen, setIsOpen] = useState(false);
 
-    function openModal() {
+    function openModal () {
         setIsOpen(true);
         toggleTab(1);
     }
 
-    function closeModal() {
+    function closeModal () {
         setIsOpen(false);
     }
 
@@ -75,14 +89,17 @@ function Header() {
         setToggleState(index);
     };
 
+    const [username, setUsername] = useState('');
+
     //handle auth
-    function handleSignIn(e) {
+    function handleSignIn (e) {
         e.preventDefault();
         const [{ value: username }, { value: password }] = e.target;
         const data = { username, password };
         signIn(data)
             .then((response) => {
                 setIsLoggedIn(true);
+                setUsername(username);
                 closeModal();
                 navigate('/parking', { replace: true, state: 'test' });
             })
@@ -91,7 +108,7 @@ function Header() {
             });
     }
 
-    function handleSignUp(e) {
+    function handleSignUp (e) {
         e.preventDefault();
         const [{ value: username }, { value: password }, { value: ConfirmPassword }] = e.target;
         const data = { username, password, ConfirmPassword };
@@ -104,7 +121,7 @@ function Header() {
             });
     }
 
-    function handleLogout() {
+    function handleLogout () {
         setIsLoggedIn(false);
         navigate('/');
     }
@@ -143,12 +160,12 @@ function Header() {
                         })}
                     </nav>
                     {isLoggedIn ? (
-                        <div>
-                            <FontAwesomeIcon icon={faUser} className={cx('social-icon')} />
-                            <Button className={cx('login-btn')} danger onClick={handleLogout}>
-                                Log out
-                            </Button>
-                        </div>
+                        <Menu items={userMenu}>
+                            <div className={cx('login-action')}>
+                                <span className={cx('username-txt')}>{username}</span>
+                                <FontAwesomeIcon icon={faUser} className={cx('user-icon')} />
+                            </div>
+                        </Menu>
                     ) : (
                         <Button className={cx('login-btn')} primary onClick={openModal}>
                             Log in
