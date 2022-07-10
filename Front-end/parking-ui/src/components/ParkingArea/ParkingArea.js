@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ParkingArea.module.scss';
+import { useContext } from 'react';
+import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function ParkingArea ({ area, type, lotRows = [] }) {
+function ParkingArea({ area, type, lotRows = [] }) {
+    const [authState, dispatch] = useContext(AuthContext);
+    const { isLoggedIn } = authState;
     // const lotRows = [
     //     {
     //         type: 'CAR',
@@ -130,11 +134,13 @@ function ParkingArea ({ area, type, lotRows = [] }) {
                         {lotRow.type.toUpperCase() === type && lotRow.area === area ? (
                             lotRow.cells.map((cell, index) => {
                                 const parking_id = lotRow.area + cell.number;
+                                const isRedirect = !cell.isParked && isLoggedIn;
                                 return (
                                     <Link
                                         key={index}
-                                        to={!cell.isParked && `/parking/${parking_id}`}
+                                        to={isRedirect && `/parking/${parking_id}`}
                                         className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
+                                        onClick={() => !isLoggedIn && dispatch({ type: AUTH_ACTION.OPEN_MODAL })}
                                         style={
                                             !cell.isParked
                                                 ? {
