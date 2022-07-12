@@ -37,4 +37,14 @@
             transform: rotate(90deg);
         }
     }
+
+    .notes {
+        display: flex;
+        margin-top: -40px;
+        margin-left: 56px;
+
+        .note-item {
+            margin: 0 8px;
+        }
+    }
 }

@@ -1,13 +1,15 @@
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap');
 
-:root{
+:root {
     //Colors
     --primary-color: #f1c50e;
     --primary-border-color: #f0e68c;
     --white-color: #fff;
     --text-color: #333;
     --parked-color: #28a745;
+    --empty-color: #696969;
+    --your-color: #ff0000;
 
     //Width
     --default-layout-max-width: 1200px;
@@ -20,17 +22,17 @@
     --font-family: 'Poppins', sans-serif;
 }
 
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-html{
+html {
     font-size: 62.5%;
 }
 
-body{
+body {
     font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
@@ -45,7 +47,7 @@ html *::-webkit-scrollbar {
 
 html *::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: rgba(0, 0, 0, .15);
+    background-color: rgba(0, 0, 0, 0.15);
 }
 
 html *::-webkit-scrollbar-track {
@@ -53,11 +55,13 @@ html *::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
 }
 
-button, input, [tabindex]{
+button,
+input,
+[tabindex] {
     border: none;
     outline: none;
 }
 
-a{
+a {
     text-decoration: none;
 }

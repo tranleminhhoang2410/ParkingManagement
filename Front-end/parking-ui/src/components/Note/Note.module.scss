@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    margin: 0 12px;
+
+    .title {
+        margin-right: 8px;
+    }
+
+    .value {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .sub-value {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--white-color);
+        margin-left: 8px;
+    }
+}

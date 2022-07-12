@@ -41,15 +41,13 @@ function ParkingArea ({ area, type, lotRows = [] }) {
                                         className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
                                         onClick={() => !isLoggedIn && dispatch({ type: AUTH_ACTION.OPEN_MODAL })}
                                         style={
-                                            !cell.isParked
+                                            cell.isParked
                                                 ? {
-                                                      backgroundColor: 'none',
-                                                  }
-                                                : {
                                                       display: 'block',
                                                       backgroundColor: 'var(--parked-color)',
                                                       cursor: 'default',
                                                   }
+                                                : {}
                                         }
                                     >
                                         <span>
