@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,13 +11,20 @@ import 'tippy.js/dist/tippy.css';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 import { signIn, signUp } from '~/services/authService';
-import { AuthContext } from '~/context/AuthContextProvider';
+import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
+import { parseJwt } from '~/utils/jwt';
+import { LS } from '~/utils';
 
 const cx = classNames.bind(styles);
 
-function Header () {
+function Header() {
     //To be Better, handle this logic from other component, not UI like Header
-    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
+    const [authState, dispatch] = useContext(AuthContext);
+    const {
+        isLoggedIn,
+        user: { username },
+        openAuthModal,
+    } = authState;
     const [errorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
 
@@ -72,15 +79,13 @@ function Header () {
     };
 
     //Modal
-    const [isOpen, setIsOpen] = useState(false);
-
-    function openModal () {
-        setIsOpen(true);
+    function openModal() {
+        dispatch({ type: AUTH_ACTION.OPEN_MODAL });
         toggleTab(1);
     }
 
-    function closeModal () {
-        setIsOpen(false);
+    function closeModal() {
+        dispatch({ type: AUTH_ACTION.CLOSE_MODAL });
     }
 
     //UI Tabs
@@ -91,40 +96,69 @@ function Header () {
         setToggleState(index);
     };
 
-    const [username, setUsername] = useState('');
-
     //handle auth
-    function handleSignIn (e) {
+    useEffect(() => {
+        const authData = LS.getLocalStorage('auth');
+        if (!authData) return;
+        const { jwt, user } = authData;
+        const expiredTime = new Date(jwt.expired * 1000).getTime();
+        const currentTime = new Date().getTime();
+        if (currentTime < expiredTime) {
+            dispatch({
+                type: AUTH_ACTION.LOGIN,
+                payload: {
+                    jwt,
+                    user,
+                },
+            });
+        } else {
+            dispatch({ type: AUTH_ACTION.LOGOUT });
+            LS.removeLocalStorage('auth');
+        }
+        return () => {};
+    }, []);
+
+    async function handleSignIn(e) {
         e.preventDefault();
         const [{ value: username }, { value: password }] = e.target;
         const data = { username, password };
-        signIn(data)
-            .then((response) => {
-                setIsLoggedIn(true);
-                setUsername(username);
-                closeModal();
-                navigate('/parking', { replace: true, state: 'test' });
-            })
-            .catch((err) => {
-                setErrorMsg(err);
+        try {
+            const response = await signIn(data);
+            const token = response.token;
+            const result = parseJwt(token);
+            const jwt = {
+                token: token,
+                expired: result.exp,
+            };
+            const authData = { jwt, user: { username } };
+            dispatch({
+                type: AUTH_ACTION.LOGIN,
+                payload: authData,
             });
+            LS.setLocalStorage('auth', authData);
+            setErrorMsg('');
+            closeModal();
+            navigate('/parking', { replace: true, state: 'test' });
+        } catch (err) {
+            setErrorMsg(err);
+        }
     }
 
-    function handleSignUp (e) {
+    async function handleSignUp(e) {
         e.preventDefault();
         const [{ value: username }, { value: password }, { value: ConfirmPassword }] = e.target;
         const data = { username, password, ConfirmPassword };
-        signUp(data)
-            .then(() => {
-                toggleTab(1);
-            })
-            .catch((err) => {
-                setErrorMsg(err);
-            });
+        try {
+            await signUp(data);
+            toggleTab(1);
+        } catch (err) {
+            setErrorMsg(err);
+        }
     }
 
-    function handleLogout () {
-        setIsLoggedIn(false);
+    function handleLogout() {
+        dispatch({ type: AUTH_ACTION.LOGOUT });
+        LS.removeLocalStorage('auth');
         navigate('/');
     }
 
@@ -179,12 +213,18 @@ function Header () {
             {/* Modal */}
 
             <div className={cx('modal')}>
-                {isOpen && (
+                {openAuthModal && (
                     <Button className={cx('close-btn')} onClick={closeModal}>
                         <FontAwesomeIcon icon={faXmark} className={cx('close-btn-content')} />
                     </Button>
                 )}
-                <Modal ariaHideApp={false} isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+                <Modal
+                    ariaHideApp={false}
+                    isOpen={openAuthModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    onAfterClose={() => setErrorMsg('')}
+                >
                     {/* UI Tabs */}
                     <div className={cx('tab-title')}>
                         <Button
