@@ -17,7 +17,7 @@ import { LS } from '~/utils';
 
 const cx = classNames.bind(styles);
 
-function Header() {
+function Header () {
     //To be Better, handle this logic from other component, not UI like Header
     const [authState, dispatch] = useContext(AuthContext);
     const {
@@ -33,6 +33,16 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View Profile',
+            to: '/',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: 'My Slot',
+            to: '/',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: 'Change Password',
             to: '/',
         },
         {
@@ -79,12 +89,12 @@ function Header() {
     };
 
     //Modal
-    function openModal() {
+    function openModal () {
         dispatch({ type: AUTH_ACTION.OPEN_MODAL });
         toggleTab(1);
     }
 
-    function closeModal() {
+    function closeModal () {
         dispatch({ type: AUTH_ACTION.CLOSE_MODAL });
     }
 
@@ -118,7 +128,7 @@ function Header() {
         return () => {};
     }, []);
 
-    async function handleSignIn(e) {
+    async function handleSignIn (e) {
         e.preventDefault();
         const [{ value: username }, { value: password }] = e.target;
         const data = { username, password };
@@ -144,7 +154,7 @@ function Header() {
         }
     }
 
-    async function handleSignUp(e) {
+    async function handleSignUp (e) {
         e.preventDefault();
         const [{ value: username }, { value: password }, { value: ConfirmPassword }] = e.target;
         const data = { username, password, ConfirmPassword };
@@ -156,7 +166,7 @@ function Header() {
         }
     }
 
-    function handleLogout() {
+    function handleLogout () {
         dispatch({ type: AUTH_ACTION.LOGOUT });
         LS.removeLocalStorage('auth');
         navigate('/');
