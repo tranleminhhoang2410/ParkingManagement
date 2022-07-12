@@ -1,0 +1,76 @@
+.wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.enroll-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+
+    .form-info {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.parking-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 120px;
+
+    .parking-lot {
+        height: 30vh;
+        width: 10vw;
+        border: 1px solid var(--white-color);
+        border-bottom: none;
+    }
+
+    .parking-id {
+        margin-top: 16px;
+        font-size: 3rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+}
+
+.form-input {
+    margin-top: -64px;
+    .input-group {
+        display: flex;
+        align-items: center;
+        margin: 12px 0;
+
+        .input-label {
+            margin-right: 16px;
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--white-color);
+            width: 264px;
+        }
+
+        .input-text {
+            padding: 8px;
+            flex: 1;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-color);
+            border-radius: 4px;
+            border: 2px solid var(--primary-border-color);
+        }
+
+        .input-notext {
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--primary-color);
+        }
+    }
+}
+
+.regis-btn {
+    font-size: 2rem;
+    font-weight: 500;
+}

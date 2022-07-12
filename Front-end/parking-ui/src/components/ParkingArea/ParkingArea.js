@@ -1,116 +1,15 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ParkingArea.module.scss';
+
 import { useContext } from 'react';
 import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function ParkingArea({ area, type, lotRows = [] }) {
+function ParkingArea ({ area, type, lotRows = [] }) {
     const [authState, dispatch] = useContext(AuthContext);
     const { isLoggedIn } = authState;
-    // const lotRows = [
-    //     {
-    //         type: 'CAR',
-    //         area: 'A',
-    //         cells: [
-    //             {
-    //                 number: 1,
-    //                 isParked: true,
-    //             },
-    //             {
-    //                 number: 2,
-    //                 isParked: false,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         type: 'CAR',
-    //         area: 'A',
-    //         cells: [
-    //             {
-    //                 number: 3,
-    //                 isParked: false,
-    //             },
-    //             {
-    //                 number: 4,
-    //                 isParked: false,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         type: 'CAR',
-    //         area: 'A',
-    //         cells: [
-    //             {
-    //                 number: 5,
-    //                 isParked: true,
-    //             },
-    //             {
-    //                 number: 6,
-    //                 isParked: false,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         type: 'CAR',
-    //         area: 'A',
-    //         cells: [
-    //             {
-    //                 number: 7,
-    //                 isParked: true,
-    //             },
-    //             {
-    //                 number: 8,
-    //                 isParked: false,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         type: 'BUS',
-    //         area: 'D',
-    //         cells: [
-    //             {
-    //                 number: 1,
-    //                 isParked: true,
-    //             },
-    //             {
-    //                 number: 2,
-    //                 isParked: false,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         type: 'CAR',
-    //         area: 'A',
-    //         cells: [
-    //             {
-    //                 number: 1,
-    //                 isParked: true,
-    //             },
-    //             {
-    //                 number: 2,
-    //                 isParked: false,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         type: 'BUS',
-    //         area: 'D',
-    //         cells: [
-    //             {
-    //                 number: 1,
-    //                 isParked: true,
-    //             },
-    //             {
-    //                 number: 2,
-    //                 isParked: false,
-    //             },
-    //         ],
-    //     },
-    // ];
-
-    // console.log(lotRows);
 
     return (
         <div className={cx('wrapper')} style={type === 'CAR' ? { width: '8vw' } : { width: '10vw' }}>

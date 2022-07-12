@@ -4,9 +4,10 @@ import config from '~/config';
 import Home from '~/pages/Home';
 import Price from '~/pages/Price';
 import Parking from '~/pages/Parking';
-import ParkingDetail from '~/pages/ParkingDetail';
+import ParkingDetail from '~/pages/Parking/ParkingDetail';
 import Feedback from '~/pages/Feedback';
-import Forgot from '~/pages/Forgot';
+import Forgot from '~/pages/Security/Forgot';
+import ChangePassword from '~/pages/Security/ChangePassword/ChangePassword';
 
 const publicRoutes = [
     { path: config.routes.home, component: Home },
@@ -15,6 +16,7 @@ const publicRoutes = [
     { path: config.routes.parkingDetail, component: ParkingDetail },
     { path: config.routes.feedback, component: Feedback },
     { path: config.routes.forgot, component: Forgot },
+    { path: config.routes.changePassword, component: ChangePassword },
 ];
 
 const privateRoutes = [];

@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitterSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
-import { faXmark, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faUser, faRightFromBracket, faKey } from '@fortawesome/free-solid-svg-icons';
 import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
@@ -36,14 +36,9 @@ function Header () {
             to: '/',
         },
         {
-            icon: <FontAwesomeIcon icon={faUser} />,
-            title: 'My Slot',
-            to: '/',
-        },
-        {
-            icon: <FontAwesomeIcon icon={faUser} />,
+            icon: <FontAwesomeIcon icon={faKey} />,
             title: 'Change Password',
-            to: '/',
+            to: '/changePassword',
         },
         {
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
@@ -126,7 +121,7 @@ function Header () {
             LS.removeLocalStorage('auth');
         }
         return () => {};
-    }, []);
+    }, [dispatch]);
 
     async function handleSignIn (e) {
         e.preventDefault();
@@ -148,7 +143,7 @@ function Header () {
             LS.setLocalStorage('auth', authData);
             setErrorMsg('');
             closeModal();
-            navigate('/parking', { replace: true, state: 'test' });
+            navigate('/', { replace: true, state: 'test' });
         } catch (err) {
             setErrorMsg(err);
         }

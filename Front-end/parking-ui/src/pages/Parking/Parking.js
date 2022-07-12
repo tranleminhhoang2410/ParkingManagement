@@ -20,11 +20,20 @@ function Parking () {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('parking-area')}>
-                <ParkingArea lotRows={lotRows} area="E" type="TRUCK" className={cx('parking-area-item')} />
-                <ParkingArea lotRows={lotRows} area="D" type="BUS" className={cx('parking-area-item')} />
-                <ParkingArea lotRows={lotRows} area="C" type="CAR" className={cx('parking-area-item')} />
-                <ParkingArea lotRows={lotRows} area="B" type="CAR" className={cx('parking-area-item')} />
-                <ParkingArea lotRows={lotRows} area="A" type="CAR" className={cx('parking-area-item')} />
+                <div className={cx('truck-area')}>
+                    <ParkingArea lotRows={lotRows} area="E" type="TRUCK" className={cx('parking-area-item')} />
+                </div>
+                <div className={cx('bus-area')}>
+                    <ParkingArea lotRows={lotRows} area="D" type="BUS" className={cx('parking-area-item')} />
+                </div>
+                <div className={cx('car-area')}>
+                    <ParkingArea lotRows={lotRows} area="C" type="CAR" className={cx('parking-area-item')} />
+                    <ParkingArea lotRows={lotRows} area="B" type="CAR" className={cx('parking-area-item')} />
+                    <ParkingArea lotRows={lotRows} area="A" type="CAR" className={cx('parking-area-item')} />
+                </div>
+                <div className={cx('plant-area')}>
+                    <h1 className={cx('plant-text')}>plant</h1>
+                </div>
             </div>
         </div>
     );

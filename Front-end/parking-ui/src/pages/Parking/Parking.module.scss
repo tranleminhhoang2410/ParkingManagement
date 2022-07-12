@@ -1,10 +1,10 @@
-.wrapper{
+.wrapper {
     max-width: var(--default-layout-max-width);
     height: 100%;
     padding: 16px 0;
     margin: auto;
 
-    .parking-area{
+    .parking-area {
         display: flex;
         padding: 16px;
         height: 100%;
@@ -13,4 +13,28 @@
         position: relative;
     }
 
+    .car-area {
+        display: flex;
+        margin-left: 16px;
+    }
+
+    .bus-area,
+    .truck-area {
+        margin-left: 16px;
+    }
+
+    .plant-area {
+        display: flex;
+        height: 80%;
+        margin: auto 32px;
+        background-color: var(--parked-color);
+        border-radius: 8px;
+
+        .plant-text {
+            margin: auto;
+            color: var(--white-color);
+            text-transform: uppercase;
+            transform: rotate(90deg);
+        }
+    }
 }

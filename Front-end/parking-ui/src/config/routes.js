@@ -7,6 +7,7 @@ const routes = {
     parkingDetail: '/parking/:id',
     feedback: '/feedback',
     forgot: '/forgot',
+    changePassword: '/changePassword',
 };
 
 export default routes;
