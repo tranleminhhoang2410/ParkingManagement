@@ -1,4 +1,8 @@
+import classNames from 'classnames/bind';
+import styles from './ParkingDetail.module.scss';
 import { useParams } from 'react-router-dom';
+
+const cx = classNames.bind(styles);
 
 function ParkingDetail () {
     // const { id } = useParams;
@@ -16,7 +20,11 @@ function ParkingDetail () {
 
     // console.log(parkingSlot.area);
 
-    return <h1>Parking Detail of {parkingId}</h1>;
+    return (
+        <div className={cx('wrapper')}>
+            <h1>Parking Detail of {parkingId}</h1>
+        </div>
+    );
 }
 
 export default ParkingDetail;
