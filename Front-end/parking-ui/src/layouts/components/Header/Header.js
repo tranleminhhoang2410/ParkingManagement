@@ -302,7 +302,7 @@ function Header() {
                         </div>
                     </div>
                     {/* PLEASE CUSTOM CSS FOR THIS MESSAGE */}
-                    <div style={{ color: 'red' }}>{errorMsg}</div>
+                    <div style={{ color: 'red' }}>{errorMsg.toString()}</div>
                 </Modal>
             </div>
         </>
