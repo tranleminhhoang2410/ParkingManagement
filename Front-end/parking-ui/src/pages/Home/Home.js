@@ -6,9 +6,15 @@ import { faSquareParking, faMoneyCheckDollar, faCommentDots } from '@fortawesome
 
 import NavItems from '~/components/NavItem';
 
+import { useContext } from 'react';
+import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
+
 const cx = classNames.bind(styles);
 
 function Home () {
+    const [authState, dispatch] = useContext(AuthContext);
+    const { isLoggedIn } = authState;
+
     const menuItems = [
         {
             icon: faSquareParking,
@@ -24,9 +30,10 @@ function Home () {
         },
         {
             icon: faCommentDots,
-            title: 'Feedback',
-            description: 'Opinion about our services from many users',
-            to: '/feedback',
+            title: 'Vehicles',
+            description: 'Manage your vehicles in parking area',
+            to: isLoggedIn && '/vehicles',
+            onClick: () => !isLoggedIn && dispatch({ type: AUTH_ACTION.OPEN_MODAL }),
         },
     ];
     return (
@@ -39,7 +46,7 @@ function Home () {
             </div>
             <div className={cx('nav-item-list')}>
                 {menuItems.map((menuItem, index) => (
-                    <Link key={index} to={menuItem.to}>
+                    <Link key={index} to={menuItem.to} onClick={menuItem.onClick}>
                         <NavItems icon={menuItem.icon} title={menuItem.title} description={menuItem.description} />
                     </Link>
                 ))}

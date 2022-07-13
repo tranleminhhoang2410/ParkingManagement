@@ -13,7 +13,7 @@ import Menu from '~/components/Popper/Menu';
 import { signIn, signUp } from '~/services/authService';
 import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
 import { parseJwt } from '~/utils/jwt';
-import { LS } from '~/utils';
+import { LS } from '~/utils/localStorage';
 
 const cx = classNames.bind(styles);
 

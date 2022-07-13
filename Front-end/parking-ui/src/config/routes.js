@@ -5,7 +5,7 @@ const routes = {
     price: '/price',
     parking: '/parking',
     parkingDetail: '/parking/:id',
-    feedback: '/feedback',
+    vehicles: '/vehicles',
     forgot: '/forgot',
     changePassword: '/changePassword',
 };
