@@ -2,6 +2,9 @@ import { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Vehicles.module.scss';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCar, faBus, faTruck } from '@fortawesome/free-solid-svg-icons';
+
 import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
@@ -37,7 +40,51 @@ function Vehicles () {
             <div className={cx('tab-content')}>
                 {/* My Vehicles */}
                 <div className={toggleState === 1 ? cx('content', 'active-content') : cx('content')}>
-                    <h1>MY VEHICLE</h1>
+                    {/* Don't have vehicle */}
+                    {/* <div className={cx('no-vehicle')}>
+                        <h1 className={cx('no-vehicle-notification')}>You don't have any vehicle yet</h1>
+                    </div> */}
+                    {/* Have Vehicles */}
+                    <div className={cx('vehicle')}>
+                        <ul className={cx('vehicle-list')}>
+                            <li className={cx('vehicle-item')}>
+                                <div className={cx('vehicle-wrapper')}>
+                                    <div className={cx('vehicle-avatar')}>
+                                        <FontAwesomeIcon icon={faCar} />
+                                    </div>
+                                    <div className={cx('vehicle-info')}>
+                                        <span className={cx('vehicle-brand')}>Chervrolet</span>
+                                        <span className={cx('vehicle-name')}>Spark</span>
+                                        <span className={cx('vehicle-registrationPlate')}>43A-22222</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className={cx('vehicle-item')}>
+                                <div className={cx('vehicle-wrapper')}>
+                                    <div className={cx('vehicle-avatar')}>
+                                        <FontAwesomeIcon icon={faBus} />
+                                    </div>
+                                    <div className={cx('vehicle-info')}>
+                                        <span className={cx('vehicle-brand')}>Chervrolet</span>
+                                        <span className={cx('vehicle-name')}>Spark</span>
+                                        <span className={cx('vehicle-registrationPlate')}>43A-22222</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className={cx('vehicle-item')}>
+                                <div className={cx('vehicle-wrapper')}>
+                                    <div className={cx('vehicle-avatar')}>
+                                        <FontAwesomeIcon icon={faTruck} />
+                                    </div>
+                                    <div className={cx('vehicle-info')}>
+                                        <span className={cx('vehicle-brand')}>Chervrolet</span>
+                                        <span className={cx('vehicle-name')}>Spark</span>
+                                        <span className={cx('vehicle-registrationPlate')}>43A-22222</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 {/* ENROLL VEHICLE Form */}
                 <div className={toggleState === 2 ? cx('content', 'active-content') : cx('content')}>

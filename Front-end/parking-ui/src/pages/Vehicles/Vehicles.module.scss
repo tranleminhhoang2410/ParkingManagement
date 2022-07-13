@@ -72,3 +72,48 @@
     font-size: 2rem;
     font-weight: 500;
 }
+
+//Vehicle
+.no-vehicle-notification {
+    text-align: center;
+    color: var(--white-color);
+    font-weight: 500;
+}
+
+.vehicle {
+    margin-top: 16px;
+}
+
+.vehicle-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -4px;
+    margin-right: -4px;
+
+    .vehicle-item {
+        list-style-type: none;
+        flex: 0 0 25%;
+        max-width: 25%;
+        padding-left: 4px;
+        padding-right: 4px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+
+        .vehicle-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: var(--white-color);
+            border-radius: 4px;
+            padding: 4px 8px;
+        }
+
+        .vehicle-avatar {
+            padding: 16px;
+        }
+
+        .vehicle-info {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

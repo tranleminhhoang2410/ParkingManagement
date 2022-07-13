@@ -28,6 +28,8 @@ function Header () {
     const [errorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
 
+    //validate form
+
     //User menu
     const userMenu = [
         {
@@ -254,6 +256,7 @@ function Header () {
                                         Username
                                     </label>
                                     <input type="text" className={cx('input-text')} />
+                                    <p className={cx('error-message')}>{errorMsg}</p>
                                 </div>
                                 <div className={cx('input-group')}>
                                     <label htmlFor="password" className={cx('input-label')}>
@@ -286,6 +289,7 @@ function Header () {
                                     <label htmlFor="username" className={cx('input-label')}>
                                         Username
                                     </label>
+                                    <input type="password" className={cx('input-text')} />
                                     <input type="text" className={cx('input-text')} />
                                 </div>
                                 <div className={cx('input-group')}>
