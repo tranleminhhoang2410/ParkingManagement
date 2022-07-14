@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Service;
+using System.Security.Claims;
 
 namespace ParkingManagement.Controllers
 {
