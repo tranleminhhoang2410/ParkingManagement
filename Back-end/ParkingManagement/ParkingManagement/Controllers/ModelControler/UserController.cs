@@ -10,10 +10,12 @@ namespace ParkingManagement.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             this.userService = userService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet("Get/Id/{Id}")]
@@ -21,6 +23,14 @@ namespace ParkingManagement.Controllers
         {
             UserDTO user = await userService.GetUserById(Id);
             if (user == null) return BadRequest("not found");
+            return Ok(user);
+        }
+
+        [HttpGet("GetLoggedUser")]
+        public async Task<ActionResult<UserDTO>> GetLoggedUser()
+        {
+            int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            UserDTO user = await userService.GetUserById(userid);
             return Ok(user);
         }
 
