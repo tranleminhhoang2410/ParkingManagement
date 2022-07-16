@@ -1,8 +1,17 @@
 import axios from 'axios';
+import { LS } from '~/utils';
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
     timeout: 300000,
+});
+
+instance.interceptors.request.use((config) => {
+    if (LS.getLocalStorage('auth')) {
+        let token = LS.getLocalStorage('auth').jwt;
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 });
 
 instance.interceptors.response.use(
