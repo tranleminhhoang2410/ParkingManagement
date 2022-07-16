@@ -8,7 +8,7 @@ import AuthContextProvider from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function DefaultLayout({ children }) {
+function DefaultLayout ({ children }) {
     return (
         <AuthContextProvider>
             <div className={cx('wrapper')}>

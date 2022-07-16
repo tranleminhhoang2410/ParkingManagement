@@ -14,6 +14,7 @@ import { signIn, signUp } from '~/services/authService';
 import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
 import { parseJwt } from '~/utils/jwt';
 import { LS } from '~/utils/localStorage';
+import { getLoggedUser } from '~/services/userService';
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +23,7 @@ function Header () {
     const [authState, dispatch] = useContext(AuthContext);
     const {
         isLoggedIn,
-        user: { username },
+        user: { name: username },
         openAuthModal,
     } = authState;
     const [errorMsg, setErrorMsg] = useState('');
@@ -132,12 +133,17 @@ function Header () {
         try {
             const response = await signIn(data);
             const token = response.token;
+            if (!token) return;
+
             const result = parseJwt(token);
             const jwt = {
                 token: token,
                 expired: result.exp,
             };
-            const authData = { jwt, user: { username } };
+            const authData = { jwt, user: {} };
+            LS.setLocalStorage('auth', authData);
+            const user = await getLoggedUser();
+            authData.user = user;
             dispatch({
                 type: AUTH_ACTION.LOGIN,
                 payload: authData,
@@ -145,7 +151,6 @@ function Header () {
             LS.setLocalStorage('auth', authData);
             setErrorMsg('');
             closeModal();
-            navigate('/', { replace: true, state: 'test' });
         } catch (err) {
             setErrorMsg(err);
         }
@@ -289,7 +294,6 @@ function Header () {
                                     <label htmlFor="username" className={cx('input-label')}>
                                         Username
                                     </label>
-                                    <input type="password" className={cx('input-text')} />
                                     <input type="text" className={cx('input-text')} />
                                 </div>
                                 <div className={cx('input-group')}>

@@ -8,7 +8,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
     if (LS.getLocalStorage('auth')) {
-        let token = LS.getLocalStorage('auth').jwt;
+        let token = LS.getLocalStorage('auth').jwt.token;
         config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
