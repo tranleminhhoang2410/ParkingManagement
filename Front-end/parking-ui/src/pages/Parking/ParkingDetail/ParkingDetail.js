@@ -3,9 +3,10 @@ import classNames from 'classnames/bind';
 import styles from './ParkingDetail.module.scss';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
-import Vehicles from '~/pages/Vehicles';
 
 import { getSlotById } from '~/services/slotService';
 import { AuthContext } from '~/context/AuthContextProvider';
@@ -48,6 +49,9 @@ function ParkingDetail() {
 
     return (
         <div className={cx('wrapper')}>
+            <Button leftIcon={<FontAwesomeIcon icon={faArrowLeft} />} className={cx('back-btn')} to="/parking">
+                Back
+            </Button>
             <form action="" id="enroll-form" className={cx('enroll-form')}>
                 <div className={cx('form-info')}>
                     <div className={cx('parking-area')}>
@@ -69,8 +73,21 @@ function ParkingDetail() {
                                 </select>
                             ) : (
                                 <>
-                                    <h1>Do not have any {parkingSlot.vehicleTypeName}</h1>
-                                    <Button onClick={moveToEnrollVehicleForm}>Enroll here</Button>
+                                    <h1 style={{ fontSize: '2rem', color: 'red', marginRight: '4px' }}>
+                                        You don't have any {parkingSlot.vehicleTypeName} yet !
+                                    </h1>
+                                    <Button
+                                        style={{
+                                            padding: '0',
+                                            backgroundColor: 'transparent',
+                                            marginLeft: '16px',
+                                            textDecoration: 'underline',
+                                            color: '#00008B',
+                                        }}
+                                        onClick={moveToEnrollVehicleForm}
+                                    >
+                                        Enroll here
+                                    </Button>
                                 </>
                             )}
                         </div>
