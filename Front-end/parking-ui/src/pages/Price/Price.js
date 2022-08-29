@@ -41,11 +41,11 @@ function Price() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        const fetchVehicalTypesData = async () => {
+        const fetchVehicleTypesData = async () => {
             setData(await getAllVehicleTypesApi());
         };
 
-        fetchVehicalTypesData();
+        fetchVehicleTypesData();
     }, []);
 
     const columns = useMemo(

@@ -16,6 +16,7 @@ const setLocalStorage = (key, value) => {
         console.error(`[setLocalStorage]: ${error.message}`);
     }
 };
+
 const removeLocalStorage = (key) => {
     try {
         localStorage.removeItem(key);

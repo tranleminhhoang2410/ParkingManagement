@@ -5,13 +5,16 @@ import styles from './Vehicles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faBus, faTruck } from '@fortawesome/free-solid-svg-icons';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Button from '~/components/Button';
 import { enrollVehicle, getVehicleByUserId } from './../../services/vehicleService';
 import { AuthContext } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function Vehicles () {
+function Vehicles() {
     //UI Tabs
 
     const [toggleState, setToggleState] = useState(1);
@@ -46,12 +49,14 @@ function Vehicles () {
         const vehicles = await getVehicleByUserId(authState.user.id);
         setVehicles(vehicles);
         setToggleState(1);
+        notifyRegisterSuccess();
     };
 
     useEffect(async () => {
         const vehicles = await getVehicleByUserId(authState.user.id);
         setVehicles(vehicles);
     }, []);
+
     const getIconOfVehicle = (id) => {
         console.log(id);
         switch (id) {
@@ -65,6 +70,19 @@ function Vehicles () {
                 return;
         }
     };
+
+    const notifyRegisterSuccess = () => {
+        toast.success('Enroll a vehicle successfully!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    };
+
     return (
         <div className={cx('wrapper')}>
             {/* UI Tabs */}
@@ -92,25 +110,30 @@ function Vehicles () {
                         <h1 className={cx('no-vehicle-notification')}>You don't have any vehicle yet</h1>
                     </div> */}
                     {/* Have Vehicles */}
-                    <div className={cx('vehicle')}>
-                        <ul className={cx('vehicle-list')}>
-                            {vehicles.map((vehicle) => (
-                                <li key={vehicle.id} className={cx('vehicle-item')}>
-                                    <div className={cx('vehicle-wrapper')}>
-                                        <div className={cx('vehicle-avatar')}>
-                                            <FontAwesomeIcon icon={getIconOfVehicle(vehicle.vehicleType.id)} />
+                    {vehicles && vehicles.length > 0 ? (
+                        <div className={cx('vehicle')}>
+                            <ul className={cx('vehicle-list')}>
+                                {vehicles.map((vehicle) => (
+                                    <li key={vehicle.id} className={cx('vehicle-item')}>
+                                        <div className={cx('vehicle-wrapper')}>
+                                            <div className={cx('vehicle-avatar')}>
+                                                <FontAwesomeIcon icon={getIconOfVehicle(vehicle.vehicleType.id)} />
+                                            </div>
+                                            <div className={cx('vehicle-info')}>
+                                                <span className={cx('vehicle-brand')}>{vehicle.vehicleBrand}</span>
+                                                <span className={cx('vehicle-name')}>{vehicle.vehicleName}</span>
+                                                <span className={cx('vehicle-registrationPlate')}>{vehicle.id}</span>
+                                            </div>
                                         </div>
-                                        <div className={cx('vehicle-info')}>
-                                            <span className={cx('vehicle-brand')}>{vehicle.vehicleBrand}</span>
-                                            <span className={cx('vehicle-name')}>{vehicle.vehicleName}</span>
-                                            <span className={cx('vehicle-registrationPlate')}>{vehicle.id}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))}
-                            ;
-                        </ul>
-                    </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <div className={cx('no-vehicle')}>
+                            <h1 className={cx('no-vehicle-notification')}>You don't have any vehicle yet</h1>
+                        </div>
+                    )}
                 </div>
                 {/* ENROLL VEHICLE Form */}
                 <div className={toggleState === 2 ? cx('content', 'active-content') : cx('content')}>
@@ -137,7 +160,7 @@ function Vehicles () {
                             <label htmlFor="type" className={cx('input-label')}>
                                 Vehicle's Type
                             </label>
-                            <select name="" id="">
+                            <select name="" id="" className={cx('input-text')}>
                                 <option value="1">Car</option>
                                 <option value="2">Bus</option>
                                 <option value="3">Truck</option>
@@ -149,6 +172,7 @@ function Vehicles () {
                     </form>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }
