@@ -9,15 +9,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Button from '~/components/Button';
-import { enrollVehicle, getVehicleByUserId } from './../../services/vehicleService';
+import { enrollVehicle, getVehicleByUserId } from '~/services/vehicleService';
 import { AuthContext } from '~/context/AuthContextProvider';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function Vehicles() {
+function Vehicles({ tab = 1 }) {
     //UI Tabs
 
-    const [toggleState, setToggleState] = useState(1);
+    const [toggleState, setToggleState] = useState(tab);
     const toggleTab = (index) => {
         setToggleState(index);
     };
@@ -32,13 +33,7 @@ function Vehicles() {
         const name = event.target[1].value;
         const brand = event.target[2].value;
         const typeId = event.target[3].value;
-        // const type = event.target[3].value;
-        // console.log({
-        //     plate,
-        //     name,
-        //     brand,
-        //     type,
-        // });
+
         await enrollVehicle({
             userID: authState.user.id,
             vehicleId: plate,
@@ -58,7 +53,6 @@ function Vehicles() {
     }, []);
 
     const getIconOfVehicle = (id) => {
-        console.log(id);
         switch (id) {
             case 1:
                 return faCar;

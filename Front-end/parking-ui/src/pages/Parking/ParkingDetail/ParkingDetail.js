@@ -1,30 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ParkingDetail.module.scss';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
+import Vehicles from '~/pages/Vehicles';
 
 import { getSlotById } from '~/services/slotService';
+import { AuthContext } from '~/context/AuthContextProvider';
+import { getVehicleByUserId } from '~/services/vehicleService';
 
 const cx = classNames.bind(styles);
 
-function ParkingDetail () {
+function ParkingDetail() {
     // const { id } = useParams;
     const parkingId = useParams().id;
     const [parkingSlot, setParkingSlot] = useState([]);
+    const [vehicleId, setVehicleId] = useState([]);
+    const [authState] = useContext(AuthContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSlotDetail = async () => {
             setParkingSlot(await getSlotById(parkingId));
         };
 
+        const fetchVehicleByUserId = async () => {
+            setVehicleId(await getVehicleByUserId(authState.user.id));
+        };
+
         fetchSlotDetail();
+        fetchVehicleByUserId();
     }, [parkingId]);
+
+    //Filter vehicle by Vehicle Type Id of Slot
+    const vehiclesBySlot = vehicleId.filter((vehicle) => vehicle.vehicleTypeId === parkingSlot.vehicleTypeId);
 
     //Get Current Date
     const current = new Date();
     const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+
+    //Move to enroll vehicle form
+    const moveToEnrollVehicleForm = () => {
+        navigate('/vehicles');
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -39,7 +59,20 @@ function ParkingDetail () {
                             <label htmlFor="vehiclePlate" className={cx('input-label')}>
                                 Vehicle Registration Plate
                             </label>
-                            <input type="text" className={cx('input-text')} />
+                            {vehiclesBySlot && vehiclesBySlot.length > 0 ? (
+                                <select type="text" className={cx('input-text')}>
+                                    {vehiclesBySlot.map((vehicle) => (
+                                        <option key={vehicle.id} value={vehicle.id}>
+                                            {vehicle.id}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <>
+                                    <h1>Do not have any {parkingSlot.vehicleTypeName}</h1>
+                                    <Button onClick={moveToEnrollVehicleForm}>Enroll here</Button>
+                                </>
+                            )}
                         </div>
                         <div className={cx('input-group')}>
                             <label htmlFor="vehicleType" className={cx('input-label')}>
