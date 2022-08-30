@@ -50,7 +50,7 @@ function ParkingDetail() {
 
     //Move to enroll vehicle form
     const moveToEnrollVehicleForm = () => {
-        navigate('/vehicles');
+        navigate('/vehicles', { state: { isEnroll: true } });
     };
 
     //Check in

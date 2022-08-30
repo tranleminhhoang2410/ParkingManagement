@@ -12,10 +12,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import Button from '~/components/Button';
 import { enrollVehicle, getVehicleByUserId } from '~/services/vehicleService';
 import { AuthContext } from '~/context/AuthContextProvider';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Vehicles() {
+    const location = useLocation();
+    const isEnroll = location.state?.isEnroll;
     const [modalIsOpen, setIsOpen] = useState(false);
 
     //Custom Style for Modal
@@ -50,7 +53,7 @@ function Vehicles() {
 
     //UI Tabs
 
-    const [toggleState, setToggleState] = useState(1);
+    const [toggleState, setToggleState] = useState(isEnroll ? 2 : 1);
     const toggleTab = (index) => {
         setToggleState(index);
     };
@@ -83,10 +86,13 @@ function Vehicles() {
         notifyEnrollSuccess();
     };
 
-    useEffect(async () => {
-        const vehicles = await getVehicleByUserId(authState.user.id);
-        setVehicles(vehicles);
-    }, []);
+    useEffect(() => {
+        const getVehicle = async () => {
+            const vehicles = await getVehicleByUserId(authState.user.id);
+            setVehicles(vehicles);
+        };
+        getVehicle();
+    }, [authState.user.id]);
 
     const getIconOfVehicle = (id) => {
         switch (id) {
