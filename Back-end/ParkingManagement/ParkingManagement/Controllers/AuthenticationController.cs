@@ -125,12 +125,57 @@ namespace ParkingManagement.Controllers
         /// <param name="password"></param>
         /// <param name="newPassword"></param>
         /// <returns></returns>
-        [AuthorizationFilter]
-        [Authorize]
-        [HttpPost("ChangePassword")]
-        public IActionResult ChangePassword(string user, string password, string newPassword)
+        //[AuthorizationFilter]
+        //[Authorize]
+        [HttpPut("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(string username, string oldPassword, string newPassword, string confirmNewPassword)
         {
-            return Ok();
+            try
+            {
+                if (newPassword.Equals(oldPassword)) throw new Exception("New Password must not match with Old Password! Try again.");
+                if (!confirmNewPassword.Equals(newPassword)) throw new Exception("Confirm New Password must match with New Password! Try again.");
+
+                AccountDTO user = await accountService.GetAccountByUser(username);
+                if (user != null)
+                {
+                    if (user.Password.Equals(AuthenticationHelper.PasswordMD5Hash(oldPassword)))
+                    {
+                        //int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                        //await tokenManager.DeleteToken(userid);
+                        //SetTokenCookie(string.Empty, DateTime.Now.AddDays(-1));
+
+                        AccountDTO accountDTO = new AccountDTO
+                        {
+                            Id = user.Id,
+                            Username = user.Username,
+                            Password = AuthenticationHelper.PasswordMD5Hash(newPassword),
+                        };
+
+                        await accountService.UpdateAccount(accountDTO);
+                    }
+                    else
+                    {
+                        throw new Exception("Username or Password is not correct! Try again.");
+                    }
+
+                }
+                else
+                {
+                    throw new Exception("Username or Password is not correct! Try again.");
+                }
+
+                return Ok(new
+                {
+                    Success = "Change password sucessful"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Fail = ex.Message
+                });
+            }
         }
 
         /// <summary>

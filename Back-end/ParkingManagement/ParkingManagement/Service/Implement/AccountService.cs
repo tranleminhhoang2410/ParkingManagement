@@ -55,9 +55,15 @@ namespace ParkingManagement.Service.Implement
             return accountDTO;
         }
 
-        public Task<string> UpdateAccount(AccountDTO accountDTO)
+        public async Task<bool> UpdateAccount(AccountDTO accountDTO)
         {
-            throw new NotImplementedException();
+            Account? _account = await _db.Accounts.FirstOrDefaultAsync(c => c.Id.Equals(accountDTO.Id));
+            if (_account == null) return false;
+
+            _account.Password = accountDTO.Password;
+
+            await _db.SaveChangesAsync();
+            return true;
         }
     }
 }
