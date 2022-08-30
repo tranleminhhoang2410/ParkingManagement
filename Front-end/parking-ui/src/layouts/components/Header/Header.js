@@ -36,7 +36,7 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View Profile',
-            to: '/',
+            to: '/profile',
         },
         {
             icon: <FontAwesomeIcon icon={faKey} />,
