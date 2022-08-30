@@ -2,8 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Vehicles.module.scss';
 
+import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faBus, faTruck } from '@fortawesome/free-solid-svg-icons';
+import { faCar, faBus, faTruck, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,10 +15,42 @@ import { AuthContext } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function Vehicles({ tab = 1 }) {
+function Vehicles() {
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    //Custom Style for Modal
+    const customStyles = {
+        overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        },
+
+        content: {
+            width: '40%',
+            maxWidth: '100%',
+            top: '40%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'none',
+            border: 'none',
+        },
+    };
+
+    //Confirm Modal
+    function openModal(e) {
+        e.preventDefault();
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
     //UI Tabs
 
-    const [toggleState, setToggleState] = useState(tab);
+    const [toggleState, setToggleState] = useState(1);
     const toggleTab = (index) => {
         setToggleState(index);
     };
@@ -26,25 +59,28 @@ function Vehicles({ tab = 1 }) {
     const [authState] = useContext(AuthContext);
     const [vehicles, setVehicles] = useState([]);
 
+    //Get form input
+    const [vehicleId, setVehicleId] = useState('');
+    const [vehicleName, setVehicleName] = useState('');
+    const [vehicleBrand, setVehicleBrand] = useState('');
+    const [vehicleTypeId, setVehicleTypeId] = useState(1);
+
     //Enroll Vehicles
     const handleEnrollVehicle = async (event) => {
         event.preventDefault();
-        const plate = event.target[0].value;
-        const name = event.target[1].value;
-        const brand = event.target[2].value;
-        const typeId = event.target[3].value;
 
         await enrollVehicle({
             userID: authState.user.id,
-            vehicleId: plate,
-            name: name,
-            brand: brand,
-            typeId: typeId,
+            vehicleId: vehicleId,
+            name: vehicleName,
+            brand: vehicleBrand,
+            typeId: vehicleTypeId,
         });
         const vehicles = await getVehicleByUserId(authState.user.id);
         setVehicles(vehicles);
+        closeModal();
         setToggleState(1);
-        notifyRegisterSuccess();
+        notifyEnrollSuccess();
     };
 
     useEffect(async () => {
@@ -65,13 +101,13 @@ function Vehicles({ tab = 1 }) {
         }
     };
 
-    const notifyRegisterSuccess = () => {
+    const notifyEnrollSuccess = () => {
         toast.success('Enroll a vehicle successfully!', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
         });
@@ -82,7 +118,6 @@ function Vehicles({ tab = 1 }) {
             {/* UI Tabs */}
             <div className={cx('tab-title')}>
                 <Button
-                    to="/vehicles"
                     className={toggleState === 1 ? cx('tabs', 'active-tabs') : cx('tabs')}
                     onClick={() => toggleTab(1)}
                     primary
@@ -90,7 +125,6 @@ function Vehicles({ tab = 1 }) {
                     My Vehicles
                 </Button>
                 <Button
-                    to="/vehicles/enroll"
                     className={toggleState === 2 ? cx('tabs', 'active-tabs') : cx('tabs')}
                     onClick={() => toggleTab(2)}
                     primary
@@ -130,39 +164,112 @@ function Vehicles({ tab = 1 }) {
                 </div>
                 {/* ENROLL VEHICLE Form */}
                 <div className={toggleState === 2 ? cx('content', 'active-content') : cx('content')}>
-                    <form id="vehicle-enroll-form" className={cx('vehicle-enroll-form')} onSubmit={handleEnrollVehicle}>
+                    <form id="vehicle-enroll-form" className={cx('vehicle-enroll-form')}>
                         <div className={cx('input-group')}>
                             <label htmlFor="registrationPlate" className={cx('input-label')}>
                                 Vehicle's Registration Plate
                             </label>
-                            <input type="text" className={cx('input-text')} id="registrationPlate" />
+                            <input
+                                type="text"
+                                className={cx('input-text')}
+                                id="registrationPlate"
+                                value={vehicleId}
+                                onChange={(event) => setVehicleId(event.target.value)}
+                            />
                         </div>
                         <div className={cx('input-group')}>
                             <label htmlFor="name" className={cx('input-label')}>
                                 Vehicle's Name
                             </label>
-                            <input type="text" className={cx('input-text')} id="name" />
+                            <input
+                                type="text"
+                                className={cx('input-text')}
+                                id="name"
+                                value={vehicleName}
+                                onChange={(event) => setVehicleName(event.target.value)}
+                            />
                         </div>
                         <div className={cx('input-group')}>
                             <label htmlFor="brand" className={cx('input-label')}>
                                 Vehicle's Brand
                             </label>
-                            <input type="text" className={cx('input-text')} id="brand" />
+                            <input
+                                type="text"
+                                className={cx('input-text')}
+                                id="brand"
+                                value={vehicleBrand}
+                                onChange={(event) => setVehicleBrand(event.target.value)}
+                            />
                         </div>
                         <div className={cx('input-group')}>
                             <label htmlFor="type" className={cx('input-label')}>
                                 Vehicle's Type
                             </label>
-                            <select name="" id="" className={cx('input-text')}>
+                            <select
+                                name=""
+                                id=""
+                                className={cx('input-text')}
+                                onChange={(e) => setVehicleTypeId(e.target.value)}
+                            >
+                                <option value="" selected disabled hidden>
+                                    -- Select type of vehicle --
+                                </option>
                                 <option value="1">Car</option>
                                 <option value="2">Bus</option>
                                 <option value="3">Truck</option>
                             </select>
                         </div>
-                        <Button className={cx('action-btn')} primary>
+                        <Button className={cx('action-btn')} primary onClick={openModal}>
                             Enroll a vehicle
                         </Button>
                     </form>
+                </div>
+                {/* Modal */}
+                <div className={cx('modal')}>
+                    <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+                        {/* Confirm Form */}
+                        <div>
+                            <form
+                                style={{
+                                    padding: '16px',
+                                    borderRadius: '8px',
+                                    border: '2px solid var(--primary-border-color)',
+                                    backgroundColor: '#ffffe0',
+                                }}
+                                id="confirm-form"
+                                className={cx('confirm-form')}
+                                onSubmit={handleEnrollVehicle}
+                            >
+                                <h1 style={{ fontSize: '3rem', fontWeight: '500', color: 'var(--primary-color)' }}>
+                                    Do you want to enroll this vehicle ?
+                                </h1>
+                                <div
+                                    style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}
+                                    className="action-btn"
+                                >
+                                    <Button
+                                        style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'green' }}
+                                        className={cx('confirm-btn')}
+                                        primary
+                                        leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                                        type="submit"
+                                    >
+                                        confirm
+                                    </Button>
+                                    <Button
+                                        style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'red' }}
+                                        className={cx('cancel-btn')}
+                                        primary
+                                        leftIcon={<FontAwesomeIcon icon={faX} />}
+                                        type="button"
+                                        onClick={closeModal}
+                                    >
+                                        cancel
+                                    </Button>
+                                </div>
+                            </form>
+                        </div>
+                    </Modal>
                 </div>
             </div>
             <ToastContainer />

@@ -1,10 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ParkingDetail.module.scss';
+
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
+import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
 
@@ -18,11 +21,11 @@ import { checkIn, getVehicleByUserId } from '~/services/vehicleService';
 const cx = classNames.bind(styles);
 
 function ParkingDetail() {
-    // const { id } = useParams;
     const parkingId = useParams().id;
     const [parkingSlot, setParkingSlot] = useState([]);
-    const [vehicleId, setVehicleId] = useState([]);
+    const [vehicleByUserId, setVehicleByUserId] = useState([]);
     const [authState] = useContext(AuthContext);
+    const [vehiclePlate, setVehiclePlate] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,7 +34,7 @@ function ParkingDetail() {
         };
 
         const fetchVehicleByUserId = async () => {
-            setVehicleId(await getVehicleByUserId(authState.user.id));
+            setVehicleByUserId(await getVehicleByUserId(authState.user.id));
         };
 
         fetchSlotDetail();
@@ -39,7 +42,7 @@ function ParkingDetail() {
     }, [parkingId]);
 
     //Filter vehicle by Vehicle Type Id of Slot
-    const vehiclesBySlot = vehicleId.filter((vehicle) => vehicle.vehicleTypeId === parkingSlot.vehicleTypeId);
+    const vehiclesBySlot = vehicleByUserId.filter((vehicle) => vehicle.vehicleTypeId === parkingSlot.vehicleTypeId);
 
     //Get Current Date
     const current = new Date();
@@ -53,7 +56,7 @@ function ParkingDetail() {
     //Check in
     const handleCheckIn = async (event) => {
         event.preventDefault();
-        const vehicleId = event.target[0].value;
+        const vehicleId = vehiclePlate;
         const slotId = parkingId;
 
         await checkIn({
@@ -76,12 +79,44 @@ function ParkingDetail() {
         });
     };
 
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    //Custom Style for Modal
+    const customStyles = {
+        overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        },
+
+        content: {
+            width: '40%',
+            maxWidth: '100%',
+            top: '40%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'none',
+            border: 'none',
+        },
+    };
+
+    //Confirm Modal
+    function openModal(e) {
+        e.preventDefault();
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
     return (
         <div className={cx('wrapper')}>
             <Button leftIcon={<FontAwesomeIcon icon={faArrowLeft} />} className={cx('back-btn')} to="/parking">
                 Back
             </Button>
-            <form action="" id="enroll-form" className={cx('enroll-form')} onSubmit={handleCheckIn}>
+            <form action="" id="enroll-form" className={cx('enroll-form')} onSubmit={openModal}>
                 <div className={cx('form-info')}>
                     <div className={cx('parking-area')}>
                         <div className={cx('parking-lot')}></div>
@@ -93,7 +128,10 @@ function ParkingDetail() {
                                 Vehicle Registration Plate
                             </label>
                             {vehiclesBySlot && vehiclesBySlot.length > 0 ? (
-                                <select type="text" className={cx('input-text')}>
+                                <select className={cx('input-text')} onChange={(e) => setVehiclePlate(e.target.value)}>
+                                    <option value="" selected disabled hidden>
+                                        -- Select a vehicle --
+                                    </option>
                                     {vehiclesBySlot.map((vehicle) => (
                                         <option key={vehicle.id} value={vehicle.id}>
                                             {vehicle.id}
@@ -113,7 +151,6 @@ function ParkingDetail() {
                                             textDecoration: 'underline',
                                             color: '#00008B',
                                         }}
-                                        to="/vehicles/enroll"
                                         onClick={moveToEnrollVehicleForm}
                                     >
                                         Enroll here
@@ -139,6 +176,50 @@ function ParkingDetail() {
                     CHECK IN
                 </Button>
             </form>
+            <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+                {/* Confirm Form */}
+                <div>
+                    <form
+                        style={{
+                            padding: '16px',
+                            borderRadius: '8px',
+                            border: '2px solid var(--primary-border-color)',
+                            backgroundColor: '#ffffe0',
+                        }}
+                        id="confirm-form"
+                        className={cx('confirm-form')}
+                        onSubmit={handleCheckIn}
+                    >
+                        <h1 style={{ fontSize: '3rem', fontWeight: '500', color: 'var(--primary-color)' }}>
+                            Do you want to check in this slot ?
+                        </h1>
+                        <div
+                            style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}
+                            className="action-btn"
+                        >
+                            <Button
+                                style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'green' }}
+                                className={cx('confirm-btn')}
+                                primary
+                                leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                                type="submit"
+                            >
+                                confirm
+                            </Button>
+                            <Button
+                                style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'red' }}
+                                className={cx('cancel-btn')}
+                                primary
+                                leftIcon={<FontAwesomeIcon icon={faX} />}
+                                type="button"
+                                onClick={closeModal}
+                            >
+                                cancel
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+            </Modal>
         </div>
     );
 }
