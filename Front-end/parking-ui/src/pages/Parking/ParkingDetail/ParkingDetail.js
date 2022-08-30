@@ -39,7 +39,7 @@ function ParkingDetail() {
 
         fetchSlotDetail();
         fetchVehicleByUserId();
-    }, [parkingId]);
+    }, [authState.user.id, parkingId]);
 
     //Filter vehicle by Vehicle Type Id of Slot
     const vehiclesBySlot = vehicleByUserId.filter((vehicle) => vehicle.vehicleTypeId === parkingSlot.vehicleTypeId);
@@ -128,8 +128,12 @@ function ParkingDetail() {
                                 Vehicle Registration Plate
                             </label>
                             {vehiclesBySlot && vehiclesBySlot.length > 0 ? (
-                                <select className={cx('input-text')} onChange={(e) => setVehiclePlate(e.target.value)}>
-                                    <option value="" selected disabled hidden>
+                                <select
+                                    className={cx('input-text')}
+                                    defaultValue={'DEFAULT'}
+                                    onChange={(e) => setVehiclePlate(e.target.value)}
+                                >
+                                    <option value="DEFAULT" selected disabled hidden>
                                         -- Select a vehicle --
                                     </option>
                                     {vehiclesBySlot.map((vehicle) => (

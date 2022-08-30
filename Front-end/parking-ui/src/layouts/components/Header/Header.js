@@ -18,7 +18,7 @@ import { getLoggedUser } from '~/services/userService';
 
 const cx = classNames.bind(styles);
 
-function Header () {
+function Header() {
     //To be Better, handle this logic from other component, not UI like Header
     const [authState, dispatch] = useContext(AuthContext);
     const {
@@ -87,12 +87,12 @@ function Header () {
     };
 
     //Modal
-    function openModal () {
+    function openModal() {
         dispatch({ type: AUTH_ACTION.OPEN_MODAL });
         toggleTab(1);
     }
 
-    function closeModal () {
+    function closeModal() {
         dispatch({ type: AUTH_ACTION.CLOSE_MODAL });
     }
 
@@ -126,7 +126,7 @@ function Header () {
         return () => {};
     }, [dispatch]);
 
-    async function handleSignIn (e) {
+    async function handleSignIn(e) {
         e.preventDefault();
         const [{ value: username }, { value: password }] = e.target;
         const data = { username, password };
@@ -156,10 +156,17 @@ function Header () {
         }
     }
 
-    async function handleSignUp (e) {
+    async function handleSignUp(e) {
         e.preventDefault();
-        const [{ value: username }, { value: password }, { value: ConfirmPassword }] = e.target;
-        const data = { username, password, ConfirmPassword };
+        const [
+            { value: username },
+            { value: name },
+            { value: email },
+            { value: phone },
+            { value: password },
+            { value: ConfirmPassword },
+        ] = e.target;
+        const data = { username, name, email, phone, password, ConfirmPassword };
         try {
             await signUp(data);
             toggleTab(1);
@@ -168,7 +175,7 @@ function Header () {
         }
     }
 
-    function handleLogout () {
+    function handleLogout() {
         dispatch({ type: AUTH_ACTION.LOGOUT });
         LS.removeLocalStorage('auth');
         navigate('/');
@@ -295,6 +302,24 @@ function Header () {
                                         Username
                                     </label>
                                     <input type="text" className={cx('input-text')} />
+                                </div>
+                                <div className={cx('input-group')}>
+                                    <label htmlFor="full-name" className={cx('input-label')}>
+                                        Full name
+                                    </label>
+                                    <input type="text" className={cx('input-text')} />
+                                </div>
+                                <div className={cx('input-group')}>
+                                    <label htmlFor="email" className={cx('input-label')}>
+                                        Email
+                                    </label>
+                                    <input type="email" className={cx('input-text')} />
+                                </div>
+                                <div className={cx('input-group')}>
+                                    <label htmlFor="username" className={cx('input-label')}>
+                                        Phone
+                                    </label>
+                                    <input type="tel" className={cx('input-text')} />
                                 </div>
                                 <div className={cx('input-group')}>
                                     <label htmlFor="password" className={cx('input-label')}>

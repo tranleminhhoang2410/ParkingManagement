@@ -216,8 +216,9 @@ function Vehicles() {
                                 id=""
                                 className={cx('input-text')}
                                 onChange={(e) => setVehicleTypeId(e.target.value)}
+                                defaultValue={'DEFAULT'}
                             >
-                                <option value="" selected disabled hidden>
+                                <option value="DEFAULT" selected disabled hidden>
                                     -- Select type of vehicle --
                                 </option>
                                 <option value="1">Car</option>
