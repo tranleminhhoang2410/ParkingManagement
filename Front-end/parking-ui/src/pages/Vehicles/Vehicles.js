@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Button from '~/components/Button';
 import { enrollVehicle, getVehicleByUserId } from '~/services/vehicleService';
 import { AuthContext } from '~/context/AuthContextProvider';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +25,7 @@ function Vehicles({ tab = 1 }) {
     //Get user Id
     const [authState] = useContext(AuthContext);
     const [vehicles, setVehicles] = useState([]);
+
     //Enroll Vehicles
     const handleEnrollVehicle = async (event) => {
         event.preventDefault();
@@ -82,6 +82,7 @@ function Vehicles({ tab = 1 }) {
             {/* UI Tabs */}
             <div className={cx('tab-title')}>
                 <Button
+                    to="/vehicles"
                     className={toggleState === 1 ? cx('tabs', 'active-tabs') : cx('tabs')}
                     onClick={() => toggleTab(1)}
                     primary
@@ -89,6 +90,7 @@ function Vehicles({ tab = 1 }) {
                     My Vehicles
                 </Button>
                 <Button
+                    to="/vehicles/enroll"
                     className={toggleState === 2 ? cx('tabs', 'active-tabs') : cx('tabs')}
                     onClick={() => toggleTab(2)}
                     primary
@@ -99,10 +101,6 @@ function Vehicles({ tab = 1 }) {
             <div className={cx('tab-content')}>
                 {/* My Vehicles */}
                 <div className={toggleState === 1 ? cx('content', 'active-content') : cx('content')}>
-                    {/* Don't have vehicle */}
-                    {/* <div className={cx('no-vehicle')}>
-                        <h1 className={cx('no-vehicle-notification')}>You don't have any vehicle yet</h1>
-                    </div> */}
                     {/* Have Vehicles */}
                     {vehicles && vehicles.length > 0 ? (
                         <div className={cx('vehicle')}>
@@ -124,6 +122,7 @@ function Vehicles({ tab = 1 }) {
                             </ul>
                         </div>
                     ) : (
+                        /* Don't have vehicle */
                         <div className={cx('no-vehicle')}>
                             <h1 className={cx('no-vehicle-notification')}>You don't have any vehicle yet</h1>
                         </div>

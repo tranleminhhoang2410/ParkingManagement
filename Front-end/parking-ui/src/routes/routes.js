@@ -15,6 +15,7 @@ const publicRoutes = [
     { path: config.routes.parking, component: Parking },
     { path: config.routes.parkingDetail, component: ParkingDetail },
     { path: config.routes.vehicles, component: Vehicles },
+    { path: config.routes.enrollVehicle, component: Vehicles },
     { path: config.routes.forgot, component: Forgot },
     { path: config.routes.changePassword, component: ChangePassword },
 ];

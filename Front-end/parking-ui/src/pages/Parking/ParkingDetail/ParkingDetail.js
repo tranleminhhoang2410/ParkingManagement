@@ -8,9 +8,12 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { getSlotById } from '~/services/slotService';
 import { AuthContext } from '~/context/AuthContextProvider';
-import { getVehicleByUserId } from '~/services/vehicleService';
+import { checkIn, getVehicleByUserId } from '~/services/vehicleService';
 
 const cx = classNames.bind(styles);
 
@@ -47,12 +50,38 @@ function ParkingDetail() {
         navigate('/vehicles');
     };
 
+    //Check in
+    const handleCheckIn = async (event) => {
+        event.preventDefault();
+        const vehicleId = event.target[0].value;
+        const slotId = parkingId;
+
+        await checkIn({
+            vehicleId: vehicleId,
+            slotId: slotId,
+        });
+        navigate('/parking');
+        notifyCheckInSuccess();
+    };
+
+    const notifyCheckInSuccess = () => {
+        toast.success('Check in successfully!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    };
+
     return (
         <div className={cx('wrapper')}>
             <Button leftIcon={<FontAwesomeIcon icon={faArrowLeft} />} className={cx('back-btn')} to="/parking">
                 Back
             </Button>
-            <form action="" id="enroll-form" className={cx('enroll-form')}>
+            <form action="" id="enroll-form" className={cx('enroll-form')} onSubmit={handleCheckIn}>
                 <div className={cx('form-info')}>
                     <div className={cx('parking-area')}>
                         <div className={cx('parking-lot')}></div>
@@ -84,6 +113,7 @@ function ParkingDetail() {
                                             textDecoration: 'underline',
                                             color: '#00008B',
                                         }}
+                                        to="/vehicles/enroll"
                                         onClick={moveToEnrollVehicleForm}
                                     >
                                         Enroll here

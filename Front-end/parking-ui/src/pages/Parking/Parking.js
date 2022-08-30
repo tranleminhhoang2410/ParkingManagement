@@ -4,12 +4,14 @@ import styles from './Parking.module.scss';
 import ParkingArea from '~/components/ParkingArea';
 import Note from '~/components/Note';
 
+import { ToastContainer } from 'react-toastify';
+
 import { useEffect, useState } from 'react';
 import { getAllSlotsApi } from '~/services/slotService';
 
 const cx = classNames.bind(styles);
 
-function Parking () {
+function Parking() {
     //notes
     const notes = [
         {
@@ -40,6 +42,7 @@ function Parking () {
         };
         fetchSlotsData();
     }, []);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('parking-area')}>
@@ -63,6 +66,7 @@ function Parking () {
                     return <Note key={index} title={note.title} value={note.value} subvalue={note.subvalue} />;
                 })}
             </div>
+            <ToastContainer />
         </div>
     );
 }

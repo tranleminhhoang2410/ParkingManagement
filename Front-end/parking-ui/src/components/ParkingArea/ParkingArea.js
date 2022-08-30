@@ -7,7 +7,7 @@ import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function ParkingArea ({ area, type, lotRows = [] }) {
+function ParkingArea({ area, type, lotRows = [] }) {
     const [authState, dispatch] = useContext(AuthContext);
     const { isLoggedIn } = authState;
 
@@ -34,6 +34,11 @@ function ParkingArea ({ area, type, lotRows = [] }) {
                             lotRow.cells.map((cell, index) => {
                                 const parking_id = lotRow.area + cell.number;
                                 const isRedirect = !cell.isParked && isLoggedIn;
+                                // const isParkedByUser = cell.isParked && isLoggedIn;
+
+                                // const handleColorParkedCell = () => {
+
+                                // }
                                 return (
                                     <Link
                                         key={index}
