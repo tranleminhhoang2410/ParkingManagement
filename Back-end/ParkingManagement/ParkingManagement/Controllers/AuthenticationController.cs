@@ -7,6 +7,8 @@ using ParkingManagement.Filter;
 using ParkingManagement.Model;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Service;
+using ParkingManagement.Utils;
+using ParkingManagement.Utils.Constant;
 using System.Security.Claims;
 
 namespace ParkingManagement.Controllers
@@ -58,13 +60,13 @@ namespace ParkingManagement.Controllers
                     }
                     else
                     {
-                        throw new Exception("Username or Password is not correct! Try again.");
+                        throw new Exception(Message.WRONG_PASSWORD);
                     }
 
                 }
                 else
                 {
-                    throw new Exception("Username or Password is not correct! Try again.");
+                    throw new Exception(Message.WRONG_USERNAME);
                 }
             }
             catch(Exception ex)
@@ -85,12 +87,20 @@ namespace ParkingManagement.Controllers
         /// <param name="ConfirmPassword"></param>
         /// <returns></returns>
         [HttpPost("SignUp")]
-        public async Task<IActionResult> SignUp(string username, string password, string ConfirmPassword)
+        public async Task<IActionResult> SignUp(
+            string username, 
+            string password, 
+            string ConfirmPassword,
+            string fullname,
+            string email,
+            string phone)
         {
             try
             {
-                if (!ConfirmPassword.Equals(password)) throw new Exception("RePassword must match with Password! Try again.");
-                if ((await accountService.GetAccountByUser(username)) != null) throw new Exception("Username existed! Try again");
+                if (!ConfirmPassword.Equals(password)) throw new Exception(Message.NOT_MATCH_CONFIRM_PASSWORD);
+                if ((await accountService.GetAccountByUser(username)) != null) throw new Exception(Message.EXISTED_USERNAME);
+                if (!Valid.email(email)) throw new Exception(Message.INVALID_EMAIL);
+                if (!Valid.phone(phone)) throw new Exception(Message.INVALID_PHONE);
 
                 AccountDTO accountDTO = new AccountDTO
                 {
@@ -99,7 +109,9 @@ namespace ParkingManagement.Controllers
                     Role = Role.User.ToString(),
                     User = new UserDTO
                     {
-                        Name = "User" + username
+                        Name = fullname,
+                        Email = email,
+                        Phone = phone
                     }
                 };
                 await accountService.AddAccount(accountDTO);
@@ -128,12 +140,16 @@ namespace ParkingManagement.Controllers
         //[AuthorizationFilter]
         //[Authorize]
         [HttpPut("ChangePassword")]
-        public async Task<IActionResult> ChangePassword(string username, string oldPassword, string newPassword, string confirmNewPassword)
+        public async Task<IActionResult> ChangePassword(
+            string username, 
+            string oldPassword, 
+            string newPassword, 
+            string confirmNewPassword)
         {
             try
             {
-                if (newPassword.Equals(oldPassword)) throw new Exception("New Password must not match with Old Password! Try again.");
-                if (!confirmNewPassword.Equals(newPassword)) throw new Exception("Confirm New Password must match with New Password! Try again.");
+                if (newPassword.Equals(oldPassword)) throw new Exception(Message.ERR_MATCH_OLDPASSWORD);
+                if (!confirmNewPassword.Equals(newPassword)) throw new Exception(Message.NOT_MATCH_CONFIRM_NEWPASSWORD);
 
                 AccountDTO user = await accountService.GetAccountByUser(username);
                 if (user != null)
@@ -155,13 +171,13 @@ namespace ParkingManagement.Controllers
                     }
                     else
                     {
-                        throw new Exception("Username or Password is not correct! Try again.");
+                        throw new Exception(Message.WRONG_PASSWORD);
                     }
 
                 }
                 else
                 {
-                    throw new Exception("Username or Password is not correct! Try again.");
+                    throw new Exception(Message.WRONG_USERNAME);
                 }
 
                 return Ok(new
