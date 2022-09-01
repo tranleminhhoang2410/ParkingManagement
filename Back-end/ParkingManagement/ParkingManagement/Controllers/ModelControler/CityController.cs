@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkingManagement.Data;
@@ -22,7 +23,7 @@ namespace ParkingManagement.Controllers
         }
 
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAll"), AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CityDTO>>> GetCities()
         {
             return Ok(new
@@ -31,7 +32,7 @@ namespace ParkingManagement.Controllers
             });
         }
 
-        [HttpGet("Get/{Id}")]
+        [HttpGet("Get/{Id}"), AllowAnonymous]
         public async Task<ActionResult<CityDTO>> GetCities(int Id)
         {
             CityDTO city = await cityService.GetCityById(Id);

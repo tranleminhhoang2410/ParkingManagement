@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingManagement.Filter;
 using ParkingManagement.Model;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Model.ViewModel;
@@ -41,14 +43,18 @@ namespace ParkingManagement.Controllers
             foreach (LotRow r in slotService.toView(E)) lotRows.Add(r);
 
             return Ok(lotRows);
-        } 
-        
+        }
+
+        [AuthorizationFilter]
+        [Authorize(Roles = "User, Admin")]
         [HttpGet("GetAll/{typeId}")]
         public async Task<ActionResult<IEnumerable<SlotDTO>>> GetAllSlotByType(int typeId)
         {
             return Ok(await slotService.GetAllByTypeId(typeId));
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "User, Admin")]
         [HttpGet("Get/{Id}")]
         public async Task<ActionResult<SlotDTO>> GetType(string Id)
         {
@@ -57,6 +63,8 @@ namespace ParkingManagement.Controllers
             return Ok(slot);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "User, Admin")]
         [HttpPut("Update")]
         public async Task<ActionResult<IEnumerable<SlotDTO>>> UpdateSlot(SlotDTO slot)
         {

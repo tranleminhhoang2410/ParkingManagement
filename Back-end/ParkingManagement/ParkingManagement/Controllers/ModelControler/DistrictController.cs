@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Service;
@@ -16,13 +17,13 @@ namespace ParkingManagement.Controllers
             this.districtService = districtService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAll"), AllowAnonymous]
         public async Task<ActionResult<IEnumerable<DistrictDTO>>> GetDistricts()
         {
             return Ok(await districtService.GetAllDistricts());
         }
 
-        [HttpGet("Get/{Id}")]
+        [HttpGet("Get/{Id}"), AllowAnonymous]
         public async Task<ActionResult<DistrictDTO>> GetDistricts(int Id)
         {
             DistrictDTO district = await districtService.GetDistrictById(Id);
@@ -30,7 +31,7 @@ namespace ParkingManagement.Controllers
             return Ok(district);
         }
 
-        [HttpGet("Get/CityId/{CityId}")]
+        [HttpGet("Get/CityId/{CityId}"), AllowAnonymous]
         public async Task<ActionResult<IEnumerable<DistrictDTO>>> GetDistrictsByCityId(int CityId)
         {
             return Ok(await districtService.GetDistrictByCityId(CityId));

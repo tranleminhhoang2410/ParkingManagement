@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Service;
@@ -16,13 +17,13 @@ namespace ParkingManagement.Controllers
             this.wardService = wardService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAll"), AllowAnonymous]
         public async Task<ActionResult<IEnumerable<WardDTO>>> GetWards()
         {
             return Ok(await wardService.GetAllWards());
         }
 
-        [HttpGet("Get/{Id}")]
+        [HttpGet("Get/{Id}"), AllowAnonymous]
         public async Task<ActionResult<WardDTO>> GetWard(int Id)
         {
             WardDTO ward = await wardService.GetWardById(Id);
@@ -30,7 +31,7 @@ namespace ParkingManagement.Controllers
             return Ok(ward);
         }
 
-        [HttpGet("Get/DistrictId/{DistrictId}")]
+        [HttpGet("Get/DistrictId/{DistrictId}"), AllowAnonymous]
         public async Task<ActionResult<IEnumerable<WardDTO>>> GetWardByDistrictId(int DistrictId)
         {
             return Ok(await wardService.GetWardByDistrictId(DistrictId));

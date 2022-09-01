@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingManagement.Filter;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Service;
 
@@ -16,13 +18,13 @@ namespace ParkingManagement.Controllers
             this.vehicleTypeService = vehicleTypeService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAll"), AllowAnonymous]
         public async Task<ActionResult<IEnumerable<VehicleTypeDTO>>> GetAllVehicleTypes()
         {
             return Ok(await vehicleTypeService.GetAll());
         }
 
-        [HttpGet("Get/{Id}")]
+        [HttpGet("Get/{Id}"), AllowAnonymous]
         public async Task<ActionResult<VehicleTypeDTO>> GetType(int Id)
         {
             VehicleTypeDTO type = await vehicleTypeService.GetById(Id);
@@ -30,6 +32,8 @@ namespace ParkingManagement.Controllers
             return Ok(type);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpPut("Update")]
         public async Task<ActionResult<IEnumerable<VehicleTypeDTO>>> Update(VehicleTypeDTO vehicleTypeDTO)
         {

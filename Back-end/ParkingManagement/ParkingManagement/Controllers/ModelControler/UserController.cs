@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingManagement.Filter;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Service;
 using System.Security.Claims;
@@ -19,6 +21,8 @@ namespace ParkingManagement.Controllers
             this.httpContextAccessor = httpContextAccessor;
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Get/Id/{Id}")]
         public async Task<ActionResult<UserDTO>> GetById(int Id)
         {
@@ -27,6 +31,8 @@ namespace ParkingManagement.Controllers
             return Ok(user);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "User, Admin")]
         [HttpGet("GetLoggedUser")]
         public async Task<ActionResult<UserDTO>> GetLoggedUser()
         {
@@ -35,6 +41,8 @@ namespace ParkingManagement.Controllers
             return Ok(user);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Get/Email/{Email}")]
         public async Task<ActionResult<UserDTO>> GetByEmail(string Email)
         {
@@ -43,6 +51,8 @@ namespace ParkingManagement.Controllers
             return Ok(user);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Get/Phone/{Phone}")]
         public async Task<ActionResult<UserDTO>> GetByPhone(string Phone)
         {
@@ -51,6 +61,8 @@ namespace ParkingManagement.Controllers
             return Ok(user);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "User")]
         [HttpPut("Update")]
         public async Task<ActionResult<UserDTO>> Update(UserDTO userDTO)
         {
