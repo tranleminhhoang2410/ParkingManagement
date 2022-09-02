@@ -160,13 +160,13 @@ function Header() {
         e.preventDefault();
         const [
             { value: username },
-            { value: name },
+            { value: fullname },
             { value: email },
             { value: phone },
             { value: password },
             { value: ConfirmPassword },
         ] = e.target;
-        const data = { username, name, email, phone, password, ConfirmPassword };
+        const data = { username, fullname, email, phone, password, ConfirmPassword };
         try {
             await signUp(data);
             toggleTab(1);
