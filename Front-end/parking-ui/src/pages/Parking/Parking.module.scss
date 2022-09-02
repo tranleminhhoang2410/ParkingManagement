@@ -1,16 +1,19 @@
 .wrapper {
     max-width: var(--default-layout-max-width);
-    height: 100%;
     padding: 16px 0;
-    margin: auto;
+    width: 100%;
 
-    .parking-area {
-        display: flex;
-        padding: 16px;
-        height: 100%;
+    .parking-diagram{
         border: 1px solid #fff;
         border-right: none;
-        position: relative;
+    }
+
+    .parking-area {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: 1fr;
+        height: auto;
+        padding: 16px;
     }
 
     .car-area {
@@ -40,8 +43,7 @@
 
     .notes {
         display: flex;
-        margin-top: -40px;
-        margin-left: 56px;
+        margin: 12px 0 12px 24px;
 
         .note-item {
             margin: 0 8px;

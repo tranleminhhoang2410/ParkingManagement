@@ -4,7 +4,7 @@
 
     table{
         margin: auto;
-        width: 80vw;
+        width: var(--default-layout-max-width);
         height: 60vh;
         border-collapse: collapse;
     }

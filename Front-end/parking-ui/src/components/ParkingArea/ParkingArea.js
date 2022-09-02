@@ -12,7 +12,7 @@ function ParkingArea({ area, type, lotRows = [] }) {
     const { isLoggedIn } = authState;
 
     return (
-        <div className={cx('wrapper')} style={type === 'CAR' ? { width: '8vw' } : { width: '10vw' }}>
+        <div className={cx('wrapper')}>
             <div className={cx('area')}>
                 <span className={cx('area-text')}>{area}</span>
             </div>
@@ -48,10 +48,10 @@ function ParkingArea({ area, type, lotRows = [] }) {
                                         style={
                                             cell.isParked
                                                 ? {
-                                                      display: 'block',
-                                                      backgroundColor: 'var(--parked-color)',
-                                                      cursor: 'default',
-                                                  }
+                                                    display: 'block',
+                                                    backgroundColor: 'var(--parked-color)',
+                                                    cursor: 'default',
+                                                }
                                                 : {}
                                         }
                                     >

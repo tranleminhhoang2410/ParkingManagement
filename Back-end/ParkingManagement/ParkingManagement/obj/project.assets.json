@@ -2355,19 +2355,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
+      "projectUniqueName": "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
       "projectName": "ParkingManagement",
-      "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\obj\\",
+      "projectPath": "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2430,7 +2430,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -2442,7 +2443,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -8,4 +8,6 @@
 
 .content{
     height: 100%;
+    max-width: var(--default-layout-max-width);
+    margin: auto;
 }
