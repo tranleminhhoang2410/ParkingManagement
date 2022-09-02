@@ -49,6 +49,12 @@ namespace ParkingManagement.Service.Implement
             return accountDTO;
         }
 
+        public async Task<AccountDTO> GetAccountById(int userId)
+        {
+            AccountDTO accountDTO = ToDTO.Map(await _db.Accounts.Include(c => c.User).FirstOrDefaultAsync(c => c.Id==userId));
+            return accountDTO;
+        }
+
         public async Task<AccountDTO> GetAccountByUser(string username)
         {
             AccountDTO accountDTO = ToDTO.Map(await _db.Accounts.Include(c => c.User).FirstOrDefaultAsync(c => c.Username.Equals(username)));
