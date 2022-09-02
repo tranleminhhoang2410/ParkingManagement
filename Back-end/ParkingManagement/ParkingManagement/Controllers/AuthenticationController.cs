@@ -43,7 +43,7 @@ namespace ParkingManagement.Controllers
                 AccountDTO loggeduser = await accountService.GetAccountByUser(username);
                 if (loggeduser != null)
                 {
-                    if (loggeduser.Password.Equals(AuthenticationHelper.PasswordMD5Hash(password)))
+                    if (loggeduser.Password.Equals(AuthenticationHelper.MD5Hash(password)))
                     {
                         if (tokenManager.GetUserValidTokenStorage(loggeduser.User.Id) == null)
                         {
@@ -105,7 +105,7 @@ namespace ParkingManagement.Controllers
                 AccountDTO accountDTO = new AccountDTO
                 {
                     Username = username,
-                    Password = AuthenticationHelper.PasswordMD5Hash(password),
+                    Password = AuthenticationHelper.MD5Hash(password),
                     Role = Role.User.ToString(),
                     User = new UserDTO
                     {
@@ -154,7 +154,7 @@ namespace ParkingManagement.Controllers
                 AccountDTO user = await accountService.GetAccountByUser(username);
                 if (user != null)
                 {
-                    if (user.Password.Equals(AuthenticationHelper.PasswordMD5Hash(oldPassword)))
+                    if (user.Password.Equals(AuthenticationHelper.MD5Hash(oldPassword)))
                     {
                         //int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                         //await tokenManager.DeleteToken(userid);
@@ -164,7 +164,7 @@ namespace ParkingManagement.Controllers
                         {
                             Id = user.Id,
                             Username = user.Username,
-                            Password = AuthenticationHelper.PasswordMD5Hash(newPassword),
+                            Password = AuthenticationHelper.MD5Hash(newPassword),
                         };
 
                         await accountService.UpdateAccount(accountDTO);

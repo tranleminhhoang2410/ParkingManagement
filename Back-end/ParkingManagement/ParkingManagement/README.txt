@@ -4,6 +4,9 @@ Controller - API					|	Authorization				|	Description																										|
 CityController:							k cần xác thực phân quyền		lấy tất cả hoặc theo id,.....
 DistrictController:						k cần xác thực phân quyền		lấy tất cả hoặc theo id,.....
 WardController :						k cần xác thực phân quyền		lấy tất cả hoặc theo id,.....
+
+AccountController:
+	GetByUserId:						user, admin						lấy account theo userId
 	
 SlotController:
 	GetAll:								k cần xác thực phân quyền		hiển thị tất cả lot lên page				
@@ -36,6 +39,9 @@ AuthenticationController:
 	SignUp:								k cần xác thực phân quyền		đăng kí
 	ChangePassword:						k cần xác thực phân quyền		đổi mk
 	Logout:								user, admin						đăng xuất (bắt buộc phải đăng nhập)
+
+EmailController:
+	ForgotPassword:						k cần xác thực phân quyền		gửi thư có link forgot vào email của user
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
