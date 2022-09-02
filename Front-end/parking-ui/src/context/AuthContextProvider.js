@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { LS } from '~/utils';
 
 export const AuthContext = React.createContext();
 export const AUTH_ACTION = {
@@ -14,6 +15,7 @@ const initialState = {
         token: null,
         expired: null,
     },
+    role: LS.getLocalStorage('auth')?.role || null,
     openAuthModal: false,
 };
 function authReducer(state, action) {
@@ -22,12 +24,7 @@ function authReducer(state, action) {
             return {
                 ...state,
                 isLoggedIn: true,
-                jwt: {
-                    ...action.payload.jwt,
-                },
-                user: {
-                    ...action.payload.user,
-                },
+                ...action.payload,
             };
         case AUTH_ACTION.LOGOUT:
             return {
@@ -37,6 +34,7 @@ function authReducer(state, action) {
                     token: null,
                     expired: null,
                 },
+                role: null,
             };
         case AUTH_ACTION.OPEN_MODAL:
             return { ...state, openAuthModal: true };

@@ -10,6 +10,7 @@ const routes = {
     profile: '/profile',
     forgot: '/forgot',
     changePassword: '/changePassword',
+    admin: '/admin'
 };
 
 export default routes;

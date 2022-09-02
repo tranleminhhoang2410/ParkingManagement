@@ -10,6 +10,8 @@ import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
+
+import { getAccountByUserId } from '~/services/accountService'
 import { signIn, signUp } from '~/services/authService';
 import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
 import { parseJwt } from '~/utils/jwt';
@@ -21,9 +23,10 @@ const cx = classNames.bind(styles);
 function Header() {
     //To be Better, handle this logic from other component, not UI like Header
     const [authState, dispatch] = useContext(AuthContext);
+    const [account, setAccount] = useState(null)
     const {
         isLoggedIn,
-        user: { name: username },
+        // user: { name: account },
         openAuthModal,
     } = authState;
     const [errorMsg, setErrorMsg] = useState('');
@@ -123,8 +126,22 @@ function Header() {
             dispatch({ type: AUTH_ACTION.LOGOUT });
             LS.removeLocalStorage('auth');
         }
-        return () => {};
+        return () => { };
     }, [dispatch]);
+
+    //get account of user 
+    useEffect(() => {
+        if (!authState.user.id) return;
+        const getAccount = async () => {
+            const account = await getAccountByUserId(authState.user.id)
+            setAccount(account);
+        }
+        try {
+            getAccount();
+        } catch (error) {
+            console.log('ERROR');
+        }
+    }, [authState.user.id])
 
     async function handleSignIn(e) {
         e.preventDefault();
@@ -140,7 +157,7 @@ function Header() {
                 token: token,
                 expired: result.exp,
             };
-            const authData = { jwt, user: {} };
+            const authData = { jwt, user: {}, role: result.role };
             LS.setLocalStorage('auth', authData);
             const user = await getLoggedUser();
             authData.user = user;
@@ -148,6 +165,8 @@ function Header() {
                 type: AUTH_ACTION.LOGIN,
                 payload: authData,
             });
+
+            if (result.role === "Admin") navigate('/admin');
             LS.setLocalStorage('auth', authData);
             setErrorMsg('');
             closeModal();
@@ -195,7 +214,7 @@ function Header() {
                         <Link className={cx('nav-link-item')} to="/">
                             About Us
                         </Link>
-                        <Link className={cx('nav-link-item')} to="/">
+                        <Link className={cx('nav-link-item')} to="/admin">
                             Notifications
                         </Link>
                     </nav>
@@ -217,7 +236,7 @@ function Header() {
                     {isLoggedIn ? (
                         <Menu items={userMenu}>
                             <div className={cx('login-action')}>
-                                <span className={cx('username-txt')}>{username}</span>
+                                <span className={cx('username-txt')}>{account?.username}</span>
                                 <FontAwesomeIcon icon={faUser} className={cx('user-icon')} />
                             </div>
                         </Menu>

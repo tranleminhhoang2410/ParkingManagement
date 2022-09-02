@@ -1,7 +1,10 @@
-import { Fragment } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Fragment, useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
+import { AuthContext } from './context/AuthContextProvider';
 import DefaultLayout from './layouts';
+
+
 
 function App() {
     return (
@@ -17,14 +20,16 @@ function App() {
                         } else if (route.layout === null) {
                             Layout = Fragment;
                         }
-
+                        const Guard = route.guard || Fragment;
                         return (
                             <Route
                                 key={index}
                                 path={route.path}
                                 element={
                                     <Layout>
-                                        <Page />
+                                        <Guard>
+                                            <Page />
+                                        </Guard>
                                     </Layout>
                                 }
                             />

@@ -18,8 +18,6 @@ namespace ParkingManagement.Controllers.ModelControler
             this.accountService = accountService;
         }
 
-        [AuthorizationFilter]
-        [Authorize(Roles = "Admin, User")]
         [HttpGet("GetByUserId/{Id}")]
         public async Task<ActionResult<AccountDTO>> GetById(int Id)
         {

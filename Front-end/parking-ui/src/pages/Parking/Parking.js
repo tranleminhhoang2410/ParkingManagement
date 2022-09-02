@@ -4,8 +4,6 @@ import styles from './Parking.module.scss';
 import ParkingArea from '~/components/ParkingArea';
 import Note from '~/components/Note';
 
-import { ToastContainer } from 'react-toastify';
-
 import { useEffect, useState } from 'react';
 import { getAllSlotsApi } from '~/services/slotService';
 
