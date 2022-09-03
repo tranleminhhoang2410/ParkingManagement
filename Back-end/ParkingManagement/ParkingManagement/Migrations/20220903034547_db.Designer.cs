@@ -12,17 +12,44 @@ using ParkingManagement.Data;
 namespace ParkingManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220613075335_add_9")]
-    partial class add_9
+    [Migration("20220903034547_db")]
+    partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ParkingManagement.Authentication.AuthModel.Tokens", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("JWT")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AccountTokens");
+                });
 
             modelBuilder.Entity("ParkingManagement.Model.Account", b =>
                 {
@@ -146,8 +173,11 @@ namespace ParkingManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DistrictId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -161,7 +191,16 @@ namespace ParkingManagement.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WardId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("WardId");
 
                     b.ToTable("Users");
                 });
@@ -174,7 +213,7 @@ namespace ParkingManagement.Migrations
                     b.Property<bool>("IsParking")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.Property<string>("VehicleBrand")
@@ -188,7 +227,7 @@ namespace ParkingManagement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.HasIndex("VehicleTypeId");
 
@@ -247,6 +286,17 @@ namespace ParkingManagement.Migrations
                     b.ToTable("Wards");
                 });
 
+            modelBuilder.Entity("ParkingManagement.Authentication.AuthModel.Tokens", b =>
+                {
+                    b.HasOne("ParkingManagement.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ParkingManagement.Model.Account", b =>
                 {
                     b.HasOne("ParkingManagement.Model.User", "User")
@@ -295,11 +345,32 @@ namespace ParkingManagement.Migrations
                     b.Navigation("VehicleType");
                 });
 
+            modelBuilder.Entity("ParkingManagement.Model.User", b =>
+                {
+                    b.HasOne("ParkingManagement.Model.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("ParkingManagement.Model.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictId");
+
+                    b.HasOne("ParkingManagement.Model.Ward", "Ward")
+                        .WithMany()
+                        .HasForeignKey("WardId");
+
+                    b.Navigation("City");
+
+                    b.Navigation("District");
+
+                    b.Navigation("Ward");
+                });
+
             modelBuilder.Entity("ParkingManagement.Model.Vehicle", b =>
                 {
                     b.HasOne("ParkingManagement.Model.User", "User")
                         .WithMany("Vehicles")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

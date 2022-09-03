@@ -22,7 +22,7 @@ namespace ParkingManagement.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ParkingManagement.Authentication.AuthModel.Token", b =>
+            modelBuilder.Entity("ParkingManagement.Authentication.AuthModel.Tokens", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,17 +30,23 @@ namespace ParkingManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("JWT")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ValidTokens");
+                    b.ToTable("AccountTokens");
                 });
 
             modelBuilder.Entity("ParkingManagement.Model.Account", b =>
@@ -278,7 +284,7 @@ namespace ParkingManagement.Migrations
                     b.ToTable("Wards");
                 });
 
-            modelBuilder.Entity("ParkingManagement.Authentication.AuthModel.Token", b =>
+            modelBuilder.Entity("ParkingManagement.Authentication.AuthModel.Tokens", b =>
                 {
                     b.HasOne("ParkingManagement.Model.User", "User")
                         .WithMany()

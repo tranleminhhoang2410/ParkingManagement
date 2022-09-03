@@ -223,6 +223,88 @@ namespace ParkingManagement.Controllers
             }
         }
 
+        [HttpGet("ResetPasswordToken")]
+        public async Task<IActionResult> ResetPasswordToken()
+        {
+            return Ok(new
+            {
+                Success = tokenManager.GeneratePasswordResetToken()
+            }) ;
+        }
+
+        [HttpGet("ForgotPasswordUser")]
+        public async Task<IActionResult> ForgotPasswordUser(string token)
+        {
+            try
+            {
+                Tokens tokens = tokenManager.GetUserValidTokenStorage(token);
+
+                if(tokens != null)
+                {
+                    AccountDTO acc = await accountService.GetAccountById(tokens.UserId);
+
+                    return Ok(new
+                    {
+                        username = acc.Username
+                    }) ;
+                }
+                else
+                {
+                    throw new Exception("invalid token");
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Fail = ex.Message
+                });
+            }
+        }
+
+        [HttpPut("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(
+            string username,
+            string newPassword,
+            string confirmNewPassword)
+        {
+            try
+            {
+                if (!confirmNewPassword.Equals(newPassword)) throw new Exception(Message.NOT_MATCH_CONFIRM_NEWPASSWORD);
+
+                AccountDTO user = await accountService.GetAccountByUser(username);
+                if (user != null)
+                {
+                    AccountDTO accountDTO = new AccountDTO
+                    {
+                        Id = user.Id,
+                        Username = user.Username,
+                        Password = AuthenticationHelper.MD5Hash(newPassword),
+                    };
+
+                    await accountService.UpdateAccount(accountDTO);
+                }
+                else
+                {
+                    throw new Exception(Message.WRONG_USERNAME);
+                }
+
+                return Ok(new
+                {
+                    Success = "Change password sucessful"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Fail = ex.Message
+                });
+            }
+        }
+
         private void SetTokenCookie(string Token, DateTime Expires)
         {
             var CookieOption = new CookieOptions

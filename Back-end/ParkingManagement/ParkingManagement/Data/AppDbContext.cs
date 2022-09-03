@@ -26,6 +26,6 @@ namespace ParkingManagement.Data
         public DbSet<Ward> Wards { get; set; }
 
 
-        public DbSet<Token> ValidTokens { get; set; }
+        public DbSet<Tokens> AccountTokens { get; set; }
     }
 }
