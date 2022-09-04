@@ -1,7 +1,6 @@
 import { Fragment, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
-import { AuthContext } from './context/AuthContextProvider';
 import DefaultLayout from './layouts';
 
 

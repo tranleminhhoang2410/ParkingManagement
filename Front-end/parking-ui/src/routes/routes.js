@@ -1,5 +1,8 @@
 import config from '~/config';
 
+//admin guard
+import AdminGuard from '~/components/AdminGuard/AdminGuard'
+
 //pages
 import Home from '~/pages/Home';
 import Price from '~/pages/Price';
@@ -10,22 +13,7 @@ import Profile from '~/pages/Profile';
 import Forgot from '~/pages/Security/Forgot';
 import ChangePassword from '~/pages/Security/ChangePassword/ChangePassword';
 import Admin from '~/pages/Admin';
-import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '~/context/AuthContextProvider';
 
-function AdminGuard({ children }) {
-
-    const [{ role }] = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (role !== 'Admin') { navigate('/'); }
-    }, [role])
-
-    if (role !== 'Admin') return null;
-    return children
-}
 const publicRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.price, component: Price },
