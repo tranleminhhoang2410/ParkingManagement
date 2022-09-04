@@ -5,6 +5,7 @@ using ParkingManagement.Model;
 using ParkingManagement.Model.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace ParkingManagement.Authentication
@@ -22,19 +23,19 @@ namespace ParkingManagement.Authentication
 
         public async Task AddUserValidTokenStorage(int userId)
         {
-            Token token = new Token
+            Tokens token = new Tokens
             {
                 UserId = userId
             };
 
-            _db.ValidTokens.AddAsync(token);
+            _db.AccountTokens.AddAsync(token);
             await _db.SaveChangesAsync();
         }
 
         public async Task DeleteToken(int userId)
         {
-            Token UserToken = _db.ValidTokens.FirstOrDefault(t => t.UserId == userId);
-            UserToken.Value = null;
+            Tokens UserToken = _db.AccountTokens.FirstOrDefault(t => t.UserId == userId);
+            UserToken.JWT = null;
 
             _db.SaveChanges();
         }
@@ -57,17 +58,36 @@ namespace ParkingManagement.Authentication
 
             var jwtTokenString = tokenHandler.WriteToken(token);
 
-            Token UserToken = _db.ValidTokens.FirstOrDefault(t => t.UserId == account.User.Id);
-            UserToken.Value = "bearer " + jwtTokenString;
+            Tokens UserToken = _db.AccountTokens.FirstOrDefault(t => t.UserId == account.User.Id);
+            UserToken.JWT = "bearer " + jwtTokenString;
 
             _db.SaveChanges();
 
             return jwtTokenString;
         }
 
-        public Token GetUserValidTokenStorage(int userId)
+        public string GeneratePasswordResetToken()
         {
-            return _db.ValidTokens.FirstOrDefault(c => c.UserId == userId);
+            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+        }
+
+        public Tokens GetUserValidTokenStorage(int userId)
+        {
+            return _db.AccountTokens.FirstOrDefault(c => c.UserId == userId);
+        }
+
+        public Tokens GetUserValidTokenStorage(string token)
+        {
+            return _db.AccountTokens.FirstOrDefault(c => c.PasswordResetToken == token && c.ResetTokenExpires>DateTime.Now);
+        }
+
+        public async Task SavePasswordResetToken(int userId, string token)
+        {
+            Tokens UserToken = _db.AccountTokens.FirstOrDefault(t => t.UserId == userId);
+            UserToken.PasswordResetToken = token;
+            UserToken.ResetTokenExpires = DateTime.Now.AddHours(2);
+
+            _db.SaveChangesAsync();
         }
 
         public void SaveTokenInClient(string token)
@@ -79,7 +99,7 @@ namespace ParkingManagement.Authentication
         {
             string[] tokenPart = token.Split(' ');
 
-            Token checkToken = _db.ValidTokens.FirstOrDefault(t => t.Value == token);
+            Tokens checkToken = _db.AccountTokens.FirstOrDefault(t => t.JWT == token);
 
             if (checkToken != null)
             {

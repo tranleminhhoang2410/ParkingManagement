@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingManagement.Authentication;
+using ParkingManagement.Authentication.AuthModel;
 using ParkingManagement.Model.DTO;
 using ParkingManagement.Model.ViewModel;
 using ParkingManagement.Service;
@@ -13,25 +15,32 @@ namespace ParkingManagement.Controllers.ModelControler
     {
         private readonly IEmailService emailService;
         private readonly IAccountService accountService;
+        private readonly ITokenManager tokenManager;
 
-        public EmailController(IEmailService emailService, IAccountService accountService)
+        public EmailController(IEmailService emailService, IAccountService accountService, ITokenManager tokenManager)
         {
             this.emailService = emailService;
             this.accountService = accountService;
+            this.tokenManager = tokenManager;
         }
 
         [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassowrd(string username, string link)
+        public async Task<IActionResult> ForgotPassowrd(string username, string link, string token)
         {
             try
             {
                 AccountDTO account = await accountService.GetAccountByUser(username);
 
-                string toEmail = account.User.Email;
+                if (tokenManager.GetUserValidTokenStorage(account.User.Id) == null)
+                {
+                    await tokenManager.AddUserValidTokenStorage(account.User.Id);
+                }
+
+                await tokenManager.SavePasswordResetToken(account.User.Id, token);
 
                 emailService.sendEmail(new EmailModel
                 {
-                    To = toEmail,
+                    To = account.User.Email,
                     Subject = "ForgotPassword notify",
                     Body = EmailFormat.ForgotPassword(link, username)
                 });

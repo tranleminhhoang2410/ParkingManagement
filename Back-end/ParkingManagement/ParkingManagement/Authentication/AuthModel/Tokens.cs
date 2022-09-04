@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParkingManagement.Authentication.AuthModel
 {
-    public class Token
+    public class Tokens
     {
         [Key]
         public int Id { get; set; }
-        public string? Value { get; set; }
+        public string? JWT { get; set; }
+        public string? PasswordResetToken { get; set; }
+        public DateTime? ResetTokenExpires { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
     }
