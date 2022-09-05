@@ -26,8 +26,6 @@ namespace ParkingManagement.Controllers
         {
             IEnumerable<SlotDTO> slots = await slotService.GetAll();
 
-            List<LotArea> parkingArea = new List<LotArea>();
-
             List<SlotDTO> A = slots.Where(c => c.Area == "A").OrderBy(c => c.Position).ToList();
             List<SlotDTO> B = slots.Where(c => c.Area == "B").OrderBy(c => c.Position).ToList();
             List<SlotDTO> C = slots.Where(c => c.Area == "C").OrderBy(c => c.Position).ToList();
