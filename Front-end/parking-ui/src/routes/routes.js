@@ -25,8 +25,11 @@ const publicRoutes = [
     { path: config.routes.forgot, component: Forgot },
     { path: config.routes.changePassword, component: ChangePassword },
     { path: config.routes.admin, component: Admin, guard: AdminGuard },
+
 ];
 
-const privateRoutes = [];
+const protectedRoutes = [
 
-export { publicRoutes, privateRoutes };
+];
+
+export { publicRoutes, protectedRoutes };

@@ -3,6 +3,7 @@
     height: 100%;
     padding: 16px 0;
     margin: auto;
+    position: relative;
 }
 
 // UI tab
@@ -17,12 +18,13 @@
     font-size: 2rem;
     font-weight: 500;
     flex: 1;
-    color: var(--white-color);
+    background-color: #ffffe0;
+    color: var(--primary-color);
 }
 
 .active-tabs {
-    color: var(--primary-color);
-    background-color: #ffffe0;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     cursor: default;
 
     &:hover {
@@ -81,7 +83,7 @@
 }
 
 .vehicle {
-    margin-top: 16px;
+    margin: 16px 0;
 }
 
 .vehicle-list {

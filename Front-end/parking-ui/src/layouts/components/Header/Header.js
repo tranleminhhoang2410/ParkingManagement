@@ -13,10 +13,15 @@ import Menu from '~/components/Popper/Menu';
 
 import { getAccountByUserId } from '~/services/accountService'
 import { signIn, signUp } from '~/services/authService';
+import { getLoggedUser } from '~/services/userService';
+
 import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
+
 import { parseJwt } from '~/utils/jwt';
 import { LS } from '~/utils/localStorage';
-import { getLoggedUser } from '~/services/userService';
+
+import config from '~/config';
+
 
 const cx = classNames.bind(styles);
 
@@ -166,7 +171,7 @@ function Header() {
                 payload: authData,
             });
 
-            if (result.role === "Admin") navigate('/admin');
+            if (result.role === config.roles.ADMIN) navigate('/admin');
             LS.setLocalStorage('auth', authData);
             setErrorMsg('');
             closeModal();

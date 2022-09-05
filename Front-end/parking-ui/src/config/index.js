@@ -1,5 +1,5 @@
 import routes from './routes';
-import roles from './role'
+import roles from './roles'
 
 const config = {
     routes,

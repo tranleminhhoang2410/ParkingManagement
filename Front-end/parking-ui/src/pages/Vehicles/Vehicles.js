@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Vehicles.module.scss';
 
@@ -14,9 +14,14 @@ import { enrollVehicle, getVehicleByUserId } from '~/services/vehicleService';
 import { AuthContext } from '~/context/AuthContextProvider';
 import { useLocation } from 'react-router-dom';
 
+import Pagination from '~/components/Pagination'
+
 const cx = classNames.bind(styles);
 
+
+
 function Vehicles() {
+    let pageSize = 28;
     const location = useLocation();
     const isEnroll = location.state?.isEnroll;
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -86,13 +91,29 @@ function Vehicles() {
         notifyEnrollSuccess();
     };
 
+    //Get Vehicles By User Id
     useEffect(() => {
+        if (!authState.user.id) return;
         const getVehicle = async () => {
             const vehicles = await getVehicleByUserId(authState.user.id);
             setVehicles(vehicles);
         };
-        getVehicle();
+        try {
+            getVehicle();
+        } catch (error) {
+            console.log('ERROR');
+        }
     }, [authState.user.id]);
+
+    //Pagtination
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const currentVehiclesPagination = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * pageSize;
+        const lastPageIndex = firstPageIndex + pageSize;
+        return vehicles.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage, pageSize, vehicles]);
+
 
     const getIconOfVehicle = (id) => {
         switch (id) {
@@ -143,9 +164,10 @@ function Vehicles() {
                 <div className={toggleState === 1 ? cx('content', 'active-content') : cx('content')}>
                     {/* Have Vehicles */}
                     {vehicles && vehicles.length > 0 ? (
+
                         <div className={cx('vehicle')}>
                             <ul className={cx('vehicle-list')}>
-                                {vehicles.map((vehicle) => (
+                                {currentVehiclesPagination.map((vehicle) => (
                                     <li key={vehicle.id} className={cx('vehicle-item')}>
                                         <div className={cx('vehicle-wrapper')}>
                                             <div className={cx('vehicle-avatar')}>
@@ -160,7 +182,13 @@ function Vehicles() {
                                     </li>
                                 ))}
                             </ul>
+                            <Pagination className={cx('pagination-bar')}
+                                currentPage={currentPage}
+                                totalCount={vehicles.length}
+                                pageSize={pageSize}
+                                onPageChange={page => setCurrentPage(page)} />
                         </div>
+
                     ) : (
                         /* Don't have vehicle */
                         <div className={cx('no-vehicle')}>

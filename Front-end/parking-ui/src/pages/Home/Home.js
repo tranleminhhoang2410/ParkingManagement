@@ -11,7 +11,7 @@ import { AuthContext, AUTH_ACTION } from '~/context/AuthContextProvider';
 
 const cx = classNames.bind(styles);
 
-function Home () {
+function Home() {
     const [authState, dispatch] = useContext(AuthContext);
     const { isLoggedIn } = authState;
 
