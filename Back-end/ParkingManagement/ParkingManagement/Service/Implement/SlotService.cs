@@ -19,6 +19,21 @@ namespace ParkingManagement.Service.Implement
                 .Include(c => c.VehicleType)
                 .Select(c => ToDTO.Map(c))
                 .ToListAsync();
+
+            foreach(SlotDTO s in slots)
+            {
+                Invoice invoice = (await _db.Invoices
+                .FirstOrDefaultAsync(c => c.SlotId.Equals(s.Area+s.Position) && c.CheckoutTime == null));
+
+                if (invoice == null) continue;
+
+                s.userId = (await _db.Vehicles
+                .Include(c => c.VehicleType)
+                .Include(c => c.Invoices)
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.Id.Equals(invoice.VehicleId))).UserID;
+            }
+
             return slots;
         }
 
@@ -81,12 +96,14 @@ namespace ParkingManagement.Service.Implement
                             new LotCell
                             {
                                 isParked = temp.Status,
-                                number = temp.Position
+                                number = temp.Position,
+                                userId = temp.userId
                             },
                             new LotCell
                             {
                                 isParked = slot.Status,
-                                number = slot.Position
+                                number = slot.Position,
+                                userId = slot.userId
                             }
                         }
                     };
