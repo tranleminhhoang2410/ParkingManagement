@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {}
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {}
   },
   "projects": {
-    "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
         "projectName": "ParkingManagement",
-        "projectPath": "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\obj\\",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\ParkingManagement.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\ParkingManagement\\ParkingManagement\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -77,8 +77,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -90,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -4,6 +4,8 @@ import styles from './Profile.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
+import Button from '~/components/Button';
+
 const cx = classNames.bind(styles);
 
 function Profile() {
@@ -48,28 +50,31 @@ function Profile() {
                                 <label htmlFor="city" className={cx('city-label')}>
                                     City
                                 </label>
-                                <select name="city" id="city">
-                                    <option value="">Đà Nẵng</option>
+                                <select name="city" id="city" className={cx('city-txt')}>
+                                    <option value="">--Select a city--</option>
                                 </select>
                             </div>
                             <div className={cx('district')}>
                                 <label htmlFor="district" className={cx('district-label')}>
                                     District
                                 </label>
-                                <select name="district" id="district">
-                                    <option value="">Thanh Khê</option>
+                                <select name="district" id="district" className={cx('district-txt')}>
+                                    <option value="">--Select a district--</option>
                                 </select>
                             </div>
                             <div className={cx('ward')}>
                                 <label htmlFor="ward" className={cx('ward-label')}>
                                     Ward
                                 </label>
-                                <select name="ward" id="ward">
-                                    <option value="">An Khê</option>
+                                <select name="ward" id="ward" className={cx('ward-txt')}>
+                                    <option value="">--Select a ward--</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                    <Button primary className={cx('update-btn')}>
+                        update
+                    </Button>
                 </form>
             </div>
         </div>

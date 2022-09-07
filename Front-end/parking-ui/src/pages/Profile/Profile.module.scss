@@ -1,0 +1,91 @@
+.wrapper{
+    display: flex;
+    padding: 32px 0;
+    justify-content: space-between;
+    
+
+    .avatar{
+        display: flex;
+        flex-direction: column;
+
+        .user-icon{
+            height: 64px;
+            width: 64px;
+            padding: 32px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .account{
+            margin-top: 8px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+    }
+
+    .info{
+
+        #info-form{
+            display: flex;
+            flex-direction: column;
+            font-size: 2rem;
+
+            .input-group{
+                display: flex;
+                align-items: center;
+                margin: 24px 0;
+
+                .address-info,
+                .street,
+                .city,
+                .district,
+                .ward{
+                    display: flex;
+                    align-items: center;
+                }
+
+                .input-label{
+                    min-width: 120px;
+                }
+
+                .street, .city, .district{
+                    padding: 0 8px;
+                }
+
+                .ward{
+                    padding-left: 8px;
+                }
+
+                .street-label,.city-label,.district-label,.ward-label{
+                    font-size: 1.6rem;
+                    font-weight: 500;
+                    margin-right: 4px;
+                }
+
+                .street-txt, .city-txt, .district-txt, .ward-txt{
+                    padding: 12px 8px;
+                    border-radius: 4px;
+                    border: 2px solid var(--primary-border-color);
+                }
+
+                .input-text{
+                    flex: 1;
+                    font-size: 1.6rem;
+                    font-weight: 500;
+                    color: var(--text-color);
+                    padding: 12px 8px;
+                    border-radius: 4px;
+                    border: 2px solid var(--primary-border-color);
+                }
+            }
+
+            .update-btn{
+                margin: 24px auto 0;
+                font-size: 2rem;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+        }
+    }
+}

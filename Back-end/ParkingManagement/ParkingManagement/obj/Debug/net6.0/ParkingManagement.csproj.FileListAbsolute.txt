@@ -193,3 +193,6 @@ E:\Code\Web\Fullstack\ParkingManagement\Back-end\ParkingManagement\ParkingManage
 E:\Code\Web\Fullstack\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\obj\Debug\net6.0\ParkingManagement.pdb
 E:\Code\Web\Fullstack\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\obj\Debug\net6.0\ParkingManagement.genruntimeconfig.cache
 E:\Code\Web\Fullstack\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\obj\Debug\net6.0\ref\ParkingManagement.dll
+D:\Code\Web\Fullstack\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\bin\Debug\net6.0\MailKit.dll
+D:\Code\Web\Fullstack\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\bin\Debug\net6.0\MimeKit.dll
+D:\Code\Web\Fullstack\ParkingManagement\Back-end\ParkingManagement\ParkingManagement\bin\Debug\net6.0\BouncyCastle.Crypto.dll
