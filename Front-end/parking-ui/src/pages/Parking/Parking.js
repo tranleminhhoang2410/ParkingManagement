@@ -5,7 +5,8 @@ import ParkingArea from '~/components/ParkingArea';
 import Note from '~/components/Note';
 
 import { useEffect, useState } from 'react';
-import { getAllSlotsApi } from '~/services/slotService';
+import { getAllSlots } from '~/services/slotService';
+import { ToastContainer } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -13,14 +14,14 @@ function Parking() {
     //notes
     const notes = [
         {
-            title: <div style={{ backgroundColor: 'var(--parked-color)', width: '28px', height: '20px' }}></div>,
-            value: 'Parked',
-            subvalue: 'Do not click on that slot',
-        },
-        {
             title: <div style={{ backgroundColor: 'var(--empty-color)', width: '28px', height: '20px' }}></div>,
             value: 'Empty',
             subvalue: 'Click on that slot to check in',
+        },
+        {
+            title: <div style={{ backgroundColor: 'var(--parked-color)', width: '28px', height: '20px' }}></div>,
+            value: 'Parked',
+            subvalue: 'Do not click on that slot',
         },
         {
             title: <div style={{ backgroundColor: 'var(--your-color)', width: '28px', height: '20px' }}></div>,
@@ -35,11 +36,13 @@ function Parking() {
 
     useEffect(() => {
         const fetchSlotsData = async () => {
-            const lotRows = await getAllSlotsApi();
+            const lotRows = await getAllSlots();
             setLotRows(lotRows);
         };
         fetchSlotsData();
     }, []);
+
+    // lotRows.c
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', margin: 'auto', height: '100%' }}>
@@ -59,6 +62,7 @@ function Parking() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

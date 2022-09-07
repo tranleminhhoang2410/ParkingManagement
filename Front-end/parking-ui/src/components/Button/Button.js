@@ -71,10 +71,10 @@ Button.propTypes = {
     rounded: PropTypes.bool,
     small: PropTypes.bool,
     large: PropTypes.bool,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     className: PropTypes.node,
     leftIcon: PropTypes.node,
-    rightIcon: PropTypes.func,
+    rightIcon: PropTypes.node,
 };
 
 export default Button;

@@ -5,7 +5,7 @@ const END_POINT = {
     GET_BY_ID: 'Slot/Get',
 };
 
-export const getAllSlotsApi = () => {
+export const getAllSlots = () => {
     return axios.get(END_POINT.GET_ALL);
 };
 

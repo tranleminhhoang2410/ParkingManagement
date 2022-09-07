@@ -33,16 +33,21 @@ function ParkingDetail() {
             setParkingSlot(await getSlotById(parkingId));
         };
 
+
+
+        fetchSlotDetail();
+
+    }, [parkingId]);
+
+    useEffect(() => {
         const fetchVehicleByUserId = async () => {
             setVehicleByUserId(await getVehicleByUserId(authState.user.id));
         };
-
-        fetchSlotDetail();
         fetchVehicleByUserId();
-    }, [authState.user.id, parkingId]);
+    }, [authState.user.id]);
 
     //Filter vehicle by Vehicle Type Id of Slot
-    const vehiclesBySlot = vehicleByUserId.filter((vehicle) => vehicle.vehicleTypeId === parkingSlot.vehicleTypeId);
+    const vehiclesBySlot = vehicleByUserId.filter((vehicle) => !vehicle.isParking && (vehicle.vehicleTypeId === parkingSlot.vehicleTypeId));
 
     //Get Current Date
     const current = new Date();
@@ -73,7 +78,7 @@ function ParkingDetail() {
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
         });
@@ -133,7 +138,7 @@ function ParkingDetail() {
                                     defaultValue={'DEFAULT'}
                                     onChange={(e) => setVehiclePlate(e.target.value)}
                                 >
-                                    <option value="DEFAULT" selected disabled hidden>
+                                    <option value="DEFAULT" disabled hidden>
                                         -- Select a vehicle --
                                     </option>
                                     {vehiclesBySlot.map((vehicle) => (

@@ -58,6 +58,7 @@ function Pagination({ onPageChange, totalCount, siblingCount = 1, currentPage, p
                                 selected: pageNumber === currentPage
                             })}
                             onClick={() => onPageChange(pageNumber)}
+                            key={pageNumber}
                         >
                             <Button className={cx('pagination-btn', {
                                 actived: pageNumber === currentPage

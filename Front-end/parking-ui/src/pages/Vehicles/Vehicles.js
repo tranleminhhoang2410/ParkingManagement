@@ -246,7 +246,7 @@ function Vehicles() {
                                 onChange={(e) => setVehicleTypeId(e.target.value)}
                                 defaultValue={'DEFAULT'}
                             >
-                                <option value="DEFAULT" selected disabled hidden>
+                                <option value="DEFAULT" disabled hidden>
                                     -- Select type of vehicle --
                                 </option>
                                 <option value="1">Car</option>
