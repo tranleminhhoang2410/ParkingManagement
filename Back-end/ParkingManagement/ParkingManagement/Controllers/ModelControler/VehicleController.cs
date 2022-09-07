@@ -130,7 +130,20 @@ namespace ParkingManagement.Controllers
                 int UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 UserDTO user = await userService.GetUserById(UserId);
 
-                if (!user.Vehicles.Contains(await vehicleService.GetById(invoiceDTO.VehicleId))) throw new Exception("It's not yours");
+                VehicleDTO parkedVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
+
+                bool isUserVehicle = false;
+
+                foreach (VehicleDTO v in user.Vehicles)
+                {
+                    if (v.Id.Equals(parkedVehicle.Id))
+                    {
+                        isUserVehicle = true;
+                        break;
+                    }
+                }
+
+                if (!isUserVehicle) throw new Exception("It's not yours");
 
                 invoiceDTO.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
