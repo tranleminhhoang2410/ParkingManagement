@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './ParkingDetail.module.scss';
 
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,27 +24,35 @@ function ParkingDetail() {
     const parkingId = useParams().id;
     const [parkingSlot, setParkingSlot] = useState([]);
     const [vehicleByUserId, setVehicleByUserId] = useState([]);
+    const [vehicleCheckedIn, setVehicleCheckedIn] = useState([]);
     const [authState] = useContext(AuthContext);
     const [vehiclePlate, setVehiclePlate] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
 
+    const status = location?.state.status
+    console.log(status);
+
+    //Get Slot Detail
     useEffect(() => {
         const fetchSlotDetail = async () => {
             setParkingSlot(await getSlotById(parkingId));
         };
-
-
-
         fetchSlotDetail();
-
     }, [parkingId]);
 
+    //Get Vehicle By User Id
     useEffect(() => {
         const fetchVehicleByUserId = async () => {
             setVehicleByUserId(await getVehicleByUserId(authState.user.id));
         };
         fetchVehicleByUserId();
     }, [authState.user.id]);
+
+    //Get checked in vehicle
+    useEffect(() => {
+
+    }, [parkingId])
 
     //Filter vehicle by Vehicle Type Id of Slot
     const vehiclesBySlot = vehicleByUserId.filter((vehicle) => !vehicle.isParking && (vehicle.vehicleTypeId === parkingSlot.vehicleTypeId));
@@ -116,6 +124,54 @@ function ParkingDetail() {
         setIsOpen(false);
     }
 
+    const handleRenderVehicleId = () => {
+        if (status === 'isEmpty') {
+            if (vehiclesBySlot && vehiclesBySlot.length > 0) {
+                return (
+                    <select
+                        className={cx('input-text')}
+                        defaultValue={'DEFAULT'}
+                        onChange={(e) => setVehiclePlate(e.target.value)}
+                    >
+                        <option value="DEFAULT" disabled hidden>
+                            -- Select a vehicle --
+                        </option>
+                        {vehiclesBySlot.map((vehicle) => (
+                            <option key={vehicle.id} value={vehicle.id}>
+                                {vehicle.id}
+                            </option>
+                        ))}
+                    </select>
+                )
+            } else {
+                return (
+                    <>
+                        <h1 style={{ fontSize: '2rem', color: 'red', marginRight: '4px' }}>
+                            You don't have any {parkingSlot.vehicleTypeName} yet !
+                        </h1>
+                        <Button
+                            style={{
+                                padding: '0',
+                                backgroundColor: 'transparent',
+                                marginLeft: '16px',
+                                textDecoration: 'underline',
+                                color: '#00008B',
+                            }}
+                            onClick={moveToEnrollVehicleForm}
+                        >
+                            Enroll here
+                        </Button>
+                    </>
+                )
+            }
+            //Get Vehicle Id when check in
+        } else {
+            return (
+                <h1>Plate when check in</h1>
+            )
+        }
+    }
+
     return (
         <div className={cx('wrapper')}>
             <Button leftIcon={<FontAwesomeIcon icon={faArrowLeft} />} className={cx('back-btn')} to="/parking">
@@ -132,40 +188,7 @@ function ParkingDetail() {
                             <label htmlFor="vehiclePlate" className={cx('input-label')}>
                                 Vehicle Registration Plate
                             </label>
-                            {vehiclesBySlot && vehiclesBySlot.length > 0 ? (
-                                <select
-                                    className={cx('input-text')}
-                                    defaultValue={'DEFAULT'}
-                                    onChange={(e) => setVehiclePlate(e.target.value)}
-                                >
-                                    <option value="DEFAULT" disabled hidden>
-                                        -- Select a vehicle --
-                                    </option>
-                                    {vehiclesBySlot.map((vehicle) => (
-                                        <option key={vehicle.id} value={vehicle.id}>
-                                            {vehicle.id}
-                                        </option>
-                                    ))}
-                                </select>
-                            ) : (
-                                <>
-                                    <h1 style={{ fontSize: '2rem', color: 'red', marginRight: '4px' }}>
-                                        You don't have any {parkingSlot.vehicleTypeName} yet !
-                                    </h1>
-                                    <Button
-                                        style={{
-                                            padding: '0',
-                                            backgroundColor: 'transparent',
-                                            marginLeft: '16px',
-                                            textDecoration: 'underline',
-                                            color: '#00008B',
-                                        }}
-                                        onClick={moveToEnrollVehicleForm}
-                                    >
-                                        Enroll here
-                                    </Button>
-                                </>
-                            )}
+                            {handleRenderVehicleId()}
                         </div>
                         <div className={cx('input-group')}>
                             <label htmlFor="vehicleType" className={cx('input-label')}>
@@ -181,9 +204,11 @@ function ParkingDetail() {
                         </div>
                     </div>
                 </div>
-                <Button className={cx('regis-btn')} primary>
+                {status === 'isEmpty' ? (<Button className={cx('regis-btn')} primary>
                     CHECK IN
-                </Button>
+                </Button>) : (<Button className={cx('checkout-btn')} primary>
+                    CHECK OUT
+                </Button>)}
             </form>
             <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
                 {/* Confirm Form */}
@@ -200,7 +225,7 @@ function ParkingDetail() {
                         onSubmit={handleCheckIn}
                     >
                         <h1 style={{ fontSize: '3rem', fontWeight: '500', color: 'var(--primary-color)' }}>
-                            Do you want to check in this slot ?
+                            Do you want to {status === 'isEmpty' ? 'check in' : 'check out'} this slot ?
                         </h1>
                         <div
                             style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}

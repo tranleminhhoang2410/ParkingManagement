@@ -17,3 +17,7 @@ export const getVehicleByUserId = (id) => {
 export const checkIn = (vehicle) => {
     return axios.post(END_POINT.CHECK_IN, null, { params: vehicle });
 };
+
+export const getCheckedInVehicle = (slotId) => {
+    return axios.get(`${END_POINT.CHECK_IN}/${slotId}`)
+}

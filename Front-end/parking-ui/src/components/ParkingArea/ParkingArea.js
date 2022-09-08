@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ParkingArea.module.scss';
@@ -10,6 +10,7 @@ const cx = classNames.bind(styles);
 function ParkingArea({ area, type, lotRows = [] }) {
     const [authState, dispatch] = useContext(AuthContext);
     const { isLoggedIn } = authState;
+    const [hover, setHover] = useState(false);
 
     return (
         <div className={cx('wrapper')}>
@@ -30,18 +31,25 @@ function ParkingArea({ area, type, lotRows = [] }) {
                     {lotRow.type.toUpperCase() === type && lotRow.area === area ? (
                         lotRow.cells.map((cell, index) => {
                             const parking_id = lotRow.area + cell.number;
-                            const isRedirect = !cell.isParked && isLoggedIn;
 
                             const handleStatusOfRow = () => {
-                                if (!cell.isParked)
-                                    return 'isEmpty';
-                                if (cell.isParked && (cell.userId === authState.user.id))
-                                    return 'isMyParkedSlot';
-                                if (cell.isParked)
-                                    return 'isParked';
+                                if (isLoggedIn) {
+                                    if (!cell.isParked)
+                                        return 'isEmpty';
+                                    if (cell.isParked && (cell.userId === authState.user.id))
+                                        return 'isMyParkedSlot';
+                                    if (cell.isParked)
+                                        return 'isParked';
+                                } else {
+                                    if (!cell.isParked) {
+                                        return 'isEmpty';
+                                    } else {
+                                        return 'isParked';
+                                    }
+                                }
                             };
 
-                            const handleColorRow = (status) => {
+                            const handleStyleRow = (status, hover) => {
                                 switch (status) {
                                     case 'isEmpty':
                                         return {};
@@ -49,27 +57,32 @@ function ParkingArea({ area, type, lotRows = [] }) {
                                     case 'isMyParkedSlot':
                                         return {
                                             display: 'block',
-                                            backgroundColor: 'var(--your-color)'
+                                            backgroundColor: hover ? '#F0E68C' : 'var(--your-color)',
                                         };
 
                                     case 'isParked':
                                         return {
                                             display: 'block',
                                             backgroundColor: 'var(--parked-color)',
-                                            cursor: 'default'
+                                            cursor: 'default',
+                                            pointerEvents: 'none'
                                         };
 
                                     default:
                                         return;
                                 }
                             };
+
                             return (
                                 <Link
                                     key={index}
-                                    to={isRedirect && `/parking/${parking_id}`}
+                                    to={isLoggedIn && `/parking/${parking_id}`}
+                                    state={{ status: handleStatusOfRow() }}
                                     className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
                                     onClick={() => !isLoggedIn && dispatch({ type: AUTH_ACTION.OPEN_MODAL })}
-                                    style={handleColorRow(handleStatusOfRow())}
+                                    onPointerOver={() => { handleStatusOfRow() === 'isMyParkedSlot' && setHover(true) }}
+                                    onPointerOut={() => { handleStatusOfRow() === 'isMyParkedSlot' && setHover(false) }}
+                                    style={handleStyleRow(handleStatusOfRow(), hover)}
                                 >
                                     <span>
                                         {lotRow.area}
