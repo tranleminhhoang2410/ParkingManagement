@@ -11,7 +11,7 @@ import 'tippy.js/dist/tippy.css';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 
-import { getAccountByUserId } from '~/services/accountService'
+import { getAccountByUserId } from '~/services/accountService';
 import { signIn, signUp } from '~/services/authService';
 import { getLoggedUser } from '~/services/userService';
 
@@ -22,13 +22,12 @@ import { LS } from '~/utils/localStorage';
 
 import config from '~/config';
 
-
 const cx = classNames.bind(styles);
 
 function Header() {
     //To be Better, handle this logic from other component, not UI like Header
     const [authState, dispatch] = useContext(AuthContext);
-    const [account, setAccount] = useState(null)
+    const [account, setAccount] = useState(null);
     const {
         isLoggedIn,
         // user: { name: account },
@@ -131,22 +130,22 @@ function Header() {
             dispatch({ type: AUTH_ACTION.LOGOUT });
             LS.removeLocalStorage('auth');
         }
-        return () => { };
+        return () => {};
     }, [dispatch]);
 
-    //get account of user 
+    //get account of user
     useEffect(() => {
         if (!authState.user.id) return;
         const getAccount = async () => {
-            const account = await getAccountByUserId(authState.user.id)
+            const account = await getAccountByUserId(authState.user.id);
             setAccount(account);
-        }
+        };
         try {
             getAccount();
         } catch (error) {
             console.log('ERROR');
         }
-    }, [authState.user.id])
+    }, [authState.user.id]);
 
     async function handleSignIn(e) {
         e.preventDefault();
@@ -216,12 +215,12 @@ function Header() {
                         <Link className={cx('nav-link-item')} to="/">
                             Home
                         </Link>
-                        <Link className={cx('nav-link-item')} to="/">
+                        <Link className={cx('nav-link-item')} to="/about">
                             About Us
                         </Link>
-                        <Link className={cx('nav-link-item')} to="/admin">
+                        <span className={cx('nav-link-item')} style={{ cursor: 'pointer' }}>
                             Notifications
-                        </Link>
+                        </span>
                     </nav>
                 </div>
                 <div className={cx('social-and-login')}>

@@ -1,7 +1,6 @@
 const routes = {
     home: '/',
-    about: '/',
-    notifications: '/',
+    about: '/about',
     price: '/price',
     parking: '/parking',
     parkingDetail: '/parking/:id',
@@ -10,7 +9,7 @@ const routes = {
     profile: '/profile',
     forgot: '/forgot',
     changePassword: '/changePassword',
-    admin: '/admin'
+    admin: '/admin',
 };
 
 export default routes;

@@ -1,10 +1,11 @@
 import config from '~/config';
 
 //admin guard
-import AdminGuard from '~/components/AdminGuard/AdminGuard'
+import AdminGuard from '~/components/AdminGuard/AdminGuard';
 
 //pages
 import Home from '~/pages/Home';
+import About from '~/pages/About';
 import Price from '~/pages/Price';
 import Parking from '~/pages/Parking';
 import ParkingDetail from '~/pages/Parking/ParkingDetail';
@@ -16,6 +17,7 @@ import Admin from '~/pages/Admin';
 
 const publicRoutes = [
     { path: config.routes.home, component: Home },
+    { path: config.routes.about, component: About },
     { path: config.routes.price, component: Price },
     { path: config.routes.parking, component: Parking },
     { path: config.routes.parkingDetail, component: ParkingDetail },
@@ -25,11 +27,8 @@ const publicRoutes = [
     { path: config.routes.forgot, component: Forgot },
     { path: config.routes.changePassword, component: ChangePassword },
     { path: config.routes.admin, component: Admin, guard: AdminGuard },
-
 ];
 
-const protectedRoutes = [
-
-];
+const protectedRoutes = [];
 
 export { publicRoutes, protectedRoutes };
