@@ -58,27 +58,28 @@ namespace ParkingManagement.Controllers
         /// </summary>
         /// <param name="SlotId">LOT ĐƯỢC CHỌN (AREA+NUMBER)</param>
         /// <returns></returns>
-        [AuthorizationFilter]
-        [Authorize(Roles = "User")]
-        [HttpGet("CheckIn/{SlotId}")]
-        public async Task<ActionResult<IEnumerable<VehicleDTO>>> CheckIn(string SlotId)
-        {
-            int UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            IEnumerable<VehicleDTO> vehicleDTOs = await vehicleService.GetAllByUserID(UserId);
-            SlotDTO slotDTO = await slotService.GetByID(SlotId);
+        
+        //[AuthorizationFilter]
+        //[Authorize(Roles = "User")]
+        //[HttpGet("CheckIn/{SlotId}")]
+        //public async Task<ActionResult<IEnumerable<VehicleDTO>>> CheckIn(string SlotId)
+        //{
+        //    int UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //    IEnumerable<VehicleDTO> vehicleDTOs = await vehicleService.GetAllByUserID(UserId);
+        //    SlotDTO slotDTO = await slotService.GetByID(SlotId);
 
-            List<VehicleDTO> result = new List<VehicleDTO>();
+        //    List<VehicleDTO> result = new List<VehicleDTO>();
 
-            foreach (VehicleDTO vehicle in vehicleDTOs)
-            {
-                if (vehicle.IsParking == false && vehicle.VehicleTypeId == slotDTO.VehicleTypeId)
-                {
-                    result.Add(vehicle);
-                }
-            }
+        //    foreach (VehicleDTO vehicle in vehicleDTOs)
+        //    {
+        //        if (vehicle.IsParking == false && vehicle.VehicleTypeId == slotDTO.VehicleTypeId)
+        //        {
+        //            result.Add(vehicle);
+        //        }
+        //    }
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         /// <summary>
         /// GỌI KHI NGƯỜI DÙNG CLICK VÀO NÚT CHECK IN, NÓ SẼ LẤY TẠO 1 HÓA ĐƠN ĐỂ TRỐNG PHẦN CHECKOUT TIME VÀ TỔNG TIỀN (2 CÁI NÀY THÊM VÀO LÚC CHECK OUT)
