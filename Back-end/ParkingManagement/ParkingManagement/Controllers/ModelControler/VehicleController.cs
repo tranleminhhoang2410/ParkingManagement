@@ -121,7 +121,7 @@ namespace ParkingManagement.Controllers
 
         [AuthorizationFilter]
         [Authorize(Roles = "User")]
-        [HttpGet("CheckIn/{SlotId}")]
+        [HttpGet("CheckedIn/{SlotId}")]
         public async Task<ActionResult<InvoiceDTO>> CheckOut(string SlotId)
         {
             try

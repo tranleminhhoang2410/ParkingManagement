@@ -4,6 +4,7 @@ const END_POINT = {
     ADD_VEHICLE: 'Vehicle/AddVehicle',
     GET_VEHICLE_BY_USER_ID: 'Vehicle/Get/UserVehicle',
     CHECK_IN: 'Vehicle/CheckIn',
+    GET_CHECKED_IN_VEHICLE: 'Vehicle/CheckedIn'
 };
 
 export const enrollVehicle = (vehicle) => {
@@ -19,5 +20,5 @@ export const checkIn = (vehicle) => {
 };
 
 export const getCheckedInVehicle = (slotId) => {
-    return axios.get(`${END_POINT.CHECK_IN}/${slotId}`)
+    return axios.get(`${END_POINT.GET_CHECKED_IN_VEHICLE}/${slotId}`)
 }

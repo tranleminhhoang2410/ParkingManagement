@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { getSlotById } from '~/services/slotService';
 import { AuthContext } from '~/context/AuthContextProvider';
-import { checkIn, getVehicleByUserId } from '~/services/vehicleService';
+import { checkIn, getCheckedInVehicle, getVehicleByUserId } from '~/services/vehicleService';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +24,7 @@ function ParkingDetail() {
     const parkingId = useParams().id;
     const [parkingSlot, setParkingSlot] = useState([]);
     const [vehicleByUserId, setVehicleByUserId] = useState([]);
-    const [vehicleCheckedIn, setVehicleCheckedIn] = useState([]);
+    const [vehicleCheckedIn, setVehicleCheckedIn] = useState({});
     const [authState] = useContext(AuthContext);
     const [vehiclePlate, setVehiclePlate] = useState('');
     const navigate = useNavigate();
@@ -51,7 +51,10 @@ function ParkingDetail() {
 
     //Get checked in vehicle
     useEffect(() => {
-
+        const fetchCheckedInVehicle = async () => {
+            setVehicleCheckedIn(await getCheckedInVehicle(parkingId));
+        }
+        fetchCheckedInVehicle();
     }, [parkingId])
 
     //Filter vehicle by Vehicle Type Id of Slot
@@ -167,7 +170,7 @@ function ParkingDetail() {
             //Get Vehicle Id when check in
         } else {
             return (
-                <h1>Plate when check in</h1>
+                <h1>{vehicleCheckedIn.vehicleId}</h1>
             )
         }
     }

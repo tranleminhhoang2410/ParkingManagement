@@ -8,6 +8,7 @@ export const AUTH_ACTION = {
     OPEN_MODAL: 'OPEN_MODAL',
     CLOSE_MODAL: 'CLOSE_MODAL',
 };
+
 const initialState = {
     isLoggedIn: false,
     user: {},
@@ -18,6 +19,7 @@ const initialState = {
     role: LS.getLocalStorage('auth')?.role || null,
     openAuthModal: false,
 };
+
 function authReducer(state, action) {
     switch (action.type) {
         case AUTH_ACTION.LOGIN:
