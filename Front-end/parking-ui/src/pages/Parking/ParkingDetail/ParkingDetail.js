@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { getSlotById } from '~/services/slotService';
 import { AuthContext } from '~/context/AuthContextProvider';
-import { checkIn, getCheckedInVehicle, getVehicleByUserId } from '~/services/vehicleService';
+import { checkIn, checkOut, getCheckedInVehicle, getVehicleByUserId } from '~/services/vehicleService';
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +29,8 @@ function ParkingDetail() {
     const [vehiclePlate, setVehiclePlate] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
+
+    console.log(authState)
 
     const status = location?.state.status
     console.log(status);
@@ -44,9 +46,13 @@ function ParkingDetail() {
     //Get Vehicle By User Id
     useEffect(() => {
         const fetchVehicleByUserId = async () => {
-            setVehicleByUserId(await getVehicleByUserId(authState.user.id));
+            const vehicle = await getVehicleByUserId(authState.user.id)
+
+            console.log(vehicle);
+            setVehicleByUserId(vehicle);
         };
-        fetchVehicleByUserId();
+
+        if (authState.user.id) fetchVehicleByUserId();
     }, [authState.user.id]);
 
     //Get checked in vehicle
@@ -80,11 +86,7 @@ function ParkingDetail() {
             slotId: slotId,
         });
         navigate('/parking');
-        notifyCheckInSuccess();
-    };
-
-    const notifyCheckInSuccess = () => {
-        toast.success('Check in successfully!', {
+        toast.success(`Checked in ${slotId} successfully!`, {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -94,6 +96,29 @@ function ParkingDetail() {
             progress: undefined,
         });
     };
+
+    //Check out
+    const handleCheckOut = async (event) => {
+        event.preventDefault();
+        const response = await checkOut({
+            id: vehicleCheckedIn.id,
+            checkinTime: vehicleCheckedIn.checkinTime,
+            checkoutTime: vehicleCheckedIn.checkoutTime,
+            vehicleId: vehicleCheckedIn.vehicleId,
+            slotId: parkingId
+        })
+        console.log(response);
+        navigate('/parking');
+        toast.success(`Checked out ${parkingId} successfully!`, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+    }
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -167,10 +192,10 @@ function ParkingDetail() {
                     </>
                 )
             }
-            //Get Vehicle Id when check in
         } else {
+            //Get Vehicle Id when check in
             return (
-                <h1>{vehicleCheckedIn.vehicleId}</h1>
+                <span className={cx('input-notext')}>{vehicleCheckedIn.vehicleId}</span>
             )
         }
     }
@@ -193,6 +218,14 @@ function ParkingDetail() {
                             </label>
                             {handleRenderVehicleId()}
                         </div>
+                        {
+                            status === 'isMyParkedSlot' && <div className={cx('input-group')}>
+                                <label htmlFor="vehicleType" className={cx('input-label')}>
+                                    Checked in Time
+                                </label>
+                                <span className={cx('input-notext')}>{vehicleCheckedIn.checkinTime}</span>
+                            </div>
+                        }
                         <div className={cx('input-group')}>
                             <label htmlFor="vehicleType" className={cx('input-label')}>
                                 Vehicle Type
@@ -225,7 +258,7 @@ function ParkingDetail() {
                         }}
                         id="confirm-form"
                         className={cx('confirm-form')}
-                        onSubmit={handleCheckIn}
+                        onSubmit={status === 'isEmpty' ? handleCheckIn : handleCheckOut}
                     >
                         <h1 style={{ fontSize: '3rem', fontWeight: '500', color: 'var(--primary-color)' }}>
                             Do you want to {status === 'isEmpty' ? 'check in' : 'check out'} this slot ?

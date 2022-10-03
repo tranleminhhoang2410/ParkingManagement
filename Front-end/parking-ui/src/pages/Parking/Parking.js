@@ -42,7 +42,6 @@ function Parking() {
         fetchSlotsData();
     }, []);
 
-    // lotRows.c
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', margin: 'auto', height: '100%' }}>

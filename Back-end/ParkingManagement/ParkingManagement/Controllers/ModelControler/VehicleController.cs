@@ -131,34 +131,36 @@ namespace ParkingManagement.Controllers
                 int UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 UserDTO user = await userService.GetUserById(UserId);
 
-                VehicleDTO parkedVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
-
-                bool isUserVehicle = false;
-
-                foreach (VehicleDTO v in user.Vehicles)
+                if (invoiceDTO != null)
                 {
-                    if (v.Id.Equals(parkedVehicle.Id))
+                    VehicleDTO parkedVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
+
+                    bool isUserVehicle = false;
+
+                    foreach (VehicleDTO v in user.Vehicles)
                     {
-                        isUserVehicle = true;
-                        break;
+                        if (v.Id.Equals(parkedVehicle.Id))
+                        {
+                            isUserVehicle = true;
+                            break;
+                        }
                     }
+
+                    if (!isUserVehicle) throw new Exception("It's not yours");
+
+                    invoiceDTO.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+
+                    invoiceDTO.TotalPaid = 0;
+
+                    return Ok(invoiceDTO);
                 }
-
-                if (!isUserVehicle) throw new Exception("It's not yours");
-
-                invoiceDTO.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
-
-                int[] parkingTime = await invoiceService.CalculateparkingTime(invoiceDTO.CheckinTime, invoiceDTO.CheckoutTime);
-
-                VehicleTypeDTO parkingType = await vehicleTypeService.GetById((await slotService.GetByID(SlotId)).VehicleTypeId);
-
-                invoiceDTO.TotalPaid = parkingTime[0] * parkingType.PricePerHour
-                                        + parkingTime[1] * parkingType.PricePerDay
-                                        + parkingTime[2] * parkingType.PricePerWeek
-                                        + parkingTime[3] * parkingType.PricePerMonth
-                                        + parkingTime[4] * parkingType.PricePerYear;
-
-                return Ok(invoiceDTO);
+                else
+                {
+                    return Ok(new
+                    {
+                        Message = "No parking vehicle"
+                    });
+                }
             }
             catch (Exception e)
             {
@@ -174,16 +176,27 @@ namespace ParkingManagement.Controllers
         [AuthorizationFilter]
         [Authorize(Roles = "User")]
         [HttpPost("CheckOut")]
-        public async Task<ActionResult<string>> CheckOut(InvoiceDTO invoiceDTO)
+        public async Task<ActionResult<InvoiceDTO>> CheckOut(InvoiceDTO invoiceDTO)
         {
             try
             {
+                invoiceDTO.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+
+                int[] parkingTime = await invoiceService.CalculateparkingTime(invoiceDTO.CheckinTime, invoiceDTO.CheckoutTime);
+
+                VehicleTypeDTO parkingType = await vehicleTypeService.GetById((await slotService.GetByID(invoiceDTO.SlotId)).VehicleTypeId);
+
+                invoiceDTO.TotalPaid = parkingTime[0] * parkingType.PricePerHour
+                                        + parkingTime[1] * parkingType.PricePerDay
+                                        + parkingTime[2] * parkingType.PricePerWeek
+                                        + parkingTime[3] * parkingType.PricePerMonth
+                                        + parkingTime[4] * parkingType.PricePerYear;
                 string note = "";
                 note += await invoiceService.UpdateInvoice(invoiceDTO);
                 note += await slotService.SetParkingSlotStatus(invoiceDTO.SlotId, false);
                 note += await vehicleService.SetVehicleIsParking(invoiceDTO.VehicleId, false);
 
-                return note;
+                return invoiceDTO;
             }
             catch (Exception e)
             {
