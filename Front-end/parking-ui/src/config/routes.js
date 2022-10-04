@@ -1,4 +1,9 @@
+const adminRoutes = {
+    admin: '/admin',
+}
+
 const routes = {
+    ...adminRoutes,
     home: '/',
     about: '/about',
     price: '/price',
@@ -8,8 +13,8 @@ const routes = {
     enrollVehicle: '/vehicles/enroll',
     profile: '/profile',
     forgot: '/forgot',
-    changePassword: '/changePassword',
-    admin: '/admin',
+    changePassword: '/password/change',
+    invoices: '/invoices'
 };
 
 export default routes;

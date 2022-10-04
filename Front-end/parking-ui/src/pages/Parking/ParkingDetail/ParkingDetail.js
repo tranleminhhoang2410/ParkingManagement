@@ -247,8 +247,8 @@ function ParkingDetail() {
                 </Button>)}
             </form>
             <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-                {/* Confirm Form */}
                 <div>
+                    {/* Confirm Form */}
                     <form
                         style={{
                             padding: '16px',

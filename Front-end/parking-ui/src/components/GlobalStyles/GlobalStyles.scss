@@ -16,7 +16,8 @@
 
     //Height
     --default-header-height: 52px;
-    --default-background-height: 80vh;
+    --default-content-min-height: calc(100vh - var(--default-header-height) - var(--default-footer-height));
+    --default-footer-height: 52px;
 
     //Fonts
     --font-family: 'Poppins', sans-serif;

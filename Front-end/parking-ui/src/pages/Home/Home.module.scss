@@ -3,11 +3,8 @@
 .wrapper{
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-evenly;
     height: 100%;
-    max-width: var(--default-layout-max-width);
-    margin: 0 auto;
 
     .introduction-title{
         font-family: 'Playfair Display', serif;
@@ -15,6 +12,10 @@
         color: #fbc4a6;
         font-size: 6rem;
         font-weight: 600;
+    }
+
+    .introduction-description{
+        text-align: center;
     }
 
 

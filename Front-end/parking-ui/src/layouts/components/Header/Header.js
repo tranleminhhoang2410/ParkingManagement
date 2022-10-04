@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitterSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
-import { faXmark, faUser, faRightFromBracket, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faUser, faRightFromBracket, faKey, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
@@ -42,13 +42,18 @@ function Header() {
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
-            title: 'View Profile',
+            title: 'Profile',
             to: '/profile',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faReceipt} />,
+            title: 'Invoices',
+            to: '/invoices',
         },
         {
             icon: <FontAwesomeIcon icon={faKey} />,
             title: 'Change Password',
-            to: '/changePassword',
+            to: '/password/change',
         },
         {
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
@@ -130,7 +135,7 @@ function Header() {
             dispatch({ type: AUTH_ACTION.LOGOUT });
             LS.removeLocalStorage('auth');
         }
-        return () => {};
+        return () => { };
     }, [dispatch]);
 
     //get account of user

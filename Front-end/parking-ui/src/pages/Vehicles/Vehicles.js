@@ -21,7 +21,7 @@ const cx = classNames.bind(styles);
 
 
 function Vehicles() {
-    let pageSize = 28;
+    let pageSize = 32;
     const location = useLocation();
     const isEnroll = location.state?.isEnroll;
     const [modalIsOpen, setIsOpen] = useState(false);
