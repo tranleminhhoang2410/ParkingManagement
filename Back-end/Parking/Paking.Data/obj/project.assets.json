@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj",
+      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
       "projectName": "Paking.Data",
-      "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj",
+      "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\obj\\",
+      "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

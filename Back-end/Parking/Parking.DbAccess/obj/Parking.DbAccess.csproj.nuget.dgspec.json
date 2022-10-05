@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {}
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {}
   },
   "projects": {
-    "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
         "projectName": "Paking.Data",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -58,14 +58,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
         "projectName": "Parking.DbAccess",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -82,8 +82,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj"
               }
             }
           }

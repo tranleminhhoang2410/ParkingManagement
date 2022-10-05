@@ -24,7 +24,7 @@ namespace Parking.API.Controllers
 
         [AuthorizationFilter]
         [Authorize(Roles = "User, Admin")]
-        [HttpGet("Get/UserVehicle/{userId}")]
+        [HttpGet("Get/{userId}")]
         public async Task<ActionResult<IEnumerable<InvoiceDTO>>> GetUserVehicle(int userId)
         {
             List<InvoiceDTO> userInvoice = new List<InvoiceDTO>();
@@ -33,7 +33,7 @@ namespace Parking.API.Controllers
 
             foreach(VehicleDTO v in userVehicles)
             {
-                List<InvoiceDTO> vehicleInvoice = (await invoiceService.GetByVehicleId(v.Id)).ToList();
+                List<InvoiceDTO> vehicleInvoice = (await invoiceService.GetByVehicleId(v.Id)).Where(i => i.CheckoutTime != null).ToList();
                 userInvoice.AddRange(vehicleInvoice);
             }
 

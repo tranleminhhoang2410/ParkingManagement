@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj",
+      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj",
       "projectName": "Paking.DTO",
-      "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj",
+      "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\obj\\",
+      "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +53,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj": {
-              "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj"
+            "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
+              "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj"
             }
           }
         }

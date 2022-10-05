@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D9ladslI7LRV2fHmia/+cpmxTpUVuL2g7i+tVU297JDxURd4G8m94prxCSFOdwEr7TjQbqymZlreADDeXrXehA==",
+  "dgSpecHash": "yw8MTZ3w0rksRGHTwRII5mk3BK3e0jUyF8wIv5dF2RtrrTHyZVScKciZ7fwGES1OC5q1fc7nmIXFbr0BQQW85A==",
   "success": true,
-  "projectFilePath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Service\\Parking.Service.csproj",
+  "projectFilePath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",

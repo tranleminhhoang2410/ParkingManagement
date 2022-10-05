@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hw9jo58BGBJyldUQuEYzH5cbP7X2dQz+EFc0yD/AwRs41xaUU7Pdj9zrtQQxTSergRFV20sV9cZOL3R0gOZC3w==",
+  "dgSpecHash": "8TODhniwp8XBJPr0kEOFVby0eDirN30TjAnEJTPyWu8SM4D70Jr9JPdSHTgRTLGnHhv7aQkvux1OSrwWc3sLjA==",
   "success": true,
-  "projectFilePath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
+  "projectFilePath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {}
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {}
   },
   "projects": {
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
         "projectName": "Parking.EmailService",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

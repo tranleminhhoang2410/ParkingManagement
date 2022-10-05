@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.API\\Parking.API.csproj": {}
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj": {}
   },
   "projects": {
-    "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
         "projectName": "Paking.Data",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -58,14 +58,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj",
         "projectName": "Paking.DTO",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -82,8 +82,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj"
               }
             }
           }
@@ -116,14 +116,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.API\\Parking.API.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.API\\Parking.API.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj",
         "projectName": "Parking.API",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.API\\Parking.API.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.API\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -140,17 +140,17 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
               },
-              "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj"
               },
-              "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Security\\Parking.Security.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Security\\Parking.Security.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj"
               },
-              "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Service\\Parking.Service.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Service\\Parking.Service.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj"
               }
             }
           }
@@ -202,14 +202,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
         "projectName": "Parking.DbAccess",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -226,8 +226,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj"
               }
             }
           }
@@ -284,14 +284,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
         "projectName": "Parking.EmailService",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -348,14 +348,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Security\\Parking.Security.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Security\\Parking.Security.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj",
         "projectName": "Parking.Security",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Security\\Parking.Security.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Security\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -372,11 +372,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj"
               },
-              "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
               }
             }
           }
@@ -409,14 +409,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Service\\Parking.Service.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Service\\Parking.Service.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj",
         "projectName": "Parking.Service",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Service\\Parking.Service.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.Service\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -433,17 +433,17 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.Data\\Paking.Data.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj"
               },
-              "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Paking.DTO\\Paking.DTO.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj"
               },
-              "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
               },
-              "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj": {
-                "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj"
+              "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj": {
+                "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj"
               }
             }
           }
@@ -476,14 +476,14 @@
         }
       }
     },
-    "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj": {
+    "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
+        "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
         "projectName": "Parking.ViewModel",
-        "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
+        "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\obj\\",
+        "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

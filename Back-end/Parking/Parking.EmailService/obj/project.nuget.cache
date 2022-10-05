@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TSC7drmCjhJMn3wW5j4WGWDgCATkFeJ+W3n7o8su4Ug7LhC7hHMMTEyGY12HJnLfKk3S3Q3drQQv+N0R8zqo4A==",
+  "dgSpecHash": "qxOE3Tj1cFrv7xGDweNjTnodqHfOt0wHwQhQisurWMLGBN+7imyrzVCs0Oe8T5B8CoBbgR/CJiebUXSbai8yzw==",
   "success": true,
-  "projectFilePath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
+  "projectFilePath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\mailkit\\3.4.1\\mailkit.3.4.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

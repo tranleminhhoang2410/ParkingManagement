@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6h+1+cnP7SY9ei3UOu2EdWKBrHDrk7cgLZYQPgjKK76snXS9ru3mIDT7shHzWLPklEzJccZJmu6XD/Qb5ohAFA==",
+  "dgSpecHash": "fddWD5TSCRepkmHAAXoVGi0cfX6nIA9Xc2FqPTBz6BsLXbxBTb9nOJojXVLvcH3p/I/C5wrGDAfCeyWvHKlYfQ==",
   "success": true,
-  "projectFilePath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.API\\Parking.API.csproj",
+  "projectFilePath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\mailkit\\3.4.1\\mailkit.3.4.1.nupkg.sha512",

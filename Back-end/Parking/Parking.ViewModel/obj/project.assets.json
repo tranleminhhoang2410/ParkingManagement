@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
+      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
       "projectName": "Parking.ViewModel",
-      "projectPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
+      "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\Web\\Fullstack\\Parking\\Parking.ViewModel\\obj\\",
+      "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
