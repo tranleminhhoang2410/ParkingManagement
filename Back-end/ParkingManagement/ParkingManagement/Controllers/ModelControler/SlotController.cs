@@ -51,8 +51,8 @@ namespace ParkingManagement.Controllers
             return Ok(await slotService.GetAllByTypeId(typeId));
         }
 
-        [AuthorizationFilter]
-        [Authorize(Roles = "User, Admin")]
+        //[AuthorizationFilter]
+        //[Authorize(Roles = "User, Admin")]
         [HttpGet("Get/{Id}")]
         public async Task<ActionResult<SlotDTO>> GetType(string Id)
         {

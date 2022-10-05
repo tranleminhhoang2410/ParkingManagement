@@ -1,0 +1,59 @@
+.vehicle-image{
+    text-align: center;
+    margin-bottom: 24px;
+
+    .vehicle-icon{
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    
+    .search-input{
+        padding: 4px 8px;
+        margin-right: 8px;
+        border-radius: 4px;
+    }
+
+    .search-icon{
+        cursor: pointer;
+        color: var(--primary-color);
+    }
+}
+
+.invoices-list{
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    gap: 12px 8px;
+
+    .invoice-item{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: var(--white-color);
+        border-radius: 8px;
+        padding: 16px;
+
+        .info{
+            .info-group{
+                display: flex;
+                align-items: center;
+            }
+
+            .info-label{
+                min-width: 120px;
+            }
+
+            .info-content{
+                flex: 1;
+            }
+        }
+    }
+}

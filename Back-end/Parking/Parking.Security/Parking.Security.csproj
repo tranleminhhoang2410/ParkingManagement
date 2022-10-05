@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paking.DTO\Paking.DTO.csproj" />
+    <ProjectReference Include="..\Parking.DbAccess\Parking.DbAccess.csproj" />
+  </ItemGroup>
+
+</Project>
