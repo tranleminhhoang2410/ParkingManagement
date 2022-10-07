@@ -15,12 +15,12 @@ function Invoices() {
 
     useEffect(() => {
         if (!authState.user.id) return;
-        const getVehicle = async () => {
+        const getInvoiceByUserId = async () => {
             const invoices = await getInvoiceByUserIdApi(authState.user.id);
             setInvoices(invoices);
         };
         try {
-            getVehicle();
+            getInvoiceByUserId();
         } catch (error) {
             console.log('ERROR');
         }

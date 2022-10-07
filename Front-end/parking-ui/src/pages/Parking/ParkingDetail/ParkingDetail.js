@@ -30,9 +30,9 @@ function ParkingDetail() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    console.log(authState)
+    console.log(authState);
 
-    const status = location?.state.status
+    const status = location?.state.status;
     console.log(status);
 
     //Get Slot Detail
@@ -46,7 +46,7 @@ function ParkingDetail() {
     //Get Vehicle By User Id
     useEffect(() => {
         const fetchVehicleByUserId = async () => {
-            const vehicle = await getVehicleByUserId(authState.user.id)
+            const vehicle = await getVehicleByUserId(authState.user.id);
 
             console.log(vehicle);
             setVehicleByUserId(vehicle);
@@ -59,12 +59,14 @@ function ParkingDetail() {
     useEffect(() => {
         const fetchCheckedInVehicle = async () => {
             setVehicleCheckedIn(await getCheckedInVehicle(parkingId));
-        }
+        };
         fetchCheckedInVehicle();
-    }, [parkingId])
+    }, [parkingId]);
 
     //Filter vehicle by Vehicle Type Id of Slot
-    const vehiclesBySlot = vehicleByUserId.filter((vehicle) => !vehicle.isParking && (vehicle.vehicleTypeId === parkingSlot.vehicleTypeId));
+    const vehiclesBySlot = vehicleByUserId.filter(
+        (vehicle) => !vehicle.isParking && vehicle.vehicleTypeId === parkingSlot.vehicleTypeId,
+    );
 
     //Get Current Date
     const current = new Date();
@@ -105,8 +107,8 @@ function ParkingDetail() {
             checkinTime: vehicleCheckedIn.checkinTime,
             checkoutTime: vehicleCheckedIn.checkoutTime,
             vehicleId: vehicleCheckedIn.vehicleId,
-            slotId: parkingId
-        })
+            slotId: parkingId,
+        });
         console.log(response);
         navigate('/parking');
         toast.success(`Checked out ${parkingId} successfully!`, {
@@ -118,7 +120,7 @@ function ParkingDetail() {
             draggable: true,
             progress: undefined,
         });
-    }
+    };
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -170,7 +172,7 @@ function ParkingDetail() {
                             </option>
                         ))}
                     </select>
-                )
+                );
             } else {
                 return (
                     <>
@@ -190,15 +192,13 @@ function ParkingDetail() {
                             Enroll here
                         </Button>
                     </>
-                )
+                );
             }
         } else {
             //Get Vehicle Id when check in
-            return (
-                <span className={cx('input-notext')}>{vehicleCheckedIn.vehicleId}</span>
-            )
+            return <span className={cx('input-notext')}>{vehicleCheckedIn.vehicleId}</span>;
         }
-    }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -218,14 +218,14 @@ function ParkingDetail() {
                             </label>
                             {handleRenderVehicleId()}
                         </div>
-                        {
-                            status === 'isMyParkedSlot' && <div className={cx('input-group')}>
+                        {status === 'isMyParkedSlot' && (
+                            <div className={cx('input-group')}>
                                 <label htmlFor="vehicleType" className={cx('input-label')}>
                                     Checked in Time
                                 </label>
                                 <span className={cx('input-notext')}>{vehicleCheckedIn.checkinTime}</span>
                             </div>
-                        }
+                        )}
                         <div className={cx('input-group')}>
                             <label htmlFor="vehicleType" className={cx('input-label')}>
                                 Vehicle Type
@@ -240,11 +240,15 @@ function ParkingDetail() {
                         </div>
                     </div>
                 </div>
-                {status === 'isEmpty' ? (<Button className={cx('regis-btn')} primary>
-                    CHECK IN
-                </Button>) : (<Button className={cx('checkout-btn')} primary>
-                    CHECK OUT
-                </Button>)}
+                {status === 'isEmpty' ? (
+                    <Button className={cx('regis-btn')} primary>
+                        CHECK IN
+                    </Button>
+                ) : (
+                    <Button className={cx('checkout-btn')} primary>
+                        CHECK OUT
+                    </Button>
+                )}
             </form>
             <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
                 <div>

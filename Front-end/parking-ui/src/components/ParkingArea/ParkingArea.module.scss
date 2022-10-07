@@ -34,7 +34,6 @@
     .cells {
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid var(--white-color);
     }
 
     .cell-odd,
@@ -51,6 +50,22 @@
         &:hover {
             background-color: #ccc;
         }
+
+    }
+
+    .cell-odd.my-parked,
+    .cell-even.my-parked{
+        background-color: var(--your-color);
+        &:hover{
+            background-color: #F0E68C;
+        }
+    }
+
+    .cell-odd.is-parked,
+    .cell-even.is-parked{
+        background-color: var(--parked-color);
+        cursor: default;
+        pointer-events: none;
     }
 
     .cell-odd {

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ParkingArea.module.scss';
@@ -10,7 +10,6 @@ const cx = classNames.bind(styles);
 function ParkingArea({ area, type, lotRows = [] }) {
     const [authState, dispatch] = useContext(AuthContext);
     const { isLoggedIn } = authState;
-    const [hover, setHover] = useState(false);
 
     return (
         <div className={cx('wrapper')}>
@@ -24,9 +23,11 @@ function ParkingArea({ area, type, lotRows = [] }) {
                 <div
                     key={index}
                     className={cx('cells')}
-                    style={lotRow.type.toUpperCase() === type && lotRow.area === area
-                        ? { display: 'flex' }
-                        : { display: 'none' }}
+                    style={
+                        lotRow.type.toUpperCase() === type && lotRow.area === area
+                            ? { display: 'flex' }
+                            : { display: 'none' }
+                    }
                 >
                     {lotRow.type.toUpperCase() === type && lotRow.area === area ? (
                         lotRow.cells.map((cell, index) => {
@@ -34,12 +35,9 @@ function ParkingArea({ area, type, lotRows = [] }) {
 
                             const handleStatusOfRow = () => {
                                 if (isLoggedIn) {
-                                    if (!cell.isParked)
-                                        return 'isEmpty';
-                                    if (cell.isParked && (cell.userId === authState.user.id))
-                                        return 'isMyParkedSlot';
-                                    if (cell.isParked)
-                                        return 'isParked';
+                                    if (!cell.isParked) return 'isEmpty';
+                                    if (cell.isParked && cell.userId === authState.user.id) return 'isMyParkedSlot';
+                                    if (cell.isParked) return 'isParked';
                                 } else {
                                     if (!cell.isParked) {
                                         return 'isEmpty';
@@ -49,24 +47,17 @@ function ParkingArea({ area, type, lotRows = [] }) {
                                 }
                             };
 
-                            const handleStyleRow = (status, hover) => {
+                            const handleClassOfRow = (status, number) => {
                                 switch (status) {
                                     case 'isEmpty':
-                                        return {};
-
+                                        if (number % 2 !== 0) return cx('cell-odd');
+                                        else return cx('cell-even');
                                     case 'isMyParkedSlot':
-                                        return {
-                                            display: 'block',
-                                            backgroundColor: hover ? '#F0E68C' : 'var(--your-color)',
-                                        };
-
+                                        if (number % 2 !== 0) return cx('cell-odd', 'my-parked');
+                                        else return cx('cell-even', 'my-parked');
                                     case 'isParked':
-                                        return {
-                                            display: 'block',
-                                            backgroundColor: 'var(--parked-color)',
-                                            cursor: 'default',
-                                            pointerEvents: 'none'
-                                        };
+                                        if (number % 2 !== 0) return cx('cell-odd', 'is-parked');
+                                        else return cx('cell-even', 'is-parked');
 
                                     default:
                                         return;
@@ -78,11 +69,8 @@ function ParkingArea({ area, type, lotRows = [] }) {
                                     key={index}
                                     to={isLoggedIn && `/parking/${parking_id}`}
                                     state={{ status: handleStatusOfRow() }}
-                                    className={cell.number % 2 !== 0 ? cx('cell-odd') : cx('cell-even')}
+                                    className={handleClassOfRow(handleStatusOfRow(), cell.number)}
                                     onClick={() => !isLoggedIn && dispatch({ type: AUTH_ACTION.OPEN_MODAL })}
-                                    onPointerOver={() => { handleStatusOfRow() === 'isMyParkedSlot' && setHover(true) }}
-                                    onPointerOut={() => { handleStatusOfRow() === 'isMyParkedSlot' && setHover(false) }}
-                                    style={handleStyleRow(handleStatusOfRow(), hover)}
                                 >
                                     <span>
                                         {lotRow.area}
