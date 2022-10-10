@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faBus, faTruck, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Button from '~/components/Button';
@@ -307,7 +307,6 @@ function Vehicles() {
                     </Modal>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 }

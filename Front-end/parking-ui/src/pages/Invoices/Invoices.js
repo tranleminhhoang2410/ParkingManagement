@@ -1,11 +1,15 @@
-import { useState, useEffect, useContext, useMemo } from 'react';
+import { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Invoices.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faMagnifyingGlass, faTrash, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from '~/context/AuthContextProvider';
-import { getInvoiceByUserIdApi } from '~/services/invoiceService';
+import { getInvoiceByUserIdApi, deleteInvoiceApi } from '~/services/invoiceService';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Modal from 'react-modal';
 
 import Pagination from '~/components/Pagination';
@@ -64,13 +68,40 @@ function Invoices() {
     };
 
     //Confirm Modal
-    function openModal(e) {
+    const ref = useRef()
+
+    const invoiceIdDelete = invoices.find(invoice => invoice.id === ref.current)?.id;
+
+    function openModal(e, id) {
         e.preventDefault();
+        ref.current = id;
         setIsOpen(true);
     }
 
     function closeModal() {
         setIsOpen(false);
+    }
+
+
+    const handleDeleteInvoice = async (e) => {
+        try {
+            e.preventDefault();
+            await deleteInvoiceApi(ref.current);
+            closeModal();
+            setInvoices(await getInvoiceByUserIdApi(authState.user.id));
+            setCurrentPage(1);
+            toast.success(`Delete invoice '${ref.current}' successfully!`, {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -122,14 +153,6 @@ function Invoices() {
                             <div className={cx('info')}>
                                 <div className={cx('info-group')}>
                                     <label htmlFor="" className={cx('info-label')}>
-                                        Total Time
-                                    </label>
-                                    <span className={cx('info-content')}>12:34:34</span>
-                                </div>
-                            </div>
-                            <div className={cx('info')}>
-                                <div className={cx('info-group')}>
-                                    <label htmlFor="" className={cx('info-label')}>
                                         Total Price
                                     </label>
                                     <span className={cx('info-content')}>{invoice.totalPaid}</span>
@@ -141,7 +164,7 @@ function Invoices() {
                                     <span className={cx('info-content')}>{invoice.id}</span>
                                 </div>
                             </div>
-                            <div className={cx('delete-btn')} onClick={openModal}>
+                            <div className={cx('delete-btn')} onClick={(e) => openModal(e, invoice.id)}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </div>
                         </li>
@@ -164,9 +187,10 @@ function Invoices() {
                         }}
                         id="confirm-form"
                         className={cx('confirm-form')}
+                        onSubmit={handleDeleteInvoice}
                     >
                         <h1 style={{ fontSize: '3rem', fontWeight: '500', color: 'var(--primary-color)' }}>
-                            Do you want to delete this invoice ?
+                            Do you want to delete invoice {invoiceIdDelete}?
                         </h1>
                         <div
                             style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}

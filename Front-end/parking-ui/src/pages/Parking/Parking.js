@@ -6,7 +6,6 @@ import Note from '~/components/Note';
 
 import { useEffect, useState } from 'react';
 import { getAllSlots } from '~/services/slotService';
-import { ToastContainer } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -65,7 +64,6 @@ function Parking() {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 }

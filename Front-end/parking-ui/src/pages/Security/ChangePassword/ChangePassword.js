@@ -9,7 +9,7 @@ import { AuthContext } from '~/context/AuthContextProvider';
 import { getAccountByUserId } from '~/services/accountService';
 import { changePassword } from '~/services/authService';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 const cx = classNames.bind(styles);
@@ -97,7 +97,6 @@ function ChangePassword() {
                     change password
                 </Button>
             </form>
-            <ToastContainer />
         </div>
     );
 }
