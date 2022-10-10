@@ -2736,19 +2736,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj",
+      "projectUniqueName": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj",
       "projectName": "Parking.API",
-      "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.API\\obj\\",
+      "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.API\\Parking.API.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2762,17 +2762,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
-              "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
+            "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj": {
+              "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj"
             },
-            "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
-              "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj"
+            "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj": {
+              "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.EmailService\\Parking.EmailService.csproj"
             },
-            "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj": {
-              "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj"
+            "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj": {
+              "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.Security\\Parking.Security.csproj"
             },
-            "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj": {
-              "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj"
+            "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj": {
+              "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.Service\\Parking.Service.csproj"
             }
           }
         }
@@ -2820,7 +2820,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

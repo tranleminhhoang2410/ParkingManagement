@@ -39,20 +39,40 @@ namespace Parking.Service.Implements
             }
         }
 
-        public async Task<int[]> CalculateparkingTime(DateTime? checkin, DateTime? checkout)
+        public async Task<Dictionary<string, int>> CalculateparkingTime(DateTime? checkin, DateTime? checkout)
         {
             TimeSpan timeSpan = ((DateTime)checkout).Subtract((DateTime)checkin);
 
-            int[] parkingTime = new int[]
-            {
-                timeSpan.Hours,
-                timeSpan.Days % 365 % 30 % 7,
-                timeSpan.Days % 365 % 30 / 7,
-                timeSpan.Days % 365 / 30,
-                timeSpan.Days / 365           
-            };
+            Dictionary<string, int> time = new Dictionary<string, int>();
 
-            return parkingTime;
+            time.Add("second", timeSpan.Seconds);
+            time.Add("minutes", timeSpan.Minutes);
+            time.Add("hours", timeSpan.Hours);
+            time.Add("days", timeSpan.Days % 365 % 30 % 7);
+            time.Add("weeks", timeSpan.Days % 365 % 30 / 7);
+            time.Add("months", timeSpan.Days % 365 / 30);
+            time.Add("years", timeSpan.Days / 365);
+            time.Add("totalDays", timeSpan.Days);
+
+            return time;
+        }
+
+        public async Task DeleteInvoice(int id)
+        {
+            try
+            {
+                Invoice invoice = await _db.Invoices.FirstOrDefaultAsync(i => i.Id == id);
+
+                if (invoice == null) throw new Exception("No invoice id:"+id+" found");
+
+                _db.Invoices.Remove(invoice);
+                _db.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public Task<IEnumerable<InvoiceDTO>> GetAll()
@@ -73,6 +93,7 @@ namespace Parking.Service.Implements
         public async Task<IEnumerable<InvoiceDTO>> GetByVehicleId(string vehicleId)
         {
             List<InvoiceDTO?> invoices = await _db.Invoices
+               .Include(c => c.Vehicle)
                .Where(c => c.VehicleId == vehicleId)
                .Select(c => ToDTO.Map(c))
                .ToListAsync();
@@ -104,5 +125,7 @@ namespace Parking.Service.Implements
                 return e.Message;
             }
         }
+
+
     }
 }

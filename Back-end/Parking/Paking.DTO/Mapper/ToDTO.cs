@@ -116,8 +116,8 @@ namespace Paking.DTO.Mapper
                     CheckoutTime = invoice.CheckoutTime,
                     SlotId = invoice.SlotId,
                     VehicleId = invoice.VehicleId,
-                    //Slot = Map(invoice.Slot),
-                    TotalPaid = invoice.TotalPaid
+                    TotalPaid = invoice.TotalPaid,
+                    VehicleTypeId = invoice.Vehicle.VehicleTypeId
                 };
             }
 

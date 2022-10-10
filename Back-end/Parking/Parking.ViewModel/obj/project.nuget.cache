@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Jzx/fo95AQ3rW05xKr/pDo8DnvgMepkFIkA/uHexBG79t/KlnCxTs5M6Vs7VLSkmCu1EhQbEOkln3UrhE3y9eQ==",
+  "dgSpecHash": "o8gzM19DG4MJASCmUEovuPe84vDNTUAfuigtY4hck/XRSsTj5nbz1AUu4OpJMwuEmYvtfvSp38i4WLS0Z4Ddvw==",
   "success": true,
-  "projectFilePath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
+  "projectFilePath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.ViewModel\\Parking.ViewModel.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

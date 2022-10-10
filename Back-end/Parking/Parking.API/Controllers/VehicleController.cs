@@ -54,34 +54,6 @@ namespace Parking.API.Controllers
         }
 
         /// <summary>
-        /// cÁI NÀY SẼ GỌI KHI CLICK VÀO 1 LOT TRỐNG ĐỂ GỬI 1 CÁI API LIST XE CHƯA ĐỖ CỦA USER THEO LOẠI XE CỦA CÁI LOT ĐÓ
-        /// </summary>
-        /// <param name="SlotId">LOT ĐƯỢC CHỌN (AREA+NUMBER)</param>
-        /// <returns></returns>
-        
-        //[AuthorizationFilter]
-        //[Authorize(Roles = "User")]
-        //[HttpGet("CheckIn/{SlotId}")]
-        //public async Task<ActionResult<IEnumerable<VehicleDTO>>> CheckIn(string SlotId)
-        //{
-        //    int UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-        //    IEnumerable<VehicleDTO> vehicleDTOs = await vehicleService.GetAllByUserID(UserId);
-        //    SlotDTO slotDTO = await slotService.GetByID(SlotId);
-
-        //    List<VehicleDTO> result = new List<VehicleDTO>();
-
-        //    foreach (VehicleDTO vehicle in vehicleDTOs)
-        //    {
-        //        if (vehicle.IsParking == false && vehicle.VehicleTypeId == slotDTO.VehicleTypeId)
-        //        {
-        //            result.Add(vehicle);
-        //        }
-        //    }
-
-        //    return Ok(result);
-        //}
-
-        /// <summary>
         /// GỌI KHI NGƯỜI DÙNG CLICK VÀO NÚT CHECK IN, NÓ SẼ LẤY TẠO 1 HÓA ĐƠN ĐỂ TRỐNG PHẦN CHECKOUT TIME VÀ TỔNG TIỀN (2 CÁI NÀY THÊM VÀO LÚC CHECK OUT)
         /// </summary>
         /// <param name="vehicleId">CHỌN TỪ DANH SÁCH</param>
@@ -182,15 +154,15 @@ namespace Parking.API.Controllers
             {
                 invoiceDTO.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
-                int[] parkingTime = await invoiceService.CalculateparkingTime(invoiceDTO.CheckinTime, invoiceDTO.CheckoutTime);
+                Dictionary<string, int> parkingTime = await invoiceService.CalculateparkingTime(invoiceDTO.CheckinTime, invoiceDTO.CheckoutTime);
 
                 VehicleTypeDTO parkingType = await vehicleTypeService.GetById((await slotService.GetByID(invoiceDTO.SlotId)).VehicleTypeId);
 
-                invoiceDTO.TotalPaid = parkingTime[0] * parkingType.PricePerHour
-                                        + parkingTime[1] * parkingType.PricePerDay
-                                        + parkingTime[2] * parkingType.PricePerWeek
-                                        + parkingTime[3] * parkingType.PricePerMonth
-                                        + parkingTime[4] * parkingType.PricePerYear;
+                invoiceDTO.TotalPaid = parkingTime.GetValueOrDefault("hours") * parkingType.PricePerHour
+                                        + parkingTime.GetValueOrDefault("days") * parkingType.PricePerDay
+                                        + parkingTime.GetValueOrDefault("weeks") * parkingType.PricePerWeek
+                                        + parkingTime.GetValueOrDefault("months") * parkingType.PricePerMonth
+                                        + parkingTime.GetValueOrDefault("years") * parkingType.PricePerYear;
                 string note = "";
                 note += await invoiceService.UpdateInvoice(invoiceDTO);
                 note += await slotService.SetParkingSlotStatus(invoiceDTO.SlotId, false);

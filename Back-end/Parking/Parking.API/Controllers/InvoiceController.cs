@@ -25,7 +25,7 @@ namespace Parking.API.Controllers
         [AuthorizationFilter]
         [Authorize(Roles = "User, Admin")]
         [HttpGet("Get/{userId}")]
-        public async Task<ActionResult<IEnumerable<InvoiceDTO>>> GetUserVehicle(int userId)
+        public async Task<ActionResult<IEnumerable<InvoiceDTO>>> GetByUser(int userId)
         {
             List<InvoiceDTO> userInvoice = new List<InvoiceDTO>();
 
@@ -39,5 +39,22 @@ namespace Parking.API.Controllers
 
             return Ok(userInvoice);
         }
+
+
+        //[AuthorizationFilter]
+        //[Authorize(Roles = "User, Admin")]
+        [HttpDelete("Delete/{Id}")]
+        public async Task<ActionResult<string>> Delete(int Id)
+        {
+            try
+            {
+                await invoiceService.DeleteInvoice(Id);
+                return Ok("Delete invoice success");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        } 
     }
 }

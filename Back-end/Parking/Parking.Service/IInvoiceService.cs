@@ -12,6 +12,7 @@ namespace Parking.Service
         public Task<InvoiceDTO> GetIsParkingInvoiceBySlot(string slotId);
         public Task<string> AddNewInvoice(InvoiceDTO invoiceDTO);
         public Task<string> UpdateInvoice(InvoiceDTO invoiceDTO);
-        public Task<int[]> CalculateparkingTime(DateTime? checkin, DateTime? checkout);
+        public Task DeleteInvoice(int id);
+        public Task<Dictionary<string, int>> CalculateparkingTime(DateTime? checkin, DateTime? checkout);
     }
 }
