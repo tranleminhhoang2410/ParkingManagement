@@ -41,8 +41,8 @@ namespace Parking.API.Controllers
         }
 
 
-        //[AuthorizationFilter]
-        //[Authorize(Roles = "User, Admin")]
+        [AuthorizationFilter]
+        [Authorize(Roles = "User, Admin")]
         [HttpDelete("Delete/{Id}")]
         public async Task<ActionResult<string>> Delete(int Id)
         {
