@@ -26,7 +26,11 @@ function Parking() {
         {
             title: <div style={{ backgroundColor: 'var(--your-color)', width: '28px', height: '20px' }}></div>,
             value: 'Your slot',
-            color: 'var(--your-color)',
+            subvalue: 'Click on your slot to check out',
+        },
+        {
+            title: <div style={{ backgroundColor: 'var(--maintenance-color)', width: '28px', height: '20px' }}></div>,
+            value: 'Maintenance',
             subvalue: 'Click on your slot to check out',
         },
     ];

@@ -26,24 +26,12 @@
         margin-left: 16px;
     }
 
-    .plant-area {
-        display: flex;
-        height: 80%;
-        margin: auto 32px;
-        background-color: var(--parked-color);
-        border-radius: 8px;
-
-        .plant-text {
-            margin: auto;
-            color: var(--white-color);
-            text-transform: uppercase;
-            transform: rotate(90deg);
-        }
-    }
 
     .notes {
+        padding: 16px 0;
         display: flex;
-        margin: 12px 0 12px 24px;
+        align-items: center;
+        justify-content: space-around; 
 
         .note-item {
             margin: 0 8px;

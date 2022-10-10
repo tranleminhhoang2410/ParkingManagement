@@ -1,6 +1,6 @@
 .vehicle-image{
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 8px; 
 
     .vehicle-icon{
         width: 50px;
@@ -12,10 +12,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     
     .search-input{
-        padding: 4px 8px;
+        padding: 8px;
         margin-right: 8px;
         border-radius: 4px;
     }
@@ -33,6 +33,7 @@
     grid-template-rows: 1fr;
     gap: 12px 8px;
 
+
     .invoice-item{
         display: flex;
         flex-direction: column;
@@ -40,6 +41,8 @@
         background-color: var(--white-color);
         border-radius: 8px;
         padding: 16px;
+        width: 260px;
+        position: relative;
 
         .info{
             .info-group{
@@ -53,6 +56,26 @@
 
             .info-content{
                 flex: 1;
+            }
+
+        }
+
+        .series-code{
+            margin-top: 8px;
+            .info-group{
+                flex-direction: column;
+            }
+        }
+
+        .delete-btn{
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            color: red;
+            cursor: pointer;
+
+            &:hover{
+                opacity: 0.6;
             }
         }
     }
