@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SneJSfQeu3kUxosDMN6QQvHPgYvOWwXWneJ2JIHkc2jTwqUgQ4yjC4MzCgjRuaZaWKGsbF4OAgN/0OgPHCndag==",
+  "dgSpecHash": "Qv8x9kdJsnV7BBpI69viKY3yq5e1029baKcHEA3ftXs8bsKeN32xl9wwcRBcx3stHTg/9+0bzVyIJe1ibGlW1Q==",
   "success": true,
-  "projectFilePath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj",
+  "projectFilePath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Paking.DTO\\Paking.DTO.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

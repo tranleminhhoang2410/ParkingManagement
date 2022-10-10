@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
+      "projectUniqueName": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
       "projectName": "Paking.Data",
-      "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\obj\\",
+      "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -60,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

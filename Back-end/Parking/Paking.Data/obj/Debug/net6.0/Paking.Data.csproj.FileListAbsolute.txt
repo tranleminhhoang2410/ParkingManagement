@@ -34,3 +34,15 @@ D:\Code\Web\Fullstack\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\n
 D:\Code\Web\Fullstack\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\refint\Paking.Data.dll
 D:\Code\Web\Fullstack\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.pdb
 D:\Code\Web\Fullstack\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\ref\Paking.Data.dll
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\bin\Debug\net6.0\Paking.Data.deps.json
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\bin\Debug\net6.0\Paking.Data.dll
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\bin\Debug\net6.0\Paking.Data.pdb
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.csproj.AssemblyReference.cache
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.AssemblyInfoInputs.cache
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.AssemblyInfo.cs
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.csproj.CoreCompileInputs.cache
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.dll
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\refint\Paking.Data.dll
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\Paking.Data.pdb
+D:\ParkingManagement\ParkingManagement\Back-end\Parking\Paking.Data\obj\Debug\net6.0\ref\Paking.Data.dll

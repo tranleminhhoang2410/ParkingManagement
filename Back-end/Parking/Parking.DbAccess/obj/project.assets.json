@@ -2218,19 +2218,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
+      "projectUniqueName": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
       "projectName": "Parking.DbAccess",
-      "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\obj\\",
+      "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\Parking.DbAccess.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Parking.DbAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2244,8 +2244,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
-              "projectPath": "D:\\Code\\Web\\Fullstack\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj"
+            "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj": {
+              "projectPath": "D:\\ParkingManagement\\ParkingManagement\\Back-end\\Parking\\Paking.Data\\Paking.Data.csproj"
             }
           }
         }
@@ -2298,7 +2298,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
