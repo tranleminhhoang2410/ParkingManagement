@@ -85,13 +85,13 @@ function ChangePassword() {
                     <label htmlFor="new-password" className={cx('input-label')}>
                         New password
                     </label>
-                    <input type="text" name="new-password" id="new-password" className={cx('input-text')} />
+                    <input type="password" name="new-password" id="new-password" className={cx('input-text')} />
                 </div>
                 <div className={cx('input-group')}>
                     <label htmlFor="confirm-new-password" className={cx('input-label')}>
                         Confirm new password
                     </label>
-                    <input type="text" name="confirm-new-password" id="confirm-new-password" className={cx('input-text')} />
+                    <input type="password" name="confirm-new-password" id="confirm-new-password" className={cx('input-text')} />
                 </div>
                 <Button primary className={cx('change-btn')}>
                     change password

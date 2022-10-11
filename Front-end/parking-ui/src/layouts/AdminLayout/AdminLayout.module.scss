@@ -1,0 +1,9 @@
+.container{
+    display: flex;
+    background-color: #f8f8fb;
+
+    .content{
+        margin: auto;
+        max-width: var(--default-layout-max-width);
+    }
+}

@@ -1,7 +1,8 @@
 import config from '~/config';
 
-//admin guard
-import AdminGuard from '~/components/AdminGuard/AdminGuard';
+//guards
+import AdminGuard from '~/components/Guards/AdminGuard';
+import UserGuard from '~/components/Guards/UserGuard'
 
 //pages
 import Home from '~/pages/Home';
@@ -16,8 +17,11 @@ import ChangePassword from '~/pages/Security/ChangePassword/ChangePassword';
 import Invoices from '~/pages/Invoices'
 import Admin from '~/pages/Admin';
 
+//layouts
+import AdminLayout from '~/layouts/AdminLayout'
+
 const publicRoutes = [
-    { path: config.routes.home, component: Home },
+    { path: config.routes.home, component: Home, guard: UserGuard },
     { path: config.routes.about, component: About },
     { path: config.routes.price, component: Price },
     { path: config.routes.parking, component: Parking },
@@ -28,7 +32,7 @@ const publicRoutes = [
     { path: config.routes.invoices, component: Invoices },
     { path: config.routes.forgot, component: Forgot },
     { path: config.routes.changePassword, component: ChangePassword },
-    { path: config.routes.admin, component: Admin, guard: AdminGuard },
+    { path: config.routes.admin, component: Admin, guard: AdminGuard, layout: AdminLayout },
 ];
 
 const protectedRoutes = [];
