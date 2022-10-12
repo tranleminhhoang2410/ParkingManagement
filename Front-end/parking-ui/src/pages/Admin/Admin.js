@@ -1,9 +1,26 @@
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Admin.module.scss';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+
+import Button from '~/components/Button';
+import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
 
 const cx = classNames.bind(styles);
 
 function Admin() {
+    const [priceTable, setPriceTable] = useState([]);
+
+    useEffect(() => {
+        const getPriceTable = async () => {
+            const price = await getAllVehicleTypesApi();
+            setPriceTable(price);
+        };
+        getPriceTable();
+    }, []);
+
     return (
         <div className={cx('wrapper', 'mt-4')}>
             <div className={cx('statistic')}>
@@ -19,7 +36,11 @@ function Admin() {
                                         </div>
                                     </div>
                                     <div className={cx('col-5', 'align-self-end')}>
-                                        <img src={require('~/assets/images/profile-img.png')} alt="avatar" className={cx('img-fluid')} />
+                                        <img
+                                            src={require('~/assets/images/profile-img.png')}
+                                            alt="avatar"
+                                            className={cx('img-fluid')}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +70,11 @@ function Admin() {
                                                 </div>
                                             </div>
                                             <div className={cx('mt-4')}>
-                                                <a href="/" aria-current="page" className={cx('btn', 'btn-primary', 'btn-sm')}>
+                                                <a
+                                                    href="/"
+                                                    aria-current="page"
+                                                    className={cx('btn', 'btn-primary', 'btn-sm')}
+                                                >
                                                     View Profile <i className={cx('mdi', 'mdi-arrow-right', 'ms-1')} />
                                                 </a>
                                             </div>
@@ -71,25 +96,33 @@ function Admin() {
                                             From previous period
                                         </p>
                                         <div className={cx('mt-4')}>
-                                            <a href="/" aria-current="page" className={cx('btn', 'btn-primary', 'btn-sm')}>
+                                            <a
+                                                href="/"
+                                                aria-current="page"
+                                                className={cx('btn', 'btn-primary', 'btn-sm')}
+                                            >
                                                 View More <i className={cx('mdi', 'mdi-arrow-right', 'ms-1')} />
                                             </a>
                                         </div>
                                     </div>
                                     <div className={cx('col-sm-6')}>
-                                        <div className={cx('mt-4', 'mt-sm-0')} style={{ position: "relative" }}>
+                                        <div className={cx('mt-4', 'mt-sm-0')} style={{ position: 'relative' }}>
                                             <div>
                                                 <div
                                                     id={cx('apexcharts8tbbovi9')}
-                                                    className={cx('apexcharts-canvas', 'apexcharts8tbbovi9', 'apexcharts-theme-light')}
-                                                    style={{ width: 173, height: "168.525px" }}
+                                                    className={cx(
+                                                        'apexcharts-canvas',
+                                                        'apexcharts8tbbovi9',
+                                                        'apexcharts-theme-light',
+                                                    )}
+                                                    style={{ width: 173, height: '168.525px' }}
                                                 >
                                                     <svg
                                                         id={cx('SvgjsSvg3406')}
                                                         width={173}
                                                         height={168.52499999999998}
                                                         className={cx('apexcharts-svg')}
-                                                        style={{ background: "transparent" }}
+                                                        style={{ background: 'transparent' }}
                                                     >
                                                         <g
                                                             id={cx('SvgjsG3408')}
@@ -264,7 +297,8 @@ function Admin() {
                                                                                 fill="#556ee6"
                                                                                 className="apexcharts-text apexcharts-datalabel-label"
                                                                                 style={{
-                                                                                    fontFamily: "Helvetica, Arial, sans-serif"
+                                                                                    fontFamily:
+                                                                                        'Helvetica, Arial, sans-serif',
                                                                                 }}
                                                                             >
                                                                                 Series A
@@ -281,7 +315,8 @@ function Admin() {
                                                                                 fill="#373d3f"
                                                                                 className="apexcharts-text apexcharts-datalabel-value"
                                                                                 style={{
-                                                                                    fontFamily: "Helvetica, Arial, sans-serif"
+                                                                                    fontFamily:
+                                                                                        'Helvetica, Arial, sans-serif',
                                                                                 }}
                                                                             >
                                                                                 67%
@@ -322,7 +357,6 @@ function Admin() {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div className={cx('col-xl-8')}>
                         <div className={cx('row')}>
@@ -334,7 +368,15 @@ function Admin() {
                                                 <p className={cx('text-muted', 'fw-medium')}>Orders</p>
                                                 <h4 className={cx('mb-0')}>1,235</h4>
                                             </div>
-                                            <div className={cx('mini-stat-icon', 'avatar-sm', 'rounded-circle', 'bg-primary', 'align-self-center')}>
+                                            <div
+                                                className={cx(
+                                                    'mini-stat-icon',
+                                                    'avatar-sm',
+                                                    'rounded-circle',
+                                                    'bg-primary',
+                                                    'align-self-center',
+                                                )}
+                                            >
                                                 <span className={cx('avatar-title')}>
                                                     <i className={cx('bx', 'bx-copy-alt', 'font-size-24')} />
                                                 </span>
@@ -351,7 +393,15 @@ function Admin() {
                                                 <p className={cx('text-muted', 'fw-medium')}>Revenue</p>
                                                 <h4 className={cx('mb-0')}>$35, 723</h4>
                                             </div>
-                                            <div className={cx('mini-stat-icon', 'avatar-sm', 'rounded-circle', 'bg-primary', 'align-self-center')}>
+                                            <div
+                                                className={cx(
+                                                    'mini-stat-icon',
+                                                    'avatar-sm',
+                                                    'rounded-circle',
+                                                    'bg-primary',
+                                                    'align-self-center',
+                                                )}
+                                            >
                                                 <span className={cx('avatar-title')}>
                                                     <i className={cx('bx', 'bx-archive-in', 'font-size-24')} />
                                                 </span>
@@ -368,7 +418,15 @@ function Admin() {
                                                 <p className={cx('text-muted', 'fw-medium')}>Average Price</p>
                                                 <h4 className={cx('mb-0')}>$16.2</h4>
                                             </div>
-                                            <div className={cx('mini-stat-icon', 'avatar-sm', 'rounded-circle', 'bg-primary', 'align-self-center')}>
+                                            <div
+                                                className={cx(
+                                                    'mini-stat-icon',
+                                                    'avatar-sm',
+                                                    'rounded-circle',
+                                                    'bg-primary',
+                                                    'align-self-center',
+                                                )}
+                                            >
                                                 <span className={cx('avatar-title')}>
                                                     <i className={cx('bx', 'bx-purchase-tag-alt', 'font-size-24')} />
                                                 </span>
@@ -379,7 +437,7 @@ function Admin() {
                             </div>
                         </div>
                         <div className={cx('card', 'mt-4')}>
-                            <div className={cx('card-body')} style={{ position: "relative" }}>
+                            <div className={cx('card-body')} style={{ position: 'relative' }}>
                                 <div className={cx('d-sm-flex', 'flex-wrap')}>
                                     <h5 className={cx('card-title', 'mb-4', 'h4', 'card-title')}>Vehicles</h5>
                                 </div>
@@ -395,36 +453,36 @@ function Admin() {
                                             height={360}
                                             className="apexcharts-svg"
                                             transform="translate(0, 0)"
-                                            style={{ background: "transparent" }}
+                                            style={{ background: 'transparent' }}
                                         >
                                             <foreignObject x={0} y={0} width={740} height={360}>
                                                 <div
                                                     className="apexcharts-legend apexcharts-align-center position-bottom"
                                                     style={{
-                                                        inset: "auto 0px 1px",
-                                                        position: "absolute",
-                                                        maxHeight: 180
+                                                        inset: 'auto 0px 1px',
+                                                        position: 'absolute',
+                                                        maxHeight: 180,
                                                     }}
                                                 >
                                                     <div
                                                         className="apexcharts-legend-series"
                                                         rel={1}
                                                         seriesname="SeriesxA"
-                                                        style={{ margin: "2px 5px" }}
+                                                        style={{ margin: '2px 5px' }}
                                                     >
                                                         <span
                                                             className="apexcharts-legend-marker"
                                                             rel={1}
                                                             style={{
-                                                                background: "rgb(85, 110, 230) !important",
-                                                                color: "rgb(85, 110, 230)",
+                                                                background: 'rgb(85, 110, 230) !important',
+                                                                color: 'rgb(85, 110, 230)',
                                                                 height: 12,
                                                                 width: 12,
                                                                 left: 0,
                                                                 top: 0,
                                                                 borderWidth: 0,
-                                                                borderColor: "rgb(255, 255, 255)",
-                                                                borderRadius: 2
+                                                                borderColor: 'rgb(255, 255, 255)',
+                                                                borderRadius: 2,
                                                             }}
                                                         />
                                                         <span
@@ -432,10 +490,10 @@ function Admin() {
                                                             rel={1}
                                                             i={0}
                                                             style={{
-                                                                color: "rgb(55, 61, 63)",
+                                                                color: 'rgb(55, 61, 63)',
                                                                 fontSize: 12,
                                                                 fontWeight: 400,
-                                                                fontFamily: "Helvetica, Arial, sans-serif"
+                                                                fontFamily: 'Helvetica, Arial, sans-serif',
                                                             }}
                                                         >
                                                             Series A
@@ -445,22 +503,21 @@ function Admin() {
                                                         className="apexcharts-legend-series"
                                                         rel={2}
                                                         seriesname="SeriesxB"
-                                                        style={{ margin: "2px 5px" }}
+                                                        style={{ margin: '2px 5px' }}
                                                     >
                                                         <span
                                                             className="apexcharts-legend-marker"
                                                             rel={2}
-
                                                             style={{
-                                                                background: "rgb(241, 180, 76) !important",
-                                                                color: "rgb(241, 180, 76)",
+                                                                background: 'rgb(241, 180, 76) !important',
+                                                                color: 'rgb(241, 180, 76)',
                                                                 height: 12,
                                                                 width: 12,
                                                                 left: 0,
                                                                 top: 0,
                                                                 borderWidth: 0,
-                                                                borderColor: "rgb(255, 255, 255)",
-                                                                borderRadius: 2
+                                                                borderColor: 'rgb(255, 255, 255)',
+                                                                borderRadius: 2,
                                                             }}
                                                         />
                                                         <span
@@ -468,10 +525,10 @@ function Admin() {
                                                             rel={2}
                                                             i={1}
                                                             style={{
-                                                                color: "rgb(55, 61, 63)",
+                                                                color: 'rgb(55, 61, 63)',
                                                                 fontSize: 12,
                                                                 fontWeight: 400,
-                                                                fontFamily: "Helvetica, Arial, sans-serif"
+                                                                fontFamily: 'Helvetica, Arial, sans-serif',
                                                             }}
                                                         >
                                                             Series B
@@ -481,21 +538,21 @@ function Admin() {
                                                         className="apexcharts-legend-series"
                                                         rel={3}
                                                         seriesname="SeriesxC"
-                                                        style={{ margin: "2px 5px" }}
+                                                        style={{ margin: '2px 5px' }}
                                                     >
                                                         <span
                                                             className="apexcharts-legend-marker"
                                                             rel={3}
                                                             style={{
-                                                                background: "rgb(52, 195, 143) !important",
-                                                                color: "rgb(52, 195, 143)",
+                                                                background: 'rgb(52, 195, 143) !important',
+                                                                color: 'rgb(52, 195, 143)',
                                                                 height: 12,
                                                                 width: 12,
                                                                 left: 0,
                                                                 top: 0,
                                                                 borderWidth: 0,
-                                                                borderColor: "rgb(255, 255, 255)",
-                                                                borderRadius: 2
+                                                                borderColor: 'rgb(255, 255, 255)',
+                                                                borderRadius: 2,
                                                             }}
                                                         />
                                                         <span
@@ -503,10 +560,10 @@ function Admin() {
                                                             rel={3}
                                                             i={2}
                                                             style={{
-                                                                color: "rgb(55, 61, 63)",
+                                                                color: 'rgb(55, 61, 63)',
                                                                 fontSize: 12,
                                                                 fontWeight: 400,
-                                                                fontFamily: "Helvetica, Arial, sans-serif"
+                                                                fontFamily: 'Helvetica, Arial, sans-serif',
                                                             }}
                                                         >
                                                             Series C
@@ -516,8 +573,7 @@ function Admin() {
                                                 <style
                                                     type="text/css"
                                                     dangerouslySetInnerHTML={{
-                                                        __html:
-                                                            "\t\n    \t\n      .apexcharts-legend {\t\n        display: flex;\t\n        overflow: auto;\t\n        padding: 0 10px;\t\n      }\t\n      .apexcharts-legend.position-bottom, .apexcharts-legend.position-top {\t\n        flex-wrap: wrap\t\n      }\t\n      .apexcharts-legend.position-right, .apexcharts-legend.position-left {\t\n        flex-direction: column;\t\n        bottom: 0;\t\n      }\t\n      .apexcharts-legend.position-bottom.apexcharts-align-left, .apexcharts-legend.position-top.apexcharts-align-left, .apexcharts-legend.position-right, .apexcharts-legend.position-left {\t\n        justify-content: flex-start;\t\n      }\t\n      .apexcharts-legend.position-bottom.apexcharts-align-center, .apexcharts-legend.position-top.apexcharts-align-center {\t\n        justify-content: center;  \t\n      }\t\n      .apexcharts-legend.position-bottom.apexcharts-align-right, .apexcharts-legend.position-top.apexcharts-align-right {\t\n        justify-content: flex-end;\t\n      }\t\n      .apexcharts-legend-series {\t\n        cursor: pointer;\t\n        line-height: normal;\t\n      }\t\n      .apexcharts-legend.position-bottom .apexcharts-legend-series, .apexcharts-legend.position-top .apexcharts-legend-series{\t\n        display: flex;\t\n        align-items: center;\t\n      }\t\n      .apexcharts-legend-text {\t\n        position: relative;\t\n        font-size: 14px;\t\n      }\t\n      .apexcharts-legend-text *, .apexcharts-legend-marker * {\t\n        pointer-events: none;\t\n      }\t\n      .apexcharts-legend-marker {\t\n        position: relative;\t\n        display: inline-block;\t\n        cursor: pointer;\t\n        margin-right: 3px;\t\n        border-style: solid;\n      }\t\n      \t\n      .apexcharts-legend.apexcharts-align-right .apexcharts-legend-series, .apexcharts-legend.apexcharts-align-left .apexcharts-legend-series{\t\n        display: inline-block;\t\n      }\t\n      .apexcharts-legend-series.apexcharts-no-click {\t\n        cursor: auto;\t\n      }\t\n      .apexcharts-legend .apexcharts-hidden-zero-series, .apexcharts-legend .apexcharts-hidden-null-series {\t\n        display: none !important;\t\n      }\t\n      .apexcharts-inactive-legend {\t\n        opacity: 0.45;\t\n      }"
+                                                        __html: '\t\n    \t\n      .apexcharts-legend {\t\n        display: flex;\t\n        overflow: auto;\t\n        padding: 0 10px;\t\n      }\t\n      .apexcharts-legend.position-bottom, .apexcharts-legend.position-top {\t\n        flex-wrap: wrap\t\n      }\t\n      .apexcharts-legend.position-right, .apexcharts-legend.position-left {\t\n        flex-direction: column;\t\n        bottom: 0;\t\n      }\t\n      .apexcharts-legend.position-bottom.apexcharts-align-left, .apexcharts-legend.position-top.apexcharts-align-left, .apexcharts-legend.position-right, .apexcharts-legend.position-left {\t\n        justify-content: flex-start;\t\n      }\t\n      .apexcharts-legend.position-bottom.apexcharts-align-center, .apexcharts-legend.position-top.apexcharts-align-center {\t\n        justify-content: center;  \t\n      }\t\n      .apexcharts-legend.position-bottom.apexcharts-align-right, .apexcharts-legend.position-top.apexcharts-align-right {\t\n        justify-content: flex-end;\t\n      }\t\n      .apexcharts-legend-series {\t\n        cursor: pointer;\t\n        line-height: normal;\t\n      }\t\n      .apexcharts-legend.position-bottom .apexcharts-legend-series, .apexcharts-legend.position-top .apexcharts-legend-series{\t\n        display: flex;\t\n        align-items: center;\t\n      }\t\n      .apexcharts-legend-text {\t\n        position: relative;\t\n        font-size: 14px;\t\n      }\t\n      .apexcharts-legend-text *, .apexcharts-legend-marker * {\t\n        pointer-events: none;\t\n      }\t\n      .apexcharts-legend-marker {\t\n        position: relative;\t\n        display: inline-block;\t\n        cursor: pointer;\t\n        margin-right: 3px;\t\n        border-style: solid;\n      }\t\n      \t\n      .apexcharts-legend.apexcharts-align-right .apexcharts-legend-series, .apexcharts-legend.apexcharts-align-left .apexcharts-legend-series{\t\n        display: inline-block;\t\n      }\t\n      .apexcharts-legend-series.apexcharts-no-click {\t\n        cursor: auto;\t\n      }\t\n      .apexcharts-legend .apexcharts-hidden-zero-series, .apexcharts-legend .apexcharts-hidden-null-series {\t\n        display: none !important;\t\n      }\t\n      .apexcharts-inactive-legend {\t\n        opacity: 0.45;\t\n      }',
                                                     }}
                                                 />
                                             </foreignObject>
@@ -626,7 +682,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3768">Jan</tspan>
                                                             <title>Jan</title>
@@ -642,7 +698,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3771">Feb</tspan>
                                                             <title>Feb</title>
@@ -658,7 +714,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3774">Mar</tspan>
                                                             <title>Mar</title>
@@ -674,7 +730,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3777">Apr</tspan>
                                                             <title>Apr</title>
@@ -690,7 +746,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3780">May</tspan>
                                                             <title>May</title>
@@ -706,7 +762,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3783">Jun</tspan>
                                                             <title>Jun</title>
@@ -722,7 +778,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3786">Jul</tspan>
                                                             <title>Jul</title>
@@ -738,7 +794,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3789">Aug</tspan>
                                                             <title>Aug</title>
@@ -754,7 +810,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3792">Sep</tspan>
                                                             <title>Sep</title>
@@ -770,7 +826,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3795">Oct</tspan>
                                                             <title>Oct</title>
@@ -786,7 +842,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3798">Nov</tspan>
                                                             <title>Nov</title>
@@ -802,7 +858,7 @@ function Admin() {
                                                             fontWeight={400}
                                                             fill="#373d3f"
                                                             className="apexcharts-text apexcharts-xaxis-label "
-                                                            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                         >
                                                             <tspan id="SvgjsTspan3801">Dec</tspan>
                                                             <title>Dec</title>
@@ -1041,7 +1097,6 @@ function Admin() {
                                                         className="apexcharts-series"
                                                         seriesname="SeriesxA"
                                                         rel={1}
-
                                                     >
                                                         <path
                                                             id="SvgjsPath3724"
@@ -1814,19 +1869,9 @@ function Admin() {
                                                             barwidth="9.369650268554688"
                                                         />
                                                     </g>
-                                                    <g
-                                                        id="SvgjsG3723"
-                                                        className="apexcharts-datalabels"
-
-                                                    />
-                                                    <g
-                                                        id="SvgjsG3737"
-                                                        className="apexcharts-datalabels"
-                                                    />
-                                                    <g
-                                                        id="SvgjsG3751"
-                                                        className="apexcharts-datalabels"
-                                                    />
+                                                    <g id="SvgjsG3723" className="apexcharts-datalabels" />
+                                                    <g id="SvgjsG3737" className="apexcharts-datalabels" />
+                                                    <g id="SvgjsG3751" className="apexcharts-datalabels" />
                                                 </g>
                                                 <line
                                                     id="SvgjsLine3841"
@@ -1871,7 +1916,7 @@ function Admin() {
                                                         fontWeight={400}
                                                         fill="#373d3f"
                                                         className="apexcharts-text apexcharts-yaxis-label "
-                                                        style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                        style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                     >
                                                         <tspan id="SvgjsTspan3806">100</tspan>
                                                         <title>100</title>
@@ -1887,7 +1932,7 @@ function Admin() {
                                                         fontWeight={400}
                                                         fill="#373d3f"
                                                         className="apexcharts-text apexcharts-yaxis-label "
-                                                        style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                        style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                     >
                                                         <tspan id="SvgjsTspan3808">80</tspan>
                                                         <title>80</title>
@@ -1903,7 +1948,7 @@ function Admin() {
                                                         fontWeight={400}
                                                         fill="#373d3f"
                                                         className="apexcharts-text apexcharts-yaxis-label "
-                                                        style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                        style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                     >
                                                         <tspan id="SvgjsTspan3810">60</tspan>
                                                         <title>60</title>
@@ -1919,7 +1964,7 @@ function Admin() {
                                                         fontWeight={400}
                                                         fill="#373d3f"
                                                         className="apexcharts-text apexcharts-yaxis-label "
-                                                        style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                        style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                     >
                                                         <tspan id="SvgjsTspan3812">40</tspan>
                                                         <title>40</title>
@@ -1935,7 +1980,7 @@ function Admin() {
                                                         fontWeight={400}
                                                         fill="#373d3f"
                                                         className="apexcharts-text apexcharts-yaxis-label "
-                                                        style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                        style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                     >
                                                         <tspan id="SvgjsTspan3814">20</tspan>
                                                         <title>20</title>
@@ -1951,7 +1996,7 @@ function Admin() {
                                                         fontWeight={400}
                                                         fill="#373d3f"
                                                         className="apexcharts-text apexcharts-yaxis-label "
-                                                        style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                                                        style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
                                                     >
                                                         <tspan id="SvgjsTspan3816">0</tspan>
                                                         <title>0</title>
@@ -1967,7 +2012,6 @@ function Admin() {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -1984,25 +2028,66 @@ function Admin() {
                                             <tr>
                                                 <th className={cx('align-middle')}>Vehicle Type Id</th>
                                                 <th className={cx('align-middle')}>Vehicle Type</th>
+                                                <th className={cx('align-middle')}>Price Per Hour</th>
                                                 <th className={cx('align-middle')}>Price Per Day</th>
                                                 <th className={cx('align-middle')}>Price Per Week</th>
                                                 <th className={cx('align-middle')}>Price Per Month</th>
                                                 <th className={cx('align-middle')}>Price Per Year</th>
+                                                <th className={cx('align-middle')}>Edit</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span className={cx('text-body', 'fw-bold')}>
-                                                        #1
-                                                    </span>
-                                                </td>
-                                                <td>Car</td>
-                                                <td>10.000 VNĐ</td>
-                                                <td>20.000 VNĐ</td>
-                                                <td>30.000 VNĐ</td>
-                                                <td>40.000 VNĐ</td>
-                                            </tr>
+                                            {priceTable.map((item) => (
+                                                <tr key={item.id}>
+                                                    <td>
+                                                        <span className={cx('text-body', 'fw-bold')}>#{item.id}</span>
+                                                    </td>
+                                                    <td>{item.typeName}</td>
+                                                    <td>
+                                                        <span className={cx('p-1')}>{item.pricePerHour}</span>
+                                                        VNĐ
+                                                    </td>
+                                                    <td>
+                                                        <span className={cx('p-1')}>{item.pricePerDay}</span> VNĐ
+                                                    </td>
+                                                    <td>
+                                                        <span className={cx('p-1')}>{item.pricePerWeek}</span> VNĐ
+                                                    </td>
+                                                    <td>
+                                                        <span className={cx('p-1')}>{item.pricePerMonth}</span> VNĐ
+                                                    </td>
+                                                    <td>
+                                                        <span className={cx('p-1')}>{item.pricePerYear}</span> VNĐ
+                                                    </td>
+                                                    <td>
+                                                        <Button
+                                                            style={{ with: '100%', textTransform: 'uppercase' }}
+                                                            className={cx('btn', 'btn-success', 'edit-btn')}
+                                                            leftIcon={<FontAwesomeIcon icon={faEdit} />}
+                                                            type="submit"
+                                                        >
+                                                            edit
+                                                        </Button>
+
+                                                        {/* <Button
+                                                                style={{ width: '45%', textTransform: 'uppercase' }}
+                                                                className={cx('btn', 'btn-success', 'save-btn')}
+                                                                leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                                                                type="submit"
+                                                            >
+                                                                save
+                                                            </Button>
+                                                            <Button
+                                                                style={{ width: '45%', textTransform: 'uppercase' }}
+                                                                className={cx('btn', 'btn-danger', 'cancel-btn')}
+                                                                leftIcon={<FontAwesomeIcon icon={faX} />}
+                                                                type="submit"
+                                                            >
+                                                                cancel
+                                                            </Button> */}
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -2033,22 +2118,25 @@ function Admin() {
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <span className={cx('text-body', 'fw-bold')}>
-                                                        #1
-                                                    </span>
+                                                    <span className={cx('text-body', 'fw-bold')}>#1</span>
                                                 </td>
                                                 <td>Hoang Tran</td>
                                                 <td>43A-111111</td>
                                                 <td>A1</td>
                                                 <td>12:43:00</td>
                                                 <td>15:45:23</td>
-                                                <td>
-                                                    450000 VNĐ
-                                                </td>
+                                                <td>450000 VNĐ</td>
                                                 <td>
                                                     <button
-                                                        type='button'
-                                                        className={cx('btn', 'btn-primary', 'btn-sm', 'btn-rounded', 'waves-effect', 'waves-light')}
+                                                        type="button"
+                                                        className={cx(
+                                                            'btn',
+                                                            'btn-primary',
+                                                            'btn-sm',
+                                                            'btn-rounded',
+                                                            'waves-effect',
+                                                            'waves-light',
+                                                        )}
                                                     >
                                                         View Details
                                                     </button>
@@ -2056,22 +2144,25 @@ function Admin() {
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span className={cx('text-body', 'fw-bold')}>
-                                                        #1
-                                                    </span>
+                                                    <span className={cx('text-body', 'fw-bold')}>#1</span>
                                                 </td>
                                                 <td>Hoang Tran</td>
                                                 <td>43A-111111</td>
                                                 <td>A1</td>
                                                 <td>12:43:00</td>
                                                 <td>15:45:23</td>
-                                                <td>
-                                                    450000 VNĐ
-                                                </td>
+                                                <td>450000 VNĐ</td>
                                                 <td>
                                                     <button
-                                                        type='button'
-                                                        className={cx('btn', 'btn-primary', 'btn-sm', 'btn-rounded', 'waves-effect', 'waves-light')}
+                                                        type="button"
+                                                        className={cx(
+                                                            'btn',
+                                                            'btn-primary',
+                                                            'btn-sm',
+                                                            'btn-rounded',
+                                                            'waves-effect',
+                                                            'waves-light',
+                                                        )}
                                                     >
                                                         View Details
                                                     </button>
@@ -2085,7 +2176,7 @@ function Admin() {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
