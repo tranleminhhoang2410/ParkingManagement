@@ -43,9 +43,9 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'Profile',
-            to: '/profile',
+            to: authState.role !== config.roles.ADMIN ? '/profile' : '/admin/profile',
         },
-        {
+        authState.role !== config.roles.ADMIN && {
             icon: <FontAwesomeIcon icon={faReceipt} />,
             title: 'Invoices',
             to: '/invoices',
@@ -220,9 +220,24 @@ function Header() {
                         <Link className={cx('nav-link-item')} to="/">
                             Home
                         </Link>
-                        <Link className={cx('nav-link-item')} to="/about">
-                            About Us
-                        </Link>
+                        {authState.role !== config.roles.ADMIN ? (
+                            <Link className={cx('nav-link-item')} to="/about">
+                                About Us
+                            </Link>
+                        ) : (
+                            <>
+                                <Link className={cx('nav-link-item')} to="/admin/regulations">
+                                    Regulations
+                                </Link>
+                                <Link className={cx('nav-link-item')} to="/admin/slots">
+                                    Slots
+                                </Link>
+                                <Link className={cx('nav-link-item')} to="/admin/invoices">
+                                    Invoices
+                                </Link>
+                            </>
+                        )}
+
                         <span className={cx('nav-link-item')} style={{ cursor: 'pointer' }}>
                             Notifications
                         </span>

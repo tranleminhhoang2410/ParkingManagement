@@ -1,5 +1,9 @@
 const adminRoutes = {
     admin: '/admin',
+    adminProfile: '/admin/profile',
+    adminRegulations: '/admin/regulations',
+    adminSlots: '/admin/slots',
+    adminInvoices: '/admin/invoices'
 }
 
 const routes = {

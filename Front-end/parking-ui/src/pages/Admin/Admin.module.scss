@@ -1,1 +1,41 @@
 @import '~bootstrap/scss/bootstrap';
+
+.bg-primary{
+    background-color: var(--primary-color) !important;
+}   
+
+.avatar-md{
+    width: 7.5rem;
+    height: 7.5rem;
+}
+
+.profile-user-wid{
+    margin-top: -26px;
+}
+
+.font-size-12{
+    font-size: 12px;
+}
+
+.font-size-15,
+.text-muted{
+    font-size: 15px;
+}
+
+.btn-profile{
+    padding: 4px 8px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    font-size: 12px;
+
+    .icon{
+        width: unset;
+        margin-left: 0;
+    }
+
+    &:hover{
+        background-color: #ffb400;
+    }
+}
+

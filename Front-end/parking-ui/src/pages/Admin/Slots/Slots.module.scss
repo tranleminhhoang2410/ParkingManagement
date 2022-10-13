@@ -1,0 +1,194 @@
+.wrapper{
+    height: calc(100vh - 52px - 52px - 32px);
+
+
+}
+
+.tab-title{
+    display:flex;
+    align-items: center;
+
+    .tab-button{
+        flex: 1;
+        color: var(--white-color);
+        padding: 12px 20px;
+    }
+
+    .car{
+        background-color: var(--car-color);
+        
+        &.active{
+            border: 2px solid blue;
+        }
+    }
+
+    .bus{
+        background-color: var(--bus-color);
+        &.active{
+            border: 2px solid var(--primary-border-color);
+        }
+    }
+
+    .truck{
+        background-color: var(--truck-color);
+        &.active{
+            border: 2px solid green;
+        }
+    }
+}
+
+.tab-content{
+    margin-top: 16px;
+    height: 91%;
+    overflow: auto;
+
+    .car{
+        background-color: var(--car-color);
+    
+    }
+
+    .bus{
+        background-color: var(--bus-color);
+    }
+
+    .truck{
+        background-color: var(--truck-color);
+    }
+
+    .content{
+        display: none;
+    }
+
+    .active-content{
+        display: block;
+    }
+
+    .invoice-table {
+	--bgColorDarker: #ececec;
+	--bgColorLighter: #fcfcfc;
+	--insideBorderColor: lightgray;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border-collapse: collapse;
+	color: var(--text-color);
+
+    .slot-txt{
+        color: var(--text-color);
+        font-weight: bold;
+    }
+
+    .car-txt {
+        color: var(--car-color);
+        font-weight: bold;
+    }
+
+    .bus-txt {
+        color: var(--bus-color);
+        font-weight: bold;
+    }
+
+    .truck-txt {
+        color: var(--truck-color);
+        font-weight: bold;
+    }
+
+    .view-btn{
+        background-color: green;
+        color: var(--white-color);
+        width: 150px;
+
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+
+    .maintenance-btn{
+        background-color: red;
+        color: var(--white-color);
+        width: 150px;
+
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+
+	table-layout: fixed;
+        thead { 
+            tr {
+                color: whitesmoke;
+                background-color: var(--accent-color);
+                font-size: 16px;
+            }
+        }
+    
+        tbody tr {
+            background-color: var(--bgColorDarker);
+            font-size: 14px;
+
+        }
+    
+        tbody tr:nth-child(odd) {
+            background-color: var(--bgColorLighter);
+        }
+    
+        th {
+            letter-spacing: 0.075rem;
+        }
+    
+        th,
+        td {
+            padding: 12px;
+            font-weight: normal;
+            text-align: left;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+        .invoice-table {
+            border: none;
+
+            caption {
+                padding: 0.75rem 1rem;
+                border-radius: 6px 6px 0 0;
+                color: whitesmoke;
+                font-size: 1.35rem;
+                background-color: var(--accent-color);
+            }
+    
+            thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                clip: rect(0 0 0 0);
+                overflow: hidden;
+            }
+    
+            tbody tr {
+                margin-bottom: 2rem;
+                display: block;
+            }
+    
+            td {
+                font-size: 0.875rem;
+                text-align: right;
+                display: block;
+            }
+    
+            td:before {
+                content: attr(data-label);
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.075rem;
+                text-transform: uppercase;
+                float: left;
+                opacity: 0.5;
+            }
+    
+            td:not(:last-child) {
+                border-bottom: 1px solid var(--insideBorderColor);
+            }
+        }
+
+    }

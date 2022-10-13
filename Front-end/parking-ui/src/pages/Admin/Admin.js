@@ -30,9 +30,9 @@ function Admin() {
                             <div className={cx('bg-primary', 'bg-soft')}>
                                 <div className={cx('row')}>
                                     <div className={cx('col-7')}>
-                                        <div className={cx('text-primary', 'p-3')}>
-                                            <h5 className={cx('text-primary')}>Welcome Back !</h5>
-                                            <p>Parking Dashboard</p>
+                                        <div className={cx('p-3')}>
+                                            <h5 className={cx('font-size-15', 'text-white')}>Welcome Back !</h5>
+                                            <p className={cx('font-size-12', 'text-white')}>Parking Dashboard</p>
                                         </div>
                                     </div>
                                     <div className={cx('col-5', 'align-self-end')}>
@@ -54,7 +54,7 @@ function Admin() {
                                                 className={cx('img-thumbnail', 'rounded-circle')}
                                             />
                                         </div>
-                                        <h5 className={cx('font-size-15', 'text-truncate')}>Henry Price</h5>
+                                        <h5 className={cx('font-size-15', 'text-truncate')}>Hoang Tran</h5>
                                         <p className={cx('text-muted', 'mb-0', 'text-truncate')}>UI/UX Designer</p>
                                     </div>
                                     <div className={cx('col-sm-8')}>
@@ -70,13 +70,12 @@ function Admin() {
                                                 </div>
                                             </div>
                                             <div className={cx('mt-4')}>
-                                                <a
-                                                    href="/"
-                                                    aria-current="page"
-                                                    className={cx('btn', 'btn-primary', 'btn-sm')}
+                                                <Button
+                                                    to="/admin/profile"
+                                                    className={cx('btn', 'btn-primary', 'btn-profile')}
                                                 >
                                                     View Profile <i className={cx('mdi', 'mdi-arrow-right', 'ms-1')} />
-                                                </a>
+                                                </Button>
                                             </div>
                                         </div>
                                     </div>
@@ -95,15 +94,6 @@ function Admin() {
                                             </span>
                                             From previous period
                                         </p>
-                                        <div className={cx('mt-4')}>
-                                            <a
-                                                href="/"
-                                                aria-current="page"
-                                                className={cx('btn', 'btn-primary', 'btn-sm')}
-                                            >
-                                                View More <i className={cx('mdi', 'mdi-arrow-right', 'ms-1')} />
-                                            </a>
-                                        </div>
                                     </div>
                                     <div className={cx('col-sm-6')}>
                                         <div className={cx('mt-4', 'mt-sm-0')} style={{ position: 'relative' }}>
@@ -2033,7 +2023,7 @@ function Admin() {
                                                 <th className={cx('align-middle')}>Price Per Week</th>
                                                 <th className={cx('align-middle')}>Price Per Month</th>
                                                 <th className={cx('align-middle')}>Price Per Year</th>
-                                                <th className={cx('align-middle')}>Edit</th>
+                                                <th className={cx('align-middle')}></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -2044,20 +2034,20 @@ function Admin() {
                                                     </td>
                                                     <td>{item.typeName}</td>
                                                     <td>
-                                                        <span className={cx('p-1')}>{item.pricePerHour}</span>
+                                                        <span className={cx('p-1')}>{item.pricePerHour.toLocaleString('it-It')}</span>
                                                         VNĐ
                                                     </td>
                                                     <td>
-                                                        <span className={cx('p-1')}>{item.pricePerDay}</span> VNĐ
+                                                        <span className={cx('p-1')}>{item.pricePerDay.toLocaleString('it-It')}</span> VNĐ
                                                     </td>
                                                     <td>
-                                                        <span className={cx('p-1')}>{item.pricePerWeek}</span> VNĐ
+                                                        <span className={cx('p-1')}>{item.pricePerWeek.toLocaleString('it-It')}</span> VNĐ
                                                     </td>
                                                     <td>
-                                                        <span className={cx('p-1')}>{item.pricePerMonth}</span> VNĐ
+                                                        <span className={cx('p-1')}>{item.pricePerMonth.toLocaleString('it-It')}</span> VNĐ
                                                     </td>
                                                     <td>
-                                                        <span className={cx('p-1')}>{item.pricePerYear}</span> VNĐ
+                                                        <span className={cx('p-1')}>{item.pricePerYear.toLocaleString('it-It')}</span> VNĐ
                                                     </td>
                                                     <td>
                                                         <Button
@@ -2070,21 +2060,21 @@ function Admin() {
                                                         </Button>
 
                                                         {/* <Button
-                                                                style={{ width: '45%', textTransform: 'uppercase' }}
-                                                                className={cx('btn', 'btn-success', 'save-btn')}
-                                                                leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                                                                type="submit"
-                                                            >
-                                                                save
-                                                            </Button>
-                                                            <Button
-                                                                style={{ width: '45%', textTransform: 'uppercase' }}
-                                                                className={cx('btn', 'btn-danger', 'cancel-btn')}
-                                                                leftIcon={<FontAwesomeIcon icon={faX} />}
-                                                                type="submit"
-                                                            >
-                                                                cancel
-                                                            </Button> */}
+                                                            style={{ width: 'auto', textTransform: 'uppercase' }}
+                                                            className={cx('btn', 'btn-success', 'save-btn')}
+                                                            leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                                                            type="submit"
+                                                        >
+                                                            save
+                                                        </Button>
+                                                        <Button
+                                                            style={{ width: 'auto', textTransform: 'uppercase' }}
+                                                            className={cx('btn', 'btn-danger', 'cancel-btn')}
+                                                            leftIcon={<FontAwesomeIcon icon={faX} />}
+                                                            type="submit"
+                                                        >
+                                                            cancel
+                                                        </Button> */}
                                                     </td>
                                                 </tr>
                                             ))}
@@ -2127,45 +2117,18 @@ function Admin() {
                                                 <td>15:45:23</td>
                                                 <td>450000 VNĐ</td>
                                                 <td>
-                                                    <button
-                                                        type="button"
-                                                        className={cx(
-                                                            'btn',
-                                                            'btn-primary',
-                                                            'btn-sm',
-                                                            'btn-rounded',
-                                                            'waves-effect',
-                                                            'waves-light',
-                                                        )}
+                                                    <Button
+                                                        primary
+                                                    // className={cx(
+                                                    //     'btn',
+                                                    //     'btn-sm',
+                                                    //     'btn-rounded',
+                                                    //     'waves-effect',
+                                                    //     'waves-light',
+                                                    // )}
                                                     >
                                                         View Details
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span className={cx('text-body', 'fw-bold')}>#1</span>
-                                                </td>
-                                                <td>Hoang Tran</td>
-                                                <td>43A-111111</td>
-                                                <td>A1</td>
-                                                <td>12:43:00</td>
-                                                <td>15:45:23</td>
-                                                <td>450000 VNĐ</td>
-                                                <td>
-                                                    <button
-                                                        type="button"
-                                                        className={cx(
-                                                            'btn',
-                                                            'btn-primary',
-                                                            'btn-sm',
-                                                            'btn-rounded',
-                                                            'waves-effect',
-                                                            'waves-light',
-                                                        )}
-                                                    >
-                                                        View Details
-                                                    </button>
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -8,35 +8,6 @@ import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
 const cx = classNames.bind(styles);
 
 function Price() {
-    // const data = useMemo(
-    //     () => [
-    //         {
-    //             typeName: 'Car',
-    //             pricePerHour: '10.000 VNĐ',
-    //             pricePerDay: '100.000 VNĐ',
-    //             pricePerWeek: '1.000.000 VNĐ',
-    //             pricePerMonth: '1.000.000 VNĐ',
-    //             pricePerYear: '4.000.000 VNĐ',
-    //         },
-    //         {
-    //             typeName: 'Bus',
-    //             pricePerHour: '10.000 VNĐ',
-    //             pricePerDay: '100.000 VNĐ',
-    //             pricePerWeek: '1.000.000 VNĐ',
-    //             pricePerMonth: '1.000.000 VNĐ',
-    //             pricePerYear: '4.000.000 VNĐ',
-    //         },
-    //         {
-    //             typeName: 'Truck',
-    //             pricePerHour: '10.000 VNĐ',
-    //             pricePerDay: '100.000 VNĐ',
-    //             pricePerWeek: '1.000.000 VNĐ',
-    //             pricePerMonth: '1.000.000 VNĐ',
-    //             pricePerYear: '4.000.000 VNĐ',
-    //         },
-    //     ],
-    //     [],
-    // );
 
     const [data, setData] = useState([]);
 

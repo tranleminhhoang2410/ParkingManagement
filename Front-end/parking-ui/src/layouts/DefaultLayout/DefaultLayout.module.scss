@@ -5,10 +5,9 @@
     background-image: url('../../assets/images/parking.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
-    min-height: calc(100vh - var(--default-header-height) - var(--default-footer-height));
+    background-size: cover;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     position: relative;
-}
+}                                                            
 
 .content{
     min-width: var(--default-layout-max-width);

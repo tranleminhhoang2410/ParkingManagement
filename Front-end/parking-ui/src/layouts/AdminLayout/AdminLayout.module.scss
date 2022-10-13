@@ -1,9 +1,12 @@
 .container{
     display: flex;
+    justify-content:center;
+    align-items:center;
     background-color: #f8f8fb;
+    min-height: calc(100vh - var(--default-header-height) - var(--default-footer-height));
 
     .content{
-        margin: auto;
+        padding: 16px 0;
         max-width: var(--default-layout-max-width);
     }
 }

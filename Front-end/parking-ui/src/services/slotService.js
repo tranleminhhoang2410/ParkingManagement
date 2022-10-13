@@ -12,3 +12,7 @@ export const getAllSlots = () => {
 export const getSlotById = (id) => {
     return axios.get(`${END_POINT.GET_BY_ID}/${id}`);
 };
+
+export const getSlotByVehicleTypeId = (id) => {
+    return axios.get(`${END_POINT.GET_ALL}/${id}`);
+}
