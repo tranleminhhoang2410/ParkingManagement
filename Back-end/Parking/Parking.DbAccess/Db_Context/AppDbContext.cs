@@ -44,5 +44,7 @@ namespace Parking.DbAccess.Db_Context
 
         public DbSet<Tokens> AccountTokens { get; set; }
 
+        public DbSet<ManagerInvoice> ManagerInvoices { get; set; }
+
     }
 }

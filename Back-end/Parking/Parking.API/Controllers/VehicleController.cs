@@ -18,9 +18,10 @@ namespace Parking.API.Controllers
         private readonly IVehicleTypeService vehicleTypeService;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IUserService userService;
+        private readonly IManagerInvoiceService managerInvoiceService;
 
-        public VehicleController(IVehicleService vehicleService, IInvoiceService invoiceService, ISlotService slotService, 
-            IVehicleTypeService vehicleTypeService, IHttpContextAccessor httpContextAccessor, IUserService userService)
+        public VehicleController(IVehicleService vehicleService, IInvoiceService invoiceService, ISlotService slotService,
+            IVehicleTypeService vehicleTypeService, IHttpContextAccessor httpContextAccessor, IUserService userService, IManagerInvoiceService managerInvoiceService)
         {
             this.vehicleService = vehicleService;
             this.invoiceService = invoiceService;
@@ -28,6 +29,7 @@ namespace Parking.API.Controllers
             this.vehicleTypeService = vehicleTypeService;
             this.httpContextAccessor = httpContextAccessor;
             this.userService = userService;
+            this.managerInvoiceService = managerInvoiceService;
         }
 
         [AuthorizationFilter]
@@ -160,13 +162,25 @@ namespace Parking.API.Controllers
 
                 invoiceDTO.TotalPaid = parkingTime.GetValueOrDefault("hours") * parkingType.PricePerHour
                                         + parkingTime.GetValueOrDefault("days") * parkingType.PricePerDay
-                                        + parkingTime.GetValueOrDefault("weeks") * parkingType.PricePerWeek
-                                        + parkingTime.GetValueOrDefault("months") * parkingType.PricePerMonth
-                                        + parkingTime.GetValueOrDefault("years") * parkingType.PricePerYear;
+                                        + parkingTime.GetValueOrDefault("weeks") * parkingType.PricePerWeek;
                 string note = "";
                 note += await invoiceService.UpdateInvoice(invoiceDTO);
                 note += await slotService.SetParkingSlotStatus(invoiceDTO.SlotId, false);
                 note += await vehicleService.SetVehicleIsParking(invoiceDTO.VehicleId, false);
+
+                int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                UserDTO user = await userService.GetUserById(userid);
+                ManagerInvoiceDTO managerInvoice = new ManagerInvoiceDTO
+                {
+                    Id = invoiceDTO.Id,
+                    CheckinTime = invoiceDTO.CheckinTime,
+                    CheckoutTime = invoiceDTO.CheckoutTime,
+                    SlotId = invoiceDTO.SlotId,
+                    TotalPaid = invoiceDTO.TotalPaid,
+                    UserName = user.Name,
+                    VehicleId = invoiceDTO.VehicleId
+                };
+                note += await managerInvoiceService.AddNewInvoice(managerInvoice);
 
                 return invoiceDTO;
             }

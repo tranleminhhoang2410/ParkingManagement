@@ -92,9 +92,7 @@ namespace Paking.DTO.Mapper
                     Id = vehicleType.Id,
                     PricePerHour = vehicleType.PricePerHour,
                     PricePerDay = vehicleType.PricePerDay,
-                    PricePerMonth = vehicleType.PricePerMonth,
                     PricePerWeek = vehicleType.PricePerWeek,
-                    PricePerYear = vehicleType.PricePerYear,
                     TypeName = vehicleType.TypeName
                 };
 
@@ -202,6 +200,27 @@ namespace Paking.DTO.Mapper
             }
 
             return cityDTO;
+        }
+
+        public static ManagerInvoiceDTO? Map(ManagerInvoice managerInvoice)
+        {
+            ManagerInvoiceDTO? managerInvoiceDTO = null;
+
+            if (managerInvoice != null)
+            {
+                managerInvoiceDTO = new ManagerInvoiceDTO
+                {
+                    Id = managerInvoice.Id,
+                    CheckinTime = managerInvoice.CheckinTime,
+                    CheckoutTime = managerInvoice.CheckoutTime,
+                    SlotId = managerInvoice.SlotId,
+                    VehicleId = managerInvoice.VehicleId,
+                    TotalPaid = managerInvoice.TotalPaid,
+                    UserName = managerInvoice.UserName
+                };
+            }
+
+            return managerInvoiceDTO;
         }
     }
 }

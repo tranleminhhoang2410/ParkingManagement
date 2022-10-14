@@ -35,8 +35,6 @@ namespace Parking.Service.Implements
             _type.PricePerHour = vehicleTypeDTO.PricePerDay;
             _type.PricePerDay = vehicleTypeDTO.PricePerDay;
             _type.PricePerWeek = vehicleTypeDTO.PricePerWeek;
-            _type.PricePerMonth = vehicleTypeDTO.PricePerMonth;
-            _type.PricePerYear = vehicleTypeDTO.PricePerYear;
 
 
             await _db.SaveChangesAsync();

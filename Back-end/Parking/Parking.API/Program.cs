@@ -26,6 +26,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IManagerInvoiceService, ManagerInvoiceService>();
+
 
 builder.Services.AddTransient<ITokenManager, TokenManager>();
 

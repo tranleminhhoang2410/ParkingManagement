@@ -8,6 +8,6 @@ namespace Paking.Data.Constant
 {
     public enum Role
     {
-        User, Manager
+        User, Admin
     }
 }

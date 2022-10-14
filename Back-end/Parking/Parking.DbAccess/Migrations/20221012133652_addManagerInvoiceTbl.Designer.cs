@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parking.DbAccess.Db_Context;
 
@@ -11,9 +12,10 @@ using Parking.DbAccess.Db_Context;
 namespace Parking.DbAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221012133652_addManagerInvoiceTbl")]
+    partial class addManagerInvoiceTbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,7 +276,13 @@ namespace Parking.DbAccess.Migrations
                     b.Property<double>("PricePerHour")
                         .HasColumnType("float");
 
+                    b.Property<double>("PricePerMonth")
+                        .HasColumnType("float");
+
                     b.Property<double>("PricePerWeek")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PricePerYear")
                         .HasColumnType("float");
 
                     b.Property<string>("TypeName")

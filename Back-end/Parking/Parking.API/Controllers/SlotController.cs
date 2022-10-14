@@ -42,12 +42,12 @@ namespace Parking.API.Controllers
             return Ok(lotRows);
         }
 
-        [AuthorizationFilter]
-        [Authorize(Roles = "User, Admin")]
+        //[AuthorizationFilter]
+        //[Authorize(Roles = "User, Admin")]
         [HttpGet("GetAll/{typeId}")]
         public async Task<ActionResult<IEnumerable<SlotDTO>>> GetAllSlotByType(int typeId)
         {
-            return Ok(await slotService.GetAllByTypeId(typeId));
+            return Ok((await slotService.GetAllByTypeId(typeId)).OrderBy(c => c.Area).ThenBy(c => c.Position));
         }
 
         //[AuthorizationFilter]
