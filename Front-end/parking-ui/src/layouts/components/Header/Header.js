@@ -135,7 +135,7 @@ function Header() {
             dispatch({ type: AUTH_ACTION.LOGOUT });
             LS.removeLocalStorage('auth');
         }
-        return () => { };
+        return () => {};
     }, [dispatch]);
 
     //get account of user
@@ -217,7 +217,10 @@ function Header() {
                         <h3>Logo</h3>
                     </div>
                     <nav className={cx('nav-link')}>
-                        <Link className={cx('nav-link-item')} to="/">
+                        <Link
+                            className={cx('nav-link-item')}
+                            to={authState.role === config.roles.ADMIN ? '/admin' : '/'}
+                        >
                             Home
                         </Link>
                         {authState.role !== config.roles.ADMIN ? (

@@ -2,7 +2,7 @@ import config from '~/config';
 
 //guards
 import AdminGuard from '~/components/Guards/AdminGuard';
-import UserGuard from '~/components/Guards/UserGuard'
+import UserGuard from '~/components/Guards/UserGuard';
 
 //pages
 import Home from '~/pages/Home';
@@ -14,7 +14,7 @@ import Vehicles from '~/pages/Vehicles';
 import Profile from '~/pages/Profile';
 import Forgot from '~/pages/Security/Forgot';
 import ChangePassword from '~/pages/Security/ChangePassword/ChangePassword';
-import Invoices from '~/pages/Invoices'
+import Invoices from '~/pages/Invoices';
 import Admin from '~/pages/Admin';
 import Regulations from '~/pages/Admin/Regulations';
 import Slots from '~/pages/Admin/Slots';
@@ -22,10 +22,10 @@ import { AdminInvoices } from '~/pages/Admin/Invoices';
 import { AdminProfile } from '~/pages/Admin/Profile';
 
 //layouts
-import AdminLayout from '~/layouts/AdminLayout'
+import AdminLayout from '~/layouts/AdminLayout';
 
 const publicRoutes = [
-    { path: config.routes.home, component: Home, guard: UserGuard },
+    { path: config.routes.home, component: Home },
     { path: config.routes.about, component: About },
     { path: config.routes.price, component: Price },
     { path: config.routes.parking, component: Parking },

@@ -8,7 +8,6 @@ import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
 const cx = classNames.bind(styles);
 
 function Price() {
-
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -36,14 +35,6 @@ function Price() {
             {
                 Header: 'Price Per Week',
                 accessor: 'pricePerWeek',
-            },
-            {
-                Header: 'Price Per Month',
-                accessor: 'pricePerMonth',
-            },
-            {
-                Header: 'Price Per Year',
-                accessor: 'pricePerYear',
             },
         ],
         [],

@@ -1,8 +1,6 @@
-.wrapper{
-    height: calc(100vh - 52px - 52px - 32px);
-
-
-}
+// .wrapper{
+//     height: calc(100vh - 52px - 52px - 48px);
+// }
 
 .tab-title{
     display:flex;
@@ -38,9 +36,39 @@
 }
 
 .tab-content{
+    height: calc(100vh - 52px - 48px - 52px - 52px);
     margin-top: 16px;
-    height: 91%;
-    overflow: auto;
+
+    .search-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 16px;
+        
+        .search-form{
+            padding: 8px;
+            border-radius: 4px;
+
+            &.car{
+                border: 2px solid var(--car-color);
+                background-color: unset;
+            }
+
+            &.bus{
+                border: 2px solid var(--bus-color);
+                background-color: unset;
+            }
+
+            &.truck{
+                border: 2px solid var(--truck-color);
+                background-color: unset;
+            }
+
+            .search-input{
+                background-color: transparent;
+            }
+        }
+    }
 
     .car{
         background-color: var(--car-color);
@@ -61,6 +89,11 @@
 
     .active-content{
         display: block;
+    }
+
+    .table-wrapper{
+        height: 90%;
+        overflow: auto;
     }
 
     .invoice-table {
