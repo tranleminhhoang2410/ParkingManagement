@@ -25,13 +25,15 @@ namespace Parking.Service.Implements
                 Invoice invoice = (await _db.Invoices
                 .FirstOrDefaultAsync(c => c.SlotId.Equals(s.Area+s.Position) && c.CheckoutTime == null));
 
-                if (invoice == null) continue;
+                if (invoice == null)
+                {
+                    s.vehicleID = "";
+                    continue;
+                }
 
                 s.userId = (await _db.Vehicles
-                .Include(c => c.VehicleType)
-                .Include(c => c.Invoices)
-                .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.Id.Equals(invoice.VehicleId))).UserID;
+                s.vehicleID = invoice.VehicleId;
             }
 
             return slots;
@@ -44,6 +46,21 @@ namespace Parking.Service.Implements
                 .Where(c => c.VehicleTypeId == typeId)
                 .Select(c => ToDTO.Map(c))   
                 .ToListAsync();
+            foreach (SlotDTO s in slots)
+            {
+                Invoice invoice = (await _db.Invoices
+                .FirstOrDefaultAsync(c => c.SlotId.Equals(s.Area + s.Position) && c.CheckoutTime == null));
+
+                if (invoice == null)
+                {
+                    s.vehicleID = "";
+                    continue;
+                }
+
+                s.userId = (await _db.Vehicles
+                .FirstOrDefaultAsync(c => c.Id.Equals(invoice.VehicleId))).UserID;
+                s.vehicleID = invoice.VehicleId;
+            }
             return slots;
         }
 

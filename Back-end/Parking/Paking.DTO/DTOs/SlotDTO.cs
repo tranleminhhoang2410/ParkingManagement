@@ -8,5 +8,6 @@
         public int VehicleTypeId { get; set; }
         public string VehicleTypeName { get; set; }
         public int userId { get; set; }
+        public string vehicleID { get; set; }
     }
 }
