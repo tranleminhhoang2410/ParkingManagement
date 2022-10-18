@@ -25,12 +25,12 @@ function Parking() {
         {
             title: <div style={{ backgroundColor: 'var(--your-color)', width: '28px', height: '20px' }}></div>,
             value: 'Your slot',
-            subvalue: 'Click on your slot to check out',
+            subvalue: 'Click on your slot to view details',
         },
         {
             title: <div style={{ backgroundColor: 'var(--maintenance-color)', width: '28px', height: '20px' }}></div>,
             value: 'Maintenance',
-            subvalue: 'Click on your slot to check out',
+            subvalue: 'Do not click on that slot',
         },
     ];
 

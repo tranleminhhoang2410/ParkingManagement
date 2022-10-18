@@ -35,14 +35,17 @@ function ParkingArea({ area, type, lotRows = [] }) {
 
                             const handleStatusOfRow = () => {
                                 if (isLoggedIn) {
-                                    if (!cell.isParked) return 'isEmpty';
-                                    if (cell.isParked && cell.userId === authState.user.id) return 'isMyParkedSlot';
-                                    if (cell.isParked) return 'isParked';
+                                    if (cell.status === 0) return 'isEmpty';
+                                    if (cell.status === 1 && cell.userId === authState.user.id) return 'isMyParkedSlot';
+                                    if (cell.status === 1) return 'isParked';
+                                    if (cell.status === -1) return 'isMaintenance'
                                 } else {
-                                    if (!cell.isParked) {
+                                    if (cell.status === 0) {
                                         return 'isEmpty';
-                                    } else {
+                                    } else if (cell.status === 1) {
                                         return 'isParked';
+                                    } else if (cell.status === -1) {
+                                        return 'isMaintenance';
                                     }
                                 }
                             };
@@ -58,7 +61,9 @@ function ParkingArea({ area, type, lotRows = [] }) {
                                     case 'isParked':
                                         if (number % 2 !== 0) return cx('cell-odd', 'is-parked');
                                         else return cx('cell-even', 'is-parked');
-
+                                    case 'isMaintenance':
+                                        if (number % 2 !== 0) return cx('cell-odd', 'is-maintenance');
+                                        else return cx('cell-even', 'is-maintenance');
                                     default:
                                         return;
                                 }

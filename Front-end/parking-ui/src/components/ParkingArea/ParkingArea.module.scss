@@ -61,6 +61,13 @@
         }
     }
 
+    .cell-odd.is-maintenance,
+    .cell-even.is-maintenance{
+        background-color: var(--maintenance-color);
+        cursor: default;
+        pointer-events: none;
+    }
+
     .cell-odd.is-parked,
     .cell-even.is-parked{
         background-color: var(--parked-color);

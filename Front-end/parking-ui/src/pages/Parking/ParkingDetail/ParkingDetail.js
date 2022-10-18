@@ -88,7 +88,7 @@ function ParkingDetail() {
             slotId: slotId,
         });
         navigate('/parking');
-        toast.success(`Checked in ${slotId} successfully!`, {
+        toast.success(`Checked in slot ${slotId} successfully!`, {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -214,7 +214,7 @@ function ParkingDetail() {
                     <div className={cx('form-input')}>
                         <div className={cx('input-group')}>
                             <label htmlFor="vehiclePlate" className={cx('input-label')}>
-                                Vehicle Registration Plate
+                                Vehicle Id
                             </label>
                             {handleRenderVehicleId()}
                         </div>
@@ -245,9 +245,7 @@ function ParkingDetail() {
                         CHECK IN
                     </Button>
                 ) : (
-                    <Button className={cx('checkout-btn')} primary>
-                        CHECK OUT
-                    </Button>
+                    <></>
                 )}
             </form>
             <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>

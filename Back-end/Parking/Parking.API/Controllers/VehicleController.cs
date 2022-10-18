@@ -91,7 +91,7 @@ namespace Parking.API.Controllers
         }
 
         [AuthorizationFilter]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         [HttpGet("CheckedIn/{SlotId}")]
         public async Task<ActionResult<InvoiceDTO>> CheckOut(string SlotId)
         {
@@ -140,7 +140,7 @@ namespace Parking.API.Controllers
         }
 
         [AuthorizationFilter]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("CheckOut")]
         public async Task<ActionResult<InvoiceDTO>> CheckOut(InvoiceDTO invoiceDTO)
         {

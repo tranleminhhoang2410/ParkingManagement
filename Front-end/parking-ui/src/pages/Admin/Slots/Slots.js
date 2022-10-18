@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Slots.module.scss';
 
@@ -6,27 +6,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faBus, faTruck, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
-import { getSlotByVehicleTypeId } from '~/services/slotService';
-import context from 'react-bootstrap/esm/AccordionContext';
+import ConfirmModal from '~/components/Modal/ConfirmModal';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { getSlotByVehicleTypeId, updateSlotStatus } from '~/services/slotService';
+import { checkOut, getCheckedInVehicle } from '~/services/vehicleService';
 
 const cx = classNames.bind(styles);
 
 function Slots() {
     const [tab, setTab] = useState(1);
     const [slots, setSlots] = useState([]);
+    const [vehicleCheckedIn, setVehicleCheckedIn] = useState({});
 
-    const getIconOfVehicle = (id) => {
-        switch (id) {
-            case 1:
-                return faCar;
-            case 2:
-                return faBus;
-            case 3:
-                return faTruck;
-            default:
-                return;
-        }
+    //Modal
+    const slotRef = useRef();
+
+    const [modalType, setModalType] = useState(null);
+
+    const openModal = (e, type, slotId) => {
+        e.preventDefault();
+        slotRef.current = slotId;
+        setModalType(type);
     };
+
+    const closeModal = () => {
+        setModalType(null);
+    };
+
 
     const getClassOfVehicle = (id) => {
         switch (id) {
@@ -41,6 +50,7 @@ function Slots() {
         }
     };
 
+    //Get Slot By Vehicle Type
     useEffect(() => {
         const getAllSlotsByVehicleType = async () => {
             const slots = await getSlotByVehicleTypeId(tab);
@@ -48,6 +58,127 @@ function Slots() {
         };
         getAllSlotsByVehicleType();
     }, [tab]);
+
+    //Get checked in vehicle
+    useEffect(() => {
+        const fetchCheckedInVehicle = async () => {
+            setVehicleCheckedIn(await getCheckedInVehicle(slotRef.current));
+        };
+        fetchCheckedInVehicle();
+    }, [slotRef.current]);
+
+    const renderStatus = (status) => {
+        switch (status) {
+            case 0:
+                return 'Empty'
+            case 1:
+                return 'Parking'
+            case -1:
+                return 'Maintaining'
+            default:
+                return
+        }
+    }
+
+    const renderAction = (status, slotId) => {
+        switch (status) {
+            case 0:
+                return <Button onClick={(e) => openModal(e, 'maintenance', slotId)} className={cx('maintenance-btn')}>Maintenance</Button>
+            case 1:
+                return <Button onClick={(e) => openModal(e, 'checkout', slotId)} className={cx('checkout-btn')}>Check out</Button>
+            case -1:
+                return <Button onClick={(e) => openModal(e, 'fixed', slotId)} className={cx('fixed-btn')}>Fixed</Button>
+            default:
+                return
+        }
+    }
+
+    const renderConfirmModal = (type) => {
+        switch (type) {
+            case 'maintenance':
+                return <ConfirmModal onClose={closeModal} content={`Maintain slot ${slotRef.current}`} onConfirm={handleMaintenanceSlot} />
+            case 'checkout':
+                return <ConfirmModal onClose={closeModal} content={`Check out slot ${slotRef.current}`} onConfirm={(e) => handleCheckoutSlot(e, vehicleCheckedIn)} />
+            case 'fixed':
+                return <ConfirmModal onClose={closeModal} content={`Fix slot ${slotRef.current}`} onConfirm={handleFixSlot} />
+            default:
+                return;
+        }
+    }
+
+    //Handle Action
+    const handleMaintenanceSlot = async (e) => {
+        e.preventDefault();
+        try {
+            await updateSlotStatus({
+                slotId: slotRef.current,
+                status: -1
+            })
+            closeModal();
+            toast.success(`Slot ${slotRef.current} is maintaining!`, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+            setSlots(await getSlotByVehicleTypeId(tab))
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleFixSlot = async (e) => {
+        e.preventDefault();
+        try {
+            await updateSlotStatus({
+                slotId: slotRef.current,
+                status: 0
+            })
+            toast.success(`Slot ${slotRef.current} was fixed!`, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+            closeModal();
+            setSlots(await getSlotByVehicleTypeId(tab))
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleCheckoutSlot = async (e, vehicle) => {
+        e.preventDefault();
+        // try {
+        //     await checkOut({
+        //         id: vehicleCheckedIn.id,
+        //         checkinTime: vehicleCheckedIn.checkinTime,
+        //         checkoutTime: vehicleCheckedIn.checkoutTime,
+        //         vehicleId: vehicleCheckedIn.vehicleId,
+        //         slotId: slotRef.current,
+        //     });
+        //     toast.success(`Check out ${slotRef.current} successfully!`, {
+        //         position: 'top-right',
+        //         autoClose: 5000,
+        //         hideProgressBar: false,
+        //         closeOnClick: true,
+        //         pauseOnHover: false,
+        //         draggable: true,
+        //         progress: undefined,
+        //     });
+        //     closeModal();
+        //     setSlots(await getSlotByVehicleTypeId(tab))
+        // } catch (error) {
+        //     console.log(error);
+        // }
+        console.log(vehicle);
+    }
 
     return (
         <div className={cx('wrapper')}>
@@ -73,7 +204,6 @@ function Slots() {
                 >
                     Truck
                 </Button>
-                {/* {slots.map(slot => <Button key={slot} onClick={() => setTab(slot.vehicleTypeId)} leftIcon={<FontAwesomeIcon icon={getIconOfVehicle(slot.vehicleTypeId)} />} className={tab === slot.vehicleTypeId ? cx('tab-button', `${slot.vehicleTypeName}`, 'active') : cx('tab-button', `${slot.vehicleTypeName}`)}>{slot.vehicleTypeName}</Button>)} */}
             </div>
             <div className={cx('tab-content')}>
                 <div className={cx('search-wrapper')}>
@@ -100,40 +230,19 @@ function Slots() {
                                         {slot.position}
                                     </td>
                                     <td className={cx(`${slot.vehicleTypeName.toLowerCase()}-txt`)}>
-                                        {slot.status && 'Vehicle Id'}
+                                        {slot.status === 1 && slot.vehicleID}
                                     </td>
                                     <td style={slot.status ? { color: 'var(--parked-color)' } : { color: '#333' }}>
-                                        {slot.status ? 'Parking' : 'Empty'}
+                                        {renderStatus(slot.status)}
                                     </td>
                                     <td>
-                                        {slot.status ? (
-                                            <Button className={cx('view-btn')}>Check out</Button>
-                                        ) : (
-                                            <Button className={cx('maintenance-btn')}>Maintenance</Button>
-                                        )}
+                                        {renderAction(slot.status, slot.area + slot.position)}
                                     </td>
                                 </tr>
                             ))}
-                            {/* <tr>
-                                <td >Restaurante</td>
-                                <td>Controle de fluxo</td>
-                                <td>Erick Jacquin</td>
-                                <td>4</td>
-                            </tr>
-                            <tr>
-                                <td >Relatório</td>
-                                <td>Gerador </td>
-                                <td>Elon Musk</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td >Financeiro</td>
-                                <td>Controle</td>
-                                <td>Bill Gates</td>
-                                <td>2</td>
-                            </tr> */}
                         </tbody>
                     </table>
+                    {renderConfirmModal(modalType)}
                 </div>
             </div>
         </div>

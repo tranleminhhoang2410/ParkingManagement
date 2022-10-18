@@ -210,8 +210,8 @@ function Header() {
     function handleLogout() {
         dispatch({ type: AUTH_ACTION.LOGOUT });
         LS.removeLocalStorage('auth');
-        // navigate('/');
-        window.location.href = '/'
+        navigate('/');
+        // window.location.href = '/'
     }
 
     return (

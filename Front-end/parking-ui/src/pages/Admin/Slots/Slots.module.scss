@@ -126,8 +126,18 @@
         font-weight: bold;
     }
 
-    .view-btn{
+    .checkout-btn{
         background-color: green;
+        color: var(--white-color);
+        width: 150px;
+
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+
+    .fixed-btn{
+        background-color: var(--primary-color);
         color: var(--white-color);
         width: 150px;
 

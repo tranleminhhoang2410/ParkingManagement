@@ -1,9 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-
 import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
@@ -11,10 +8,6 @@ const cx = classNames.bind(styles);
 function Profile() {
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('avatar')}>
-                <FontAwesomeIcon icon={faUser} className={cx('user-icon')} />
-                <span className={cx('account')}>username</span>
-            </div>
             <div className={cx('info')}>
                 <form id={cx('info-form')}>
                     <div className={cx('input-group')}>
