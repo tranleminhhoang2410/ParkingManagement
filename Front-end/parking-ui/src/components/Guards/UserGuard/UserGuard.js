@@ -13,9 +13,10 @@ function UserGuard({ children }) {
 
     useEffect(() => {
         if (role !== config.roles.USER && role !== null) { navigate('/admin'); }
+        console.log(role);
     }, [role, navigate])
 
-    if (role !== config.roles.USER && role !== null) return null;
+    // if (role !== config.roles.USER && role !== null) return null;
     return children
 }
 

@@ -135,7 +135,7 @@ function Header() {
             dispatch({ type: AUTH_ACTION.LOGOUT });
             LS.removeLocalStorage('auth');
         }
-        return () => {};
+        return () => { };
     }, [dispatch]);
 
     //get account of user
@@ -166,6 +166,7 @@ function Header() {
                 token: token,
                 expired: result.exp,
             };
+            console.log(result);
             const authData = { jwt, user: {}, role: result.role };
             LS.setLocalStorage('auth', authData);
             const user = await getLoggedUser();
@@ -175,7 +176,10 @@ function Header() {
                 payload: authData,
             });
 
-            if (result.role === config.roles.ADMIN) navigate('/admin');
+            if (result.role === config.roles.ADMIN) {
+                console.log('navigate');
+                navigate('/admin')
+            };
             LS.setLocalStorage('auth', authData);
             setErrorMsg('');
             closeModal();
@@ -206,7 +210,8 @@ function Header() {
     function handleLogout() {
         dispatch({ type: AUTH_ACTION.LOGOUT });
         LS.removeLocalStorage('auth');
-        navigate('/');
+        // navigate('/');
+        window.location.href = '/'
     }
 
     return (

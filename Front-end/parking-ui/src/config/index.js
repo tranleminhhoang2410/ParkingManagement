@@ -1,9 +1,11 @@
 import routes from './routes';
 import roles from './roles'
+import status from './status';
 
 const config = {
     routes,
-    roles
+    roles,
+    status,
 };
 
 export default config;

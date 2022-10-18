@@ -25,7 +25,7 @@ import { AdminProfile } from '~/pages/Admin/Profile';
 import AdminLayout from '~/layouts/AdminLayout';
 
 const publicRoutes = [
-    { path: config.routes.home, component: Home },
+    { path: config.routes.home, component: Home, guard: UserGuard },
     { path: config.routes.about, component: About },
     { path: config.routes.price, component: Price },
     { path: config.routes.parking, component: Parking },

@@ -4,6 +4,7 @@ import { publicRoutes } from '~/routes';
 import DefaultLayout from './layouts';
 
 import { ToastContainer } from 'react-toastify'
+import AuthContextProvider from './context/AuthContextProvider';
 
 
 
@@ -18,20 +19,23 @@ function App() {
 
                         if (route.layout) {
                             Layout = route.layout;
-                        } else if (route.layout === null) {
-                            Layout = Fragment;
                         }
+
+
                         const Guard = route.guard || Fragment;
                         return (
                             <Route
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout>
-                                        <Guard>
-                                            <Page />
-                                        </Guard>
-                                    </Layout>
+                                    <AuthContextProvider>
+
+                                        <Layout>
+                                            <Guard>
+                                                <Page />
+                                            </Guard>
+                                        </Layout>
+                                    </AuthContextProvider>
                                 }
                             />
                         );
