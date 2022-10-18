@@ -74,7 +74,16 @@ namespace Parking.API.Controllers
             {
                 return BadRequest("update fail");
             }
-            
+        }
+
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
+        [HttpPut("Admin/Update")]
+        public async Task<ActionResult> UpdateSlotStatus(string slotId, int status)
+        {
+
+            return Ok(await slotService.SetParkingSlotStatus(slotId, status));
+
         }
     }
 }

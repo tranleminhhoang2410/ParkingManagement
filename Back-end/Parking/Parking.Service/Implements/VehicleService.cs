@@ -17,7 +17,7 @@ namespace Parking.Service.Implements
             try
             {
                 Vehicle? vehicle = await _db.Vehicles.FirstOrDefaultAsync(c => c.Id.Equals(vehicleDTO.Id));
-                if (vehicle != null) return "Account Exis0ted";
+                if (vehicle != null) return "Vehicle Existed";
 
                 Vehicle newVehicle = new Vehicle
                 {
@@ -36,6 +36,16 @@ namespace Parking.Service.Implements
             {
                 return e.Message;
             }
+        }
+
+        public async Task<IEnumerable<VehicleDTO>> GetAll()
+        {
+            List<VehicleDTO?> vehicles = await _db.Vehicles
+                .Include(c => c.VehicleType)
+                .Include(c => c.Invoices)
+                .Select(c => ToDTO.Map(c))
+                .ToListAsync();
+            return vehicles;
         }
 
         public async Task<IEnumerable<VehicleDTO>> GetAllByUserID(int userID)

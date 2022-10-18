@@ -55,7 +55,7 @@ namespace Parking.Service.Implements
             return slot;
         }
 
-        public async Task<string> SetParkingSlotStatus(string id, bool status)
+        public async Task<string> SetParkingSlotStatus(string id, int status)
         {
             try
             {
@@ -95,13 +95,13 @@ namespace Parking.Service.Implements
                         {
                             new LotCell
                             {
-                                isParked = temp.Status,
+                                status = temp.Status,
                                 number = temp.Position,
                                 userId = temp.userId
                             },
                             new LotCell
                             {
-                                isParked = slot.Status,
+                                status = slot.Status,
                                 number = slot.Position,
                                 userId = slot.userId
                             }

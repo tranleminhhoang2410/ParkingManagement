@@ -10,7 +10,7 @@ namespace Parking.Service
         public Task<IEnumerable<SlotDTO>> GetAllByTypeId(int typeId);
         public Task<SlotDTO> GetByID(string id);
         public Task<Boolean> UpdateSlot(SlotDTO slot);
-        public Task<string> SetParkingSlotStatus(string id, bool status);
+        public Task<string> SetParkingSlotStatus(string id, int status);
         public IEnumerable<LotRow> toView(List<SlotDTO> slotDTOs);
     }
 }

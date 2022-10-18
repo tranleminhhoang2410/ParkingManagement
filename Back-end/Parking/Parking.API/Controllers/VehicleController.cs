@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Paking.Data.Constant;
 using Paking.DTO.DTOs;
 using Parking.API.Filter;
 using Parking.Service;
@@ -55,12 +56,14 @@ namespace Parking.API.Controllers
             return Ok(await vehicleService.GetAllByUserID(userId));
         }
 
-        /// <summary>
-        /// GỌI KHI NGƯỜI DÙNG CLICK VÀO NÚT CHECK IN, NÓ SẼ LẤY TẠO 1 HÓA ĐƠN ĐỂ TRỐNG PHẦN CHECKOUT TIME VÀ TỔNG TIỀN (2 CÁI NÀY THÊM VÀO LÚC CHECK OUT)
-        /// </summary>
-        /// <param name="vehicleId">CHỌN TỪ DANH SÁCH</param>
-        /// <param name="slotId">LOT HIỆN TẠI (AREA+NUMBER)</param>
-        /// <returns></returns>
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<VehicleDTO>>> GetAll()
+        {
+            return Ok(await vehicleService.GetAll());
+        }
+
         [AuthorizationFilter]
         [Authorize(Roles = "User")]
         [HttpPost("CheckIn")]
@@ -76,7 +79,7 @@ namespace Parking.API.Controllers
             {
                 string note = "";
                 note += await invoiceService.AddNewInvoice(invoiceDTO);
-                note += await slotService.SetParkingSlotStatus(slotId, true);
+                note += await slotService.SetParkingSlotStatus(slotId, (int)SlotStatus.Parked);
                 note += await vehicleService.SetVehicleIsParking(vehicleId, true);
 
                 return note;
@@ -87,12 +90,6 @@ namespace Parking.API.Controllers
             }
         }
 
-        /// <summary>
-        /// CÁI NÀY ĐƯỢC GỌI KHI NGƯỜI DÙNG CLICK VÀO LOT ĐÃ ĐẶT, NÓ SẼ TÍNH TỔNG TIỀN THEO GIỜ CHECKIN VÀ GIỜ CHECKOUT
-        /// </summary>
-        /// <param name="SlotId"> LOT ĐƯỢC CHỌN (AREA+NUMBER)</param>
-        /// <returns></returns>
-
         [AuthorizationFilter]
         [Authorize(Roles = "User")]
         [HttpGet("CheckedIn/{SlotId}")]
@@ -102,7 +99,7 @@ namespace Parking.API.Controllers
             {
                 InvoiceDTO invoiceDTO = await invoiceService.GetIsParkingInvoiceBySlot(SlotId);
 
-                int UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                int UserId = getLoggedUserId();
                 UserDTO user = await userService.GetUserById(UserId);
 
                 if (invoiceDTO != null)
@@ -142,11 +139,6 @@ namespace Parking.API.Controllers
             }
         }
 
-        /// <summary>
-        /// GỌI CÁI NÀY KHI USER NHẤN VÀO NÚT CHECK OUT, NÓ SẼ CẬP NHẬT LẠI HÓA ĐƠN THEO THÔNG TIN ĐÃ HIỆN
-        /// </summary>
-        /// <param name="invoiceDTO"> ĐẨY LẠI CÁI DTO Ở HÀM TRÊN VÀO ĐÂY </param>
-        /// <returns></returns>
         [AuthorizationFilter]
         [Authorize(Roles = "User")]
         [HttpPost("CheckOut")]
@@ -165,22 +157,19 @@ namespace Parking.API.Controllers
                                         + parkingTime.GetValueOrDefault("weeks") * parkingType.PricePerWeek;
                 string note = "";
                 note += await invoiceService.UpdateInvoice(invoiceDTO);
-                note += await slotService.SetParkingSlotStatus(invoiceDTO.SlotId, false);
+                note += await slotService.SetParkingSlotStatus(invoiceDTO.SlotId, (int)SlotStatus.Empty);
                 note += await vehicleService.SetVehicleIsParking(invoiceDTO.VehicleId, false);
 
-                int userid = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-                UserDTO user = await userService.GetUserById(userid);
-                ManagerInvoiceDTO managerInvoice = new ManagerInvoiceDTO
+                await managerInvoiceService.AddNewInvoice(new ManagerInvoiceDTO
                 {
                     Id = invoiceDTO.Id,
                     CheckinTime = invoiceDTO.CheckinTime,
                     CheckoutTime = invoiceDTO.CheckoutTime,
                     SlotId = invoiceDTO.SlotId,
                     TotalPaid = invoiceDTO.TotalPaid,
-                    UserName = user.Name,
+                    UserName = (await userService.GetUserById(getLoggedUserId())).Name,
                     VehicleId = invoiceDTO.VehicleId
-                };
-                note += await managerInvoiceService.AddNewInvoice(managerInvoice);
+                });
 
                 return invoiceDTO;
             }
@@ -189,5 +178,59 @@ namespace Parking.API.Controllers
                 return BadRequest("ERROR: " + e.Message);
             }
         }
+
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Admin/CheckOut")]
+        public async Task<ActionResult<InvoiceDTO>> CheckOutForAdmin(string vehicleID)
+        {
+            try
+            {
+                InvoiceDTO? ParkedInvoice = (await invoiceService.GetByVehicleId(vehicleID)).FirstOrDefault(i => i.CheckoutTime==null);
+
+                ParkedInvoice.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+
+                VehicleTypeDTO parkingType = await vehicleTypeService.GetById((int)ParkedInvoice.VehicleTypeId);
+
+                ParkedInvoice.TotalPaid = CalulateParkingPrice(ParkedInvoice, parkingType).Result;
+
+                await invoiceService.UpdateInvoice(ParkedInvoice);
+                await slotService.SetParkingSlotStatus(ParkedInvoice.SlotId, (int)SlotStatus.Empty);
+                await vehicleService.SetVehicleIsParking(ParkedInvoice.VehicleId, false);
+
+                await managerInvoiceService.AddNewInvoice(new ManagerInvoiceDTO
+                {
+                    Id = ParkedInvoice.Id,
+                    CheckinTime = ParkedInvoice.CheckinTime,
+                    CheckoutTime = ParkedInvoice.CheckoutTime,
+                    SlotId = ParkedInvoice.SlotId,
+                    TotalPaid = ParkedInvoice.TotalPaid,
+                    UserName = (await userService.GetUserById(getLoggedUserId())).Name,
+                    VehicleId = ParkedInvoice.VehicleId
+                });
+
+                return ParkedInvoice;
+            }
+            catch (Exception e)
+            {
+                return BadRequest("ERROR: " + e.Message);
+            }
+        }
+
+
+        private async Task<double> CalulateParkingPrice(InvoiceDTO ParkedInvoice, VehicleTypeDTO vehicleType)
+        {
+            Dictionary<string, int> parkingTime = await invoiceService.CalculateparkingTime(ParkedInvoice.CheckinTime, ParkedInvoice.CheckoutTime);
+
+            double total = parkingTime.GetValueOrDefault("hours") * vehicleType.PricePerHour 
+                        + parkingTime.GetValueOrDefault("days") * vehicleType.PricePerDay
+                        + parkingTime.GetValueOrDefault("weeks") * vehicleType.PricePerWeek;
+
+            return total;
+        }
+
+        private int getLoggedUserId() => int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+
     }
 }

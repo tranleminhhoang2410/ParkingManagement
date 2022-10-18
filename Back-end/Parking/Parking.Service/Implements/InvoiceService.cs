@@ -20,7 +20,7 @@ namespace Parking.Service.Implements
                 if (vehicle == null) return "Vehicle not existed";
 
                 Slot? slot = await _db.Slots.FirstOrDefaultAsync(c => c.Id.Equals(invoiceDTO.SlotId));
-                if (slot.Status == true) return slot.Id + "Slot is full!";
+                if (slot.Status == 1) return slot.Id + "Slot is full!";
 
                 Invoice invoice = new Invoice
                 {

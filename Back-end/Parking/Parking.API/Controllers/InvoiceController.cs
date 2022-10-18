@@ -110,7 +110,7 @@ namespace Parking.API.Controllers
             );
         }
 
-        #region UTILS
+        #region Statistic calculate
         private MonthlyParking calculateMonthlyParking(int month, IEnumerable<ManagerInvoiceDTO> thisYearInvoices)
         {
             IEnumerable<ManagerInvoiceDTO> thisMonthInvoices = thisYearInvoices.Where(c => c.CheckoutTime.Value.Month == month);
