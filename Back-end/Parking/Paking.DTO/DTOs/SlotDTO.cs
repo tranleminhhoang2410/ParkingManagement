@@ -9,5 +9,6 @@
         public string VehicleTypeName { get; set; }
         public int userId { get; set; }
         public string vehicleID { get; set; }
+        public string checkInTime { get; set; }
     }
 }

@@ -28,12 +28,14 @@ namespace Parking.Service.Implements
                 if (invoice == null)
                 {
                     s.vehicleID = "";
+                    s.checkInTime = "";
                     continue;
                 }
 
                 s.userId = (await _db.Vehicles
                 .FirstOrDefaultAsync(c => c.Id.Equals(invoice.VehicleId))).UserID;
                 s.vehicleID = invoice.VehicleId;
+                s.checkInTime = invoice.CheckinTime.ToString();
             }
 
             return slots;
@@ -53,6 +55,7 @@ namespace Parking.Service.Implements
 
                 if (invoice == null)
                 {
+                    s.checkInTime = "";
                     s.vehicleID = "";
                     continue;
                 }
@@ -60,6 +63,7 @@ namespace Parking.Service.Implements
                 s.userId = (await _db.Vehicles
                 .FirstOrDefaultAsync(c => c.Id.Equals(invoice.VehicleId))).UserID;
                 s.vehicleID = invoice.VehicleId;
+                s.checkInTime = invoice.CheckinTime.ToString();
             }
             return slots;
         }
