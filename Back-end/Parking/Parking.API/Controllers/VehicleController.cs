@@ -93,7 +93,7 @@ namespace Parking.API.Controllers
         [AuthorizationFilter]
         [Authorize(Roles = "User, Admin")]
         [HttpGet("CheckedIn/{SlotId}")]
-        public async Task<ActionResult<InvoiceDTO>> CheckOut(string SlotId)
+        public async Task<ActionResult<InvoiceDTO>> GetCheckInInvoice(string SlotId)
         {
             try
             {
@@ -104,10 +104,9 @@ namespace Parking.API.Controllers
 
                 if (invoiceDTO != null)
                 {
-                    if(getLoggedUserRole().Equals("User"))
+                    VehicleDTO parkedVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
+                    if (getLoggedUserRole().Equals("User"))
                     {
-                        VehicleDTO parkedVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
-
                         bool isUserVehicle = false;
 
                         foreach (VehicleDTO v in user.Vehicles)
@@ -124,7 +123,7 @@ namespace Parking.API.Controllers
 
                     invoiceDTO.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
-                    invoiceDTO.TotalPaid = 0;
+                    invoiceDTO.TotalPaid = CalulateParkingPrice(invoiceDTO, parkedVehicle.VehicleType).Result;
 
                     return Ok(invoiceDTO);
                 }
@@ -155,9 +154,8 @@ namespace Parking.API.Controllers
 
                 VehicleTypeDTO parkingType = await vehicleTypeService.GetById((await slotService.GetByID(invoiceDTO.SlotId)).VehicleTypeId);
 
-                invoiceDTO.TotalPaid = parkingTime.GetValueOrDefault("hours") * parkingType.PricePerHour
-                                        + parkingTime.GetValueOrDefault("days") * parkingType.PricePerDay
-                                        + parkingTime.GetValueOrDefault("weeks") * parkingType.PricePerWeek;
+                invoiceDTO.TotalPaid = CalulateParkingPrice(invoiceDTO, parkingType).Result;
+
                 string note = "";
                 note += await invoiceService.UpdateInvoice(invoiceDTO);
                 note += await slotService.SetParkingSlotStatus(invoiceDTO.SlotId, (int)SlotStatus.Empty);
@@ -175,44 +173,6 @@ namespace Parking.API.Controllers
                 });
 
                 return invoiceDTO;
-            }
-            catch (Exception e)
-            {
-                return BadRequest("ERROR: " + e.Message);
-            }
-        }
-
-        [AuthorizationFilter]
-        [Authorize(Roles = "Admin")]
-        [HttpGet("Admin/CheckOut")]
-        public async Task<ActionResult<InvoiceDTO>> CheckOutForAdmin(string vehicleID)
-        {
-            try
-            {
-                InvoiceDTO? ParkedInvoice = (await invoiceService.GetByVehicleId(vehicleID)).FirstOrDefault(i => i.CheckoutTime==null);
-
-                ParkedInvoice.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
-
-                VehicleTypeDTO parkingType = await vehicleTypeService.GetById((int)ParkedInvoice.VehicleTypeId);
-
-                ParkedInvoice.TotalPaid = CalulateParkingPrice(ParkedInvoice, parkingType).Result;
-
-                await invoiceService.UpdateInvoice(ParkedInvoice);
-                await slotService.SetParkingSlotStatus(ParkedInvoice.SlotId, (int)SlotStatus.Empty);
-                await vehicleService.SetVehicleIsParking(ParkedInvoice.VehicleId, false);
-
-                await managerInvoiceService.AddNewInvoice(new ManagerInvoiceDTO
-                {
-                    Id = ParkedInvoice.Id,
-                    CheckinTime = ParkedInvoice.CheckinTime,
-                    CheckoutTime = ParkedInvoice.CheckoutTime,
-                    SlotId = ParkedInvoice.SlotId,
-                    TotalPaid = ParkedInvoice.TotalPaid,
-                    UserName = (await userService.GetUserById(getLoggedUserId())).Name,
-                    VehicleId = ParkedInvoice.VehicleId
-                });
-
-                return ParkedInvoice;
             }
             catch (Exception e)
             {
