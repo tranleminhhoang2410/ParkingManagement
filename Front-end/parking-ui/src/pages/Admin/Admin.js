@@ -7,18 +7,37 @@ import { faEdit, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
 import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
+import { getHighestParking, getLastedCheckout } from '~/services/invoiceService';
 
 const cx = classNames.bind(styles);
 
 function Admin() {
     const [priceTable, setPriceTable] = useState([]);
-    const [selectedPrice, setSelectedPrice] = useState(null);
+    const [highestIncome, setHighestIncome] = useState({});
+    const [lastedCheckout, setLastedCheckout] = useState([]);
+
     useEffect(() => {
         const getPriceTable = async () => {
             const price = await getAllVehicleTypesApi();
             setPriceTable(price);
         };
         getPriceTable();
+    }, []);
+
+    useEffect(() => {
+        const getHighestIncome = async () => {
+            const income = await getHighestParking();
+            setHighestIncome(income);
+        };
+        getHighestIncome();
+    }, []);
+
+    useEffect(() => {
+        const fetchLastedCheckout = async () => {
+            const lastedCheckout = await getLastedCheckout();
+            setLastedCheckout(lastedCheckout);
+        };
+        fetchLastedCheckout();
     }, []);
 
     return (
@@ -87,12 +106,14 @@ function Admin() {
                                 <h5 className={cx('mb-4', 'h4', 'card-title')}>Monthly Earning</h5>
                                 <div className={cx('row')}>
                                     <div className={cx('col-sm-6')}>
-                                        <p className={cx('text-muted')}>This month</p> <h3>$34,252</h3>
+                                        <p className={cx('text-muted')}>This month</p>{' '}
+                                        <h3>{highestIncome.monthTotalPrice} VNĐ</h3>
                                         <p className={cx('text-muted')}>
                                             <span className={cx('text-success', 'me-2')}>
-                                                12% <i className={cx('mdi', 'mdi-arrow-up')} />
+                                                {/* {(highestIncome.data.total / highestIncome.monthTotalPrice) * 100}% */}
+                                                <i className={cx('mdi', 'mdi-arrow-up')} />
                                             </span>
-                                            From previous period
+                                            {/* From {highestIncome.data.typeName} */}
                                         </p>
                                     </div>
                                     <div className={cx('col-sm-6')}>
@@ -2107,31 +2128,22 @@ function Admin() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span className={cx('text-body', 'fw-bold')}>#1</span>
-                                                </td>
-                                                <td>Hoang Tran</td>
-                                                <td>43A-111111</td>
-                                                <td>A1</td>
-                                                <td>12:43:00</td>
-                                                <td>15:45:23</td>
-                                                <td>450000 VNĐ</td>
-                                                <td>
-                                                    <Button
-                                                        primary
-                                                        // className={cx(
-                                                        //     'btn',
-                                                        //     'btn-sm',
-                                                        //     'btn-rounded',
-                                                        //     'waves-effect',
-                                                        //     'waves-light',
-                                                        // )}
-                                                    >
-                                                        View Details
-                                                    </Button>
-                                                </td>
-                                            </tr>
+                                            {lastedCheckout.map((item) => (
+                                                <tr>
+                                                    <td key={item.id}>
+                                                        <span className={cx('text-body', 'fw-bold')}>#{item.id}</span>
+                                                    </td>
+                                                    <td>{item.userName}</td>
+                                                    <td>{item.vehicleId}</td>
+                                                    <td>{item.slotId}</td>
+                                                    <td>{item.checkinTime}</td>
+                                                    <td>{item.checkoutTime}</td>
+                                                    <td>{item.totalPaid.toLocaleString('it-IT')} VNĐ</td>
+                                                    <td>
+                                                        <Button primary>View Details</Button>
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>

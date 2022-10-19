@@ -247,6 +247,7 @@ function Slots() {
                                 <th>Slot Id</th>
                                 <th>Vehicle Id</th>
                                 <th>Status</th>
+                                <th>Check in Time</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -263,6 +264,7 @@ function Slots() {
                                     <td style={slot.status ? { color: 'var(--parked-color)' } : { color: '#333' }}>
                                         {renderStatus(slot.status)}
                                     </td>
+                                    <td>Check in time </td>
                                     <td>{renderAction(slot.status, slot.area + slot.position)}</td>
                                 </tr>
                             ))}
