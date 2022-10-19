@@ -36,7 +36,6 @@ function Slots() {
         setModalType(null);
     };
 
-
     const getClassOfVehicle = (id) => {
         switch (id) {
             case 1:
@@ -70,41 +69,71 @@ function Slots() {
     const renderStatus = (status) => {
         switch (status) {
             case 0:
-                return 'Empty'
+                return 'Empty';
             case 1:
-                return 'Parking'
+                return 'Parking';
             case -1:
-                return 'Maintaining'
+                return 'Maintaining';
             default:
-                return
+                return;
         }
-    }
+    };
 
     const renderAction = (status, slotId) => {
         switch (status) {
             case 0:
-                return <Button onClick={(e) => openModal(e, 'maintenance', slotId)} className={cx('maintenance-btn')}>Maintenance</Button>
+                return (
+                    <Button onClick={(e) => openModal(e, 'maintenance', slotId)} className={cx('maintenance-btn')}>
+                        Maintenance
+                    </Button>
+                );
             case 1:
-                return <Button onClick={(e) => openModal(e, 'checkout', slotId)} className={cx('checkout-btn')}>Check out</Button>
+                return (
+                    <Button onClick={(e) => openModal(e, 'checkout', slotId)} className={cx('checkout-btn')}>
+                        Check out
+                    </Button>
+                );
             case -1:
-                return <Button onClick={(e) => openModal(e, 'fixed', slotId)} className={cx('fixed-btn')}>Fixed</Button>
+                return (
+                    <Button onClick={(e) => openModal(e, 'fixed', slotId)} className={cx('fixed-btn')}>
+                        Fixed
+                    </Button>
+                );
             default:
-                return
+                return;
         }
-    }
+    };
 
     const renderConfirmModal = (type) => {
         switch (type) {
             case 'maintenance':
-                return <ConfirmModal onClose={closeModal} content={`Maintain slot ${slotRef.current}`} onConfirm={handleMaintenanceSlot} />
+                return (
+                    <ConfirmModal
+                        onClose={closeModal}
+                        content={`Maintain slot ${slotRef.current}`}
+                        onConfirm={handleMaintenanceSlot}
+                    />
+                );
             case 'checkout':
-                return <ConfirmModal onClose={closeModal} content={`Check out slot ${slotRef.current}`} onConfirm={(e) => handleCheckoutSlot(e, vehicleCheckedIn)} />
+                return (
+                    <ConfirmModal
+                        onClose={closeModal}
+                        content={`Check out slot ${slotRef.current}`}
+                        onConfirm={(e) => handleCheckoutSlot(e, vehicleCheckedIn)}
+                    />
+                );
             case 'fixed':
-                return <ConfirmModal onClose={closeModal} content={`Fix slot ${slotRef.current}`} onConfirm={handleFixSlot} />
+                return (
+                    <ConfirmModal
+                        onClose={closeModal}
+                        content={`Fix slot ${slotRef.current}`}
+                        onConfirm={handleFixSlot}
+                    />
+                );
             default:
                 return;
         }
-    }
+    };
 
     //Handle Action
     const handleMaintenanceSlot = async (e) => {
@@ -112,8 +141,8 @@ function Slots() {
         try {
             await updateSlotStatus({
                 slotId: slotRef.current,
-                status: -1
-            })
+                status: -1,
+            });
             closeModal();
             toast.success(`Slot ${slotRef.current} is maintaining!`, {
                 position: 'top-right',
@@ -124,19 +153,19 @@ function Slots() {
                 draggable: true,
                 progress: undefined,
             });
-            setSlots(await getSlotByVehicleTypeId(tab))
+            setSlots(await getSlotByVehicleTypeId(tab));
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const handleFixSlot = async (e) => {
         e.preventDefault();
         try {
             await updateSlotStatus({
                 slotId: slotRef.current,
-                status: 0
-            })
+                status: 0,
+            });
             toast.success(`Slot ${slotRef.current} was fixed!`, {
                 position: 'top-right',
                 autoClose: 5000,
@@ -147,38 +176,37 @@ function Slots() {
                 progress: undefined,
             });
             closeModal();
-            setSlots(await getSlotByVehicleTypeId(tab))
+            setSlots(await getSlotByVehicleTypeId(tab));
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
-    const handleCheckoutSlot = async (e, vehicle) => {
+    const handleCheckoutSlot = async (e, vehicleCheckedIn) => {
         e.preventDefault();
-        // try {
-        //     await checkOut({
-        //         id: vehicleCheckedIn.id,
-        //         checkinTime: vehicleCheckedIn.checkinTime,
-        //         checkoutTime: vehicleCheckedIn.checkoutTime,
-        //         vehicleId: vehicleCheckedIn.vehicleId,
-        //         slotId: slotRef.current,
-        //     });
-        //     toast.success(`Check out ${slotRef.current} successfully!`, {
-        //         position: 'top-right',
-        //         autoClose: 5000,
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         pauseOnHover: false,
-        //         draggable: true,
-        //         progress: undefined,
-        //     });
-        //     closeModal();
-        //     setSlots(await getSlotByVehicleTypeId(tab))
-        // } catch (error) {
-        //     console.log(error);
-        // }
-        console.log(vehicle);
-    }
+        try {
+            await checkOut({
+                id: vehicleCheckedIn.id,
+                checkinTime: vehicleCheckedIn.checkinTime,
+                checkoutTime: vehicleCheckedIn.checkoutTime,
+                vehicleId: vehicleCheckedIn.vehicleId,
+                slotId: slotRef.current,
+            });
+            toast.success(`Check out slot ${slotRef.current} successfully!`, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+            closeModal();
+            setSlots(await getSlotByVehicleTypeId(tab));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -235,9 +263,7 @@ function Slots() {
                                     <td style={slot.status ? { color: 'var(--parked-color)' } : { color: '#333' }}>
                                         {renderStatus(slot.status)}
                                     </td>
-                                    <td>
-                                        {renderAction(slot.status, slot.area + slot.position)}
-                                    </td>
+                                    <td>{renderAction(slot.status, slot.area + slot.position)}</td>
                                 </tr>
                             ))}
                         </tbody>
