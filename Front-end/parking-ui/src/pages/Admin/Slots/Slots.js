@@ -64,7 +64,7 @@ function Slots() {
             setVehicleCheckedIn(await getCheckedInVehicle(slotRef.current));
         };
         fetchCheckedInVehicle();
-    }, [slotRef.current]);
+    }, []);
 
     const renderStatus = (status) => {
         switch (status) {
@@ -264,7 +264,7 @@ function Slots() {
                                     <td style={slot.status ? { color: 'var(--parked-color)' } : { color: '#333' }}>
                                         {renderStatus(slot.status)}
                                     </td>
-                                    <td>Check in time </td>
+                                    <td>{slot.status === 1 && slot.checkInTime}</td>
                                     <td>{renderAction(slot.status, slot.area + slot.position)}</td>
                                 </tr>
                             ))}

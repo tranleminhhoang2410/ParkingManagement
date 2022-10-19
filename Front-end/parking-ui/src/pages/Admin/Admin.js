@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './Admin.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faCheck, faX, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
 import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
@@ -67,10 +67,9 @@ function Admin() {
                                 <div className={cx('row')}>
                                     <div className={cx('col-sm-4')}>
                                         <div className={cx('avatar-md', 'profile-user-wid', 'mb-4')}>
-                                            <img
-                                                src={require('~/assets/images/avatar-1.jpg')}
-                                                alt="avatar-1"
+                                            <FontAwesomeIcon
                                                 className={cx('img-thumbnail', 'rounded-circle')}
+                                                icon={faUser}
                                             />
                                         </div>
                                         <h5 className={cx('font-size-15', 'text-truncate')}>Hoang Tran</h5>
