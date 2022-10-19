@@ -66,7 +66,11 @@ namespace Parking.API.Controllers
         [HttpGet("Admin/GetAll")]
         public async Task<ActionResult<IEnumerable<ManagerInvoiceDTO>>> GetAllManagerInvoice()
         {
-            return Ok(await managerInvoiceService.GetAll());
+            List<ManagerInvoiceDTO> List = (await managerInvoiceService.GetAll())
+                .OrderByDescending(i => i.Id)
+                .Take(6)
+                .ToList();
+            return Ok(List);
         }
 
         [HttpGet("Admin/GetByID/{id}")]
@@ -128,9 +132,9 @@ namespace Parking.API.Controllers
                 Month = month,
                 datas = new List<TypeStatistic>()
                 {
-                    new TypeStatistic{ TypeId=1, Total=count(1, thisMonthInvoices)},
-                    new TypeStatistic{ TypeId=2, Total=count(2, thisMonthInvoices)},
-                    new TypeStatistic{ TypeId=3, Total=count(3, thisMonthInvoices)},
+                    new TypeStatistic{ TypeId=1, TypeName="Car", Total=count(1, thisMonthInvoices)},
+                    new TypeStatistic{ TypeId=2, TypeName="Bus", Total=count(2, thisMonthInvoices)},
+                    new TypeStatistic{ TypeId=3, TypeName="Truck", Total=count(3, thisMonthInvoices)},
                 }
             };
         }
@@ -148,9 +152,9 @@ namespace Parking.API.Controllers
 
             List<TypeStatistic> statistic = new List<TypeStatistic>()
             {
-                new TypeStatistic{ TypeId = 1, Total = total(1)},
-                new TypeStatistic{ TypeId = 2, Total = total(2)},
-                new TypeStatistic{ TypeId = 3, Total = total(3)}
+                new TypeStatistic{ TypeId = 1, TypeName="Car", Total = total(1)},
+                new TypeStatistic{ TypeId = 2, TypeName="Bus", Total = total(2)},
+                new TypeStatistic{ TypeId = 3, TypeName="Truck", Total = total(3)}
             };
 
 
