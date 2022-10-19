@@ -104,20 +104,23 @@ namespace Parking.API.Controllers
 
                 if (invoiceDTO != null)
                 {
-                    VehicleDTO parkedVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
-
-                    bool isUserVehicle = false;
-
-                    foreach (VehicleDTO v in user.Vehicles)
+                    if(getLoggedUserRole().Equals("User"))
                     {
-                        if (v.Id.Equals(parkedVehicle.Id))
-                        {
-                            isUserVehicle = true;
-                            break;
-                        }
-                    }
+                        VehicleDTO parkedVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
 
-                    if (!isUserVehicle) throw new Exception("It's not yours");
+                        bool isUserVehicle = false;
+
+                        foreach (VehicleDTO v in user.Vehicles)
+                        {
+                            if (v.Id.Equals(parkedVehicle.Id))
+                            {
+                                isUserVehicle = true;
+                                break;
+                            }
+                        }
+
+                        if (!isUserVehicle) throw new Exception("It's not yours");
+                    }
 
                     invoiceDTO.CheckoutTime = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
@@ -230,6 +233,8 @@ namespace Parking.API.Controllers
         }
 
         private int getLoggedUserId() => int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        private string getLoggedUserRole() => httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
 
 
     }
