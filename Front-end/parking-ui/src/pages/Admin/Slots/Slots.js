@@ -19,7 +19,6 @@ const cx = classNames.bind(styles);
 function Slots() {
     const [tab, setTab] = useState(1);
     const [slots, setSlots] = useState([]);
-    const [vehicleCheckedIn, setVehicleCheckedIn] = useState({});
 
     //Modal
     const slotRef = useRef();
@@ -58,13 +57,6 @@ function Slots() {
         getAllSlotsByVehicleType();
     }, [tab]);
 
-    //Get checked in vehicle
-    useEffect(() => {
-        const fetchCheckedInVehicle = async () => {
-            setVehicleCheckedIn(await getCheckedInVehicle(slotRef.current));
-        };
-        fetchCheckedInVehicle();
-    }, []);
 
     const renderStatus = (status) => {
         switch (status) {
@@ -119,7 +111,7 @@ function Slots() {
                     <ConfirmModal
                         onClose={closeModal}
                         content={`Check out slot ${slotRef.current}`}
-                        onConfirm={(e) => handleCheckoutSlot(e, vehicleCheckedIn)}
+                        onConfirm={handleCheckoutSlot}
                     />
                 );
             case 'fixed':
@@ -182,14 +174,16 @@ function Slots() {
         }
     };
 
-    const handleCheckoutSlot = async (e, vehicleCheckedIn) => {
+    const handleCheckoutSlot = async (e) => {
         e.preventDefault();
         try {
+            const vehicle = await getCheckedInVehicle(slotRef.current)
+
             await checkOut({
-                id: vehicleCheckedIn.id,
-                checkinTime: vehicleCheckedIn.checkinTime,
-                checkoutTime: vehicleCheckedIn.checkoutTime,
-                vehicleId: vehicleCheckedIn.vehicleId,
+                id: vehicle.id,
+                checkinTime: vehicle.checkinTime,
+                checkoutTime: vehicle.checkoutTime,
+                vehicleId: vehicle.vehicleId,
                 slotId: slotRef.current,
             });
             toast.success(`Check out slot ${slotRef.current} successfully!`, {

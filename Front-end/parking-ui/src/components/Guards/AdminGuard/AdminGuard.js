@@ -9,9 +9,6 @@ function AdminGuard({ children }) {
 
     const [{ role }] = useContext(AuthContext);
     const navigate = useNavigate();
-
-    console.log(role);
-
     useEffect(() => {
         if (role !== config.roles.ADMIN) { navigate('/'); }
     }, [role, navigate])

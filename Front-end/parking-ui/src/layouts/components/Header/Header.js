@@ -111,10 +111,15 @@ function Header() {
     //UI Tabs
 
     const [toggleState, setToggleState] = useState(1);
+    const [toggleNavLink, setToggleNavLink] = useState(1);
 
     const toggleTab = (index) => {
         setToggleState(index);
     };
+
+    const ToggleNavLink = (index) => {
+        setToggleNavLink(index);
+    }
 
     //handle auth
     useEffect(() => {
@@ -223,24 +228,34 @@ function Header() {
                     </div>
                     <nav className={cx('nav-link')}>
                         <Link
+                            onClick={() => ToggleNavLink(1)}
                             className={cx('nav-link-item')}
                             to={authState.role === config.roles.ADMIN ? '/admin' : '/'}
+                            style={toggleNavLink === 1 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}
                         >
                             Home
                         </Link>
                         {authState.role !== config.roles.ADMIN ? (
-                            <Link className={cx('nav-link-item')} to="/about">
+                            <Link className={cx('nav-link-item')} to="/about"
+                                onClick={() => ToggleNavLink(2)}
+                                style={toggleNavLink === 2 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
                                 About Us
                             </Link>
                         ) : (
                             <>
-                                <Link className={cx('nav-link-item')} to="/admin/regulations">
+                                <Link className={cx('nav-link-item')} to="/admin/regulations"
+                                    onClick={() => ToggleNavLink(3)}
+                                    style={toggleNavLink === 3 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
                                     Regulations
                                 </Link>
-                                <Link className={cx('nav-link-item')} to="/admin/slots">
+                                <Link className={cx('nav-link-item')} to="/admin/slots"
+                                    onClick={() => ToggleNavLink(4)}
+                                    style={toggleNavLink === 4 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
                                     Slots
                                 </Link>
-                                <Link className={cx('nav-link-item')} to="/admin/invoices">
+                                <Link className={cx('nav-link-item')} to="/admin/invoices"
+                                    onClick={() => ToggleNavLink(5)}
+                                    style={toggleNavLink === 5 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
                                     Invoices
                                 </Link>
                             </>
