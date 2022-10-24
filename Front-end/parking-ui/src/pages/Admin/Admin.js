@@ -4,10 +4,11 @@ import styles from './Admin.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faCheck, faX, faUser } from '@fortawesome/free-solid-svg-icons';
+
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 import Button from '~/components/Button';
-import StackedColumnChart from '~/components/Charts/StackedColumnChart'
 
 import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
 import { getHighestParking, getLastedCheckout } from '~/services/invoiceService';
@@ -54,7 +55,28 @@ function Admin() {
             default:
                 return;
         }
-    }
+    };
+
+    const data = [
+        {
+            name: 'January',
+            uv: 4000,
+            pv: 2400,
+            amt: 2400,
+        },
+        {
+            name: 'February',
+            uv: 3000,
+            pv: 1398,
+            amt: 2210,
+        },
+        {
+            name: 'March',
+            uv: 2000,
+            pv: 9800,
+            amt: 2290,
+        },
+    ];
 
     return (
         <div className={cx('wrapper', 'mt-4')}>
@@ -122,10 +144,16 @@ function Admin() {
                                 <div className={cx('row')}>
                                     <div className={cx('col-sm-6')}>
                                         <p className={cx('text-muted')}>This month</p>{' '}
-                                        <h3>{highestIncome.monthTotalPrice && highestIncome.monthTotalPrice.toLocaleString('it-IT')} VNĐ</h3>
+                                        <h3>
+                                            {highestIncome.monthTotalPrice &&
+                                                highestIncome.monthTotalPrice.toLocaleString('it-IT')}{' '}
+                                            VNĐ
+                                        </h3>
                                         <p className={cx('text-muted')}>
                                             <span className={cx('text-success', 'me-2')}>
-                                                {highestIncome.data && (highestIncome.data.total / highestIncome.monthTotalPrice) * 100}%
+                                                {highestIncome.data &&
+                                                    (highestIncome.data.total / highestIncome.monthTotalPrice) * 100}
+                                                %
                                                 <i className={cx('mdi', 'mdi-arrow-up')} />
                                             </span>
                                             From {highestIncome.data && highestIncome.data.typeName}
@@ -134,13 +162,18 @@ function Admin() {
                                     <div className={cx('col-sm-6')}>
                                         <div className={cx('mt-4', 'mt-sm-0')}>
                                             <CircularProgressbarWithChildren
-                                                value={highestIncome.data && (highestIncome.data.total / highestIncome.monthTotalPrice) * 100}
+                                                value={
+                                                    highestIncome.data &&
+                                                    (highestIncome.data.total / highestIncome.monthTotalPrice) * 100
+                                                }
                                                 styles={{
                                                     root: {},
                                                     // Customize the path, i.e. the "completed progress"
                                                     path: {
                                                         // Path color
-                                                        stroke: renderVehicleTypeColor(highestIncome.data && highestIncome.data.typeId),
+                                                        stroke: renderVehicleTypeColor(
+                                                            highestIncome.data && highestIncome.data.typeId,
+                                                        ),
                                                         // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                                                         strokeLinecap: 'butt',
                                                         // Customize transition animation
@@ -169,11 +202,16 @@ function Admin() {
                                                     // Customize background - only used when the `background` prop is true
                                                     background: {
                                                         fill: '#3e98c7',
-                                                    }
+                                                    },
                                                 }}
                                             >
                                                 <div style={{ fontSize: 12, marginTop: -5 }}>
-                                                    <strong>{highestIncome.data && (highestIncome.data.total / highestIncome.monthTotalPrice) * 100}%</strong>
+                                                    <strong>
+                                                        {highestIncome.data &&
+                                                            (highestIncome.data.total / highestIncome.monthTotalPrice) *
+                                                                100}
+                                                        %
+                                                    </strong>
                                                 </div>
                                             </CircularProgressbarWithChildren>
                                         </div>
@@ -266,7 +304,26 @@ function Admin() {
                                     <h5 className={cx('card-title', 'mb-4', 'h4', 'card-title')}>Vehicles</h5>
                                 </div>
                                 <div className="apex-charts">
-                                    <StackedColumnChart />
+                                    <BarChart
+                                        width={700}
+                                        height={300}
+                                        data={data}
+                                        margin={{
+                                            top: 20,
+                                            right: 30,
+                                            left: 20,
+                                            bottom: 5,
+                                        }}
+                                    >
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
+                                        <Bar dataKey="pv" stackId="a" fill="#8884d8" />
+                                        <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
+                                        <Bar dataKey="amt" stackId="a" fill="#333" />
+                                    </BarChart>
                                 </div>
                             </div>
                         </div>

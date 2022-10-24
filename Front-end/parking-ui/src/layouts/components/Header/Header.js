@@ -119,7 +119,7 @@ function Header() {
 
     const ToggleNavLink = (index) => {
         setToggleNavLink(index);
-    }
+    };
 
     //handle auth
     useEffect(() => {
@@ -140,7 +140,7 @@ function Header() {
             dispatch({ type: AUTH_ACTION.LOGOUT });
             LS.removeLocalStorage('auth');
         }
-        return () => { };
+        return () => {};
     }, [dispatch]);
 
     //get account of user
@@ -183,8 +183,8 @@ function Header() {
 
             if (result.role === config.roles.ADMIN) {
                 console.log('navigate');
-                navigate('/admin')
-            };
+                navigate('/admin');
+            }
             LS.setLocalStorage('auth', authData);
             setErrorMsg('');
             closeModal();
@@ -231,31 +231,75 @@ function Header() {
                             onClick={() => ToggleNavLink(1)}
                             className={cx('nav-link-item')}
                             to={authState.role === config.roles.ADMIN ? '/admin' : '/'}
-                            style={toggleNavLink === 1 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}
+                            style={
+                                toggleNavLink === 1
+                                    ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' }
+                                    : {}
+                            }
                         >
                             Home
                         </Link>
                         {authState.role !== config.roles.ADMIN ? (
-                            <Link className={cx('nav-link-item')} to="/about"
+                            <Link
+                                className={cx('nav-link-item')}
+                                to="/about"
                                 onClick={() => ToggleNavLink(2)}
-                                style={toggleNavLink === 2 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
+                                style={
+                                    toggleNavLink === 2
+                                        ? {
+                                              color: 'var(--primary-color)',
+                                              borderBottom: '2px solid var(--primary-color)',
+                                          }
+                                        : {}
+                                }
+                            >
                                 About Us
                             </Link>
                         ) : (
                             <>
-                                <Link className={cx('nav-link-item')} to="/admin/regulations"
+                                <Link
+                                    className={cx('nav-link-item')}
+                                    to="/admin/vehicles"
                                     onClick={() => ToggleNavLink(3)}
-                                    style={toggleNavLink === 3 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
-                                    Regulations
+                                    style={
+                                        toggleNavLink === 3
+                                            ? {
+                                                  color: 'var(--primary-color)',
+                                                  borderBottom: '2px solid var(--primary-color)',
+                                              }
+                                            : {}
+                                    }
+                                >
+                                    Vehicles
                                 </Link>
-                                <Link className={cx('nav-link-item')} to="/admin/slots"
+                                <Link
+                                    className={cx('nav-link-item')}
+                                    to="/admin/slots"
                                     onClick={() => ToggleNavLink(4)}
-                                    style={toggleNavLink === 4 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
+                                    style={
+                                        toggleNavLink === 4
+                                            ? {
+                                                  color: 'var(--primary-color)',
+                                                  borderBottom: '2px solid var(--primary-color)',
+                                              }
+                                            : {}
+                                    }
+                                >
                                     Slots
                                 </Link>
-                                <Link className={cx('nav-link-item')} to="/admin/invoices"
+                                <Link
+                                    className={cx('nav-link-item')}
+                                    to="/admin/invoices"
                                     onClick={() => ToggleNavLink(5)}
-                                    style={toggleNavLink === 5 ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' } : {}}>
+                                    style={
+                                        toggleNavLink === 5
+                                            ? {
+                                                  color: 'var(--primary-color)',
+                                                  borderBottom: '2px solid var(--primary-color)',
+                                              }
+                                            : {}
+                                    }
+                                >
                                     Invoices
                                 </Link>
                             </>
