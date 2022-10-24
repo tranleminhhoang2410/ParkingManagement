@@ -65,6 +65,14 @@ namespace Parking.API.Controllers
         }
 
         [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("GetByType/{typeId}")]
+        public async Task<ActionResult<IEnumerable<VehicleDTO>>> GetByType(int typeId)
+        {
+            return Ok((await vehicleService.GetAll()).Where(v => v.VehicleTypeId == typeId));
+        }
+
+        [AuthorizationFilter]
         [Authorize(Roles = "User")]
         [HttpPost("CheckIn")]
         public async Task<ActionResult<string>> CheckIn(string vehicleId, string slotId)

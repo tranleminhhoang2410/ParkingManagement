@@ -8,7 +8,9 @@ namespace Parking.ViewModel.StatisticModel
 {
     public class MonthlyParking
     {
-        public int Month { get; set; }
-        public List<TypeStatistic> datas { get; set; }
+        public string Month { get; set; }
+        public int Car { get; set; }
+        public int Bus { get; set; }
+        public int Truck { get; set; }
     }
 }

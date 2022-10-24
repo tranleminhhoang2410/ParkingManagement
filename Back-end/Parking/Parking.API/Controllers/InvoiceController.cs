@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Paking.Data.Constant;
 using Paking.DTO.DTOs;
 using Parking.API.Filter;
 using Parking.Service;
@@ -129,13 +130,10 @@ namespace Parking.API.Controllers
 
             return new MonthlyParking
             {
-                Month = month,
-                datas = new List<TypeStatistic>()
-                {
-                    new TypeStatistic{ TypeId=1, TypeName="Car", Total=count(1, thisMonthInvoices)},
-                    new TypeStatistic{ TypeId=2, TypeName="Bus", Total=count(2, thisMonthInvoices)},
-                    new TypeStatistic{ TypeId=3, TypeName="Truck", Total=count(3, thisMonthInvoices)},
-                }
+                Month = ((Month)month).ToString(),
+                Car = count(1, thisMonthInvoices),
+                Bus = count(2, thisMonthInvoices),
+                Truck = count(3, thisMonthInvoices),
             };
         }
 
