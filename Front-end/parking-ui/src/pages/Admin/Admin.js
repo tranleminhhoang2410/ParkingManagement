@@ -11,7 +11,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 import Button from '~/components/Button';
 
 import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
-import { getHighestParking, getLastedCheckout } from '~/services/invoiceService';
+import { getHighestParking, getLastedCheckout, getMonthlyParkingType } from '~/services/invoiceService';
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +19,7 @@ function Admin() {
     const [priceTable, setPriceTable] = useState([]);
     const [highestIncome, setHighestIncome] = useState({});
     const [lastedCheckout, setLastedCheckout] = useState([]);
+    const [monthlyParking, setMonthlyParking] = useState([]);
 
     useEffect(() => {
         const getPriceTable = async () => {
@@ -43,6 +44,14 @@ function Admin() {
         };
         fetchLastedCheckout();
     }, []);
+
+    useEffect(() => {
+        const fetchMonthlyParkingType = async () => {
+            const monthlyParking = await getMonthlyParkingType();
+            setMonthlyParking(monthlyParking);
+        }
+        fetchMonthlyParkingType();
+    })
 
     const renderVehicleTypeColor = (type) => {
         switch (type) {
@@ -152,7 +161,7 @@ function Admin() {
                                         <p className={cx('text-muted')}>
                                             <span className={cx('text-success', 'me-2')}>
                                                 {highestIncome.data &&
-                                                    (highestIncome.data.total / highestIncome.monthTotalPrice) * 100}
+                                                    Math.round(((highestIncome.data.total / highestIncome.monthTotalPrice) * 100) * 100) / 100}
                                                 %
                                                 <i className={cx('mdi', 'mdi-arrow-up')} />
                                             </span>
@@ -164,7 +173,7 @@ function Admin() {
                                             <CircularProgressbarWithChildren
                                                 value={
                                                     highestIncome.data &&
-                                                    (highestIncome.data.total / highestIncome.monthTotalPrice) * 100
+                                                    Math.round(((highestIncome.data.total / highestIncome.monthTotalPrice) * 100) * 100) / 100
                                                 }
                                                 styles={{
                                                     root: {},
@@ -208,8 +217,7 @@ function Admin() {
                                                 <div style={{ fontSize: 12, marginTop: -5 }}>
                                                     <strong>
                                                         {highestIncome.data &&
-                                                            (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                                100}
+                                                            Math.round(((highestIncome.data.total / highestIncome.monthTotalPrice) * 100) * 100) / 100}
                                                         %
                                                     </strong>
                                                 </div>
@@ -307,7 +315,7 @@ function Admin() {
                                     <BarChart
                                         width={700}
                                         height={300}
-                                        data={data}
+                                        data={monthlyParking}
                                         margin={{
                                             top: 20,
                                             right: 30,
@@ -316,13 +324,13 @@ function Admin() {
                                         }}
                                     >
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="name" />
+                                        <XAxis dataKey='month' />
                                         <YAxis />
                                         <Tooltip />
                                         <Legend />
-                                        <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-                                        <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
-                                        <Bar dataKey="amt" stackId="a" fill="#333" />
+                                        <Bar dataKey="car" stackId="a" fill='var(--car-color)' />
+                                        <Bar dataKey="bus" stackId="a" fill='var(--bus-color)' />
+                                        <Bar dataKey="truck" stackId="a" fill='var(--truck-color)' />
                                     </BarChart>
                                 </div>
                             </div>

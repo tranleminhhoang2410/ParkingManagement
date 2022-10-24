@@ -5,6 +5,7 @@ const END_POINTS = {
     DELETE: 'Invoice/Delete',
     GET_HIGHEST_PARKING: 'Invoice/Admin/GetHighestParkingType',
     GET_LASTED_CHECKOUT: 'Invoice/Admin/GetAll',
+    GET_MONTHLY_PARKING_TYPE: 'Invoice/Admin/GetMonthlyParkingType',
 };
 
 export const getInvoiceByUserIdApi = (id) => {
@@ -22,3 +23,7 @@ export const getHighestParking = () => {
 export const getLastedCheckout = () => {
     return axios.get(END_POINTS.GET_LASTED_CHECKOUT);
 };
+
+export const getMonthlyParkingType = () => {
+    return axios.get(END_POINTS.GET_MONTHLY_PARKING_TYPE);
+}
