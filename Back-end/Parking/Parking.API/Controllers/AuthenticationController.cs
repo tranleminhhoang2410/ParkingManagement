@@ -172,7 +172,6 @@ namespace Parking.API.Controllers
                     {
                         throw new Exception(Message.WRONG_PASSWORD);
                     }
-
                 }
                 else
                 {

@@ -23,10 +23,12 @@ namespace Parking.API.Controllers
         }
 
         [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassowrd(string username, string token)
+        public async Task<IActionResult> ForgotPassowrd(string username)
         {
             try
             {
+                string token = tokenManager.GeneratePasswordResetToken();
+
                 AccountDTO account = await accountService.GetAccountByUser(username);
 
                 if (tokenManager.GetUserValidTokenStorage(account.User.Id) == null)
