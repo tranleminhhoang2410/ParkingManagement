@@ -6,6 +6,8 @@ using Paking.DTO.DTOs;
 using Parking.API.Filter;
 using Parking.Service;
 using Parking.ViewModel.StatisticModel;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Parking.API.Controllers
 {
@@ -130,7 +132,7 @@ namespace Parking.API.Controllers
 
             return new MonthlyParking
             {
-                Month = ((Month)month).ToString(),
+                Month = GetEnumDescription((Month)month),
                 Car = count(1, thisMonthInvoices),
                 Bus = count(2, thisMonthInvoices),
                 Truck = count(3, thisMonthInvoices),
@@ -157,6 +159,20 @@ namespace Parking.API.Controllers
 
 
             return statistic.OrderByDescending(c => c.Total).FirstOrDefault();
+        }
+
+        public static string GetEnumDescription(Enum value)
+        {
+            FieldInfo fi = value.GetType().GetField(value.ToString());
+
+            DescriptionAttribute[] attributes = fi.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
+
+            if (attributes != null && attributes.Any())
+            {
+                return attributes.First().Description;
+            }
+
+            return value.ToString();
         }
         #endregion
     }
