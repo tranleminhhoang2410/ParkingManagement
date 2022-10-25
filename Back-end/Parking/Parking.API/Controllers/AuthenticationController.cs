@@ -227,7 +227,7 @@ namespace Parking.API.Controllers
         {
             return Ok(new
             {
-                Success = tokenManager.GeneratePasswordResetToken()
+                Token = tokenManager.GeneratePasswordResetToken()
             }) ;
         }
 

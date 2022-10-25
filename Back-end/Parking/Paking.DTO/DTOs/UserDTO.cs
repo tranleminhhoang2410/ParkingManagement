@@ -11,7 +11,6 @@ namespace Paking.DTO.DTOs
         public int? CityId { get; set; }
         public int? DistrictId { get; set; }
         public int? WardId { get; set; }
-        public string? Feedback { get; set; }
         public ICollection<VehicleDTO> Vehicles { get; set; } = new HashSet<VehicleDTO>();
     }
 }

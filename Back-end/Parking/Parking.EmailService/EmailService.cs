@@ -22,7 +22,7 @@ namespace Parking.EmailService
             );
             smtp.Authenticate(
                 "vehicle.parking.k15@gmail.com",
-                "jecmuxukdvfdaclw"
+                "odqeqkpabdagdjhq"
             );
             smtp.Send(email);
             smtp.Disconnect(true);

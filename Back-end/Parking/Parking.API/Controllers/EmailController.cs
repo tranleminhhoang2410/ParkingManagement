@@ -23,7 +23,7 @@ namespace Parking.API.Controllers
         }
 
         [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassowrd(string username, string link, string token)
+        public async Task<IActionResult> ForgotPassowrd(string username, string token)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Parking.API.Controllers
                 {
                     To = account.User.Email,
                     Subject = "ForgotPassword notify",
-                    Body = EmailFormat.ForgotPassword(link, username)
+                    Body = EmailFormat.ForgotPassword(username, token)
                 });
 
                 return Ok(new

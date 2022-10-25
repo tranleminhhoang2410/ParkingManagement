@@ -40,7 +40,6 @@ namespace Paking.DTO.Mapper
                     Id = user.Id,
                     Email = user.Email,
                     Name = user.Name,
-                    Feedback = user.Feedback,
                     Phone = user.Phone,
                     CityId = user.CityId,
                     DistrictId = user.DistrictId,

@@ -25,7 +25,6 @@ namespace Paking.Data.Entities
         public District District { get; set; }
         public int? WardId { get; set; }
         public Ward Ward { get; set; }
-        public string? Feedback { get; set; }
         public ICollection<Vehicle> Vehicles { get; set; }
     }
 }
