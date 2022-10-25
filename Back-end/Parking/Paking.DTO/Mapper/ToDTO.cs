@@ -69,7 +69,8 @@ namespace Paking.DTO.Mapper
                     VehicleName = vehicle.VehicleName,
                     VehicleTypeId = vehicle.VehicleTypeId,
                     VehicleType = Map(vehicle.VehicleType),
-                    IsParking = vehicle.IsParking
+                    IsParking = vehicle.IsParking,
+                     UserId = vehicle.UserID
                 };
 
                 foreach (Invoice invoice in vehicle.Invoices)

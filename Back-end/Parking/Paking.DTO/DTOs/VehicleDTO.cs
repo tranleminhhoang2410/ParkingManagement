@@ -3,6 +3,7 @@
     public class VehicleDTO
     {
         public string? Id { get; set; }
+        public int UserId { get; set; }
         public string? VehicleName { get; set; }
         public string? VehicleBrand { get; set; }
         public int VehicleTypeId { get; set; }

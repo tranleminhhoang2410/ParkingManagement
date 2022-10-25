@@ -5,6 +5,7 @@ using Paking.Data.Constant;
 using Paking.DTO.DTOs;
 using Parking.API.Filter;
 using Parking.Service;
+using Parking.ViewModel.Vehicle;
 using System.Security.Claims;
 
 namespace Parking.API.Controllers
@@ -64,12 +65,25 @@ namespace Parking.API.Controllers
             return Ok(await vehicleService.GetAll());
         }
 
-        [AuthorizationFilter]
-        [Authorize(Roles = "Admin")]
+        //[AuthorizationFilter]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("GetByType/{typeId}")]
-        public async Task<ActionResult<IEnumerable<VehicleDTO>>> GetByType(int typeId)
+        public async Task<ActionResult<IEnumerable<VehicleVM1>>> GetByType(int typeId)
         {
-            return Ok((await vehicleService.GetAll()).Where(v => v.VehicleTypeId == typeId));
+            List<VehicleDTO> vehicleList = (await vehicleService.GetAll()).Where(v => v.VehicleTypeId == typeId).ToList();
+
+            List<VehicleVM1> list = vehicleList.Select(v => new VehicleVM1
+            {
+                VehicleId = v.Id,
+                VehicleBrand = v.VehicleBrand,
+                VehicleName = v.VehicleName,
+                IsParking = v.IsParking?1:0,
+                Owner = userService.GetUserById(v.UserId).Result.Name
+            }).ToList();
+
+            return Ok(
+                list
+            );
         }
 
         [AuthorizationFilter]
