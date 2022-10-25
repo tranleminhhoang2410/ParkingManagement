@@ -51,7 +51,7 @@ function Invoices() {
                                     <td>{invoice.slotId}</td>
                                     <td>{invoice.checkinTime}</td>
                                     <td>{invoice.checkoutTime}</td>
-                                    <td>{invoice.totalPaid}</td>
+                                    <td>{invoice.totalPaid.toLocaleString('it-IT')} VNĐ</td>
                                 </tr>
                             )
                         }

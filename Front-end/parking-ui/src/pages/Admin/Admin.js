@@ -171,8 +171,8 @@ function Admin() {
                                                 {highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                            100 *
-                                                            100,
+                                                        100 *
+                                                        100,
                                                     ) / 100}
                                                 %
                                                 <i className={cx('mdi', 'mdi-arrow-up')} />
@@ -187,8 +187,8 @@ function Admin() {
                                                     highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                            100 *
-                                                            100,
+                                                        100 *
+                                                        100,
                                                     ) / 100
                                                 }
                                                 styles={{
@@ -236,8 +236,8 @@ function Admin() {
                                                             Math.round(
                                                                 (highestIncome.data.total /
                                                                     highestIncome.monthTotalPrice) *
-                                                                    100 *
-                                                                    100,
+                                                                100 *
+                                                                100,
                                                             ) / 100}
                                                         %
                                                     </strong>
@@ -388,9 +388,10 @@ function Admin() {
                                                     <td
                                                         contentEditable={editRow === item.id}
                                                         suppressContentEditableWarning
-                                                        onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerHour')}
                                                     >
-                                                        <span className={cx('p-1')}>
+                                                        <span className={cx('p-1')}
+                                                            onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerHour')}
+                                                        >
                                                             {item.pricePerHour.toLocaleString('it-It')}
                                                         </span>
                                                         VNĐ
@@ -398,9 +399,10 @@ function Admin() {
                                                     <td
                                                         contentEditable={editRow === item.id}
                                                         suppressContentEditableWarning
-                                                        onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerDay')}
+
                                                     >
-                                                        <span className={cx('p-1')}>
+                                                        <span className={cx('p-1')}
+                                                            onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerDay')}>
                                                             {item.pricePerDay.toLocaleString('it-It')}
                                                         </span>{' '}
                                                         VNĐ
@@ -408,9 +410,10 @@ function Admin() {
                                                     <td
                                                         contentEditable={editRow === item.id}
                                                         suppressContentEditableWarning
-                                                        onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerWeek')}
+
                                                     >
-                                                        <span className={cx('p-1')}>
+                                                        <span className={cx('p-1')}
+                                                            onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerWeek')}>
                                                             {item.pricePerWeek.toLocaleString('it-It')}
                                                         </span>{' '}
                                                         VNĐ

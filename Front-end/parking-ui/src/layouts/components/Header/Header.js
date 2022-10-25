@@ -128,7 +128,9 @@ function Header() {
         if (!authData) return;
         const { jwt, user } = authData;
         const expiredTime = new Date(jwt.expired * 1000).getTime();
+        // console.log(expiredTime);
         const currentTime = new Date().getTime();
+        // console.log(currentTime);
         if (currentTime < expiredTime) {
             dispatch({
                 type: AUTH_ACTION.LOGIN,
@@ -172,7 +174,6 @@ function Header() {
                 token: token,
                 expired: result.exp,
             };
-            console.log(result);
             const authData = { jwt, user: {}, role: result.role };
             LS.setLocalStorage('auth', authData);
             const user = await getLoggedUser();
@@ -183,9 +184,13 @@ function Header() {
             });
 
             if (result.role === config.roles.ADMIN) {
-                console.log('navigate');
                 navigate('/admin');
             }
+
+            if (window.location.href === 'http://localhost:3000/password/forgot') {
+                navigate('/')
+            }
+
             LS.setLocalStorage('auth', authData);
             setErrorMsg('');
             closeModal();
@@ -225,7 +230,7 @@ function Header() {
             <div className={cx('wrapper')}>
                 <div className={cx('logo-and-nav')}>
                     <div className={cx('logo')}>
-                        <h3>Logo</h3>
+                        <img className={cx('logo-img')} src={require('~/assets/images/logo.png')} />
                     </div>
                     <nav className={cx('nav-link')}>
                         <Link
@@ -395,7 +400,7 @@ function Header() {
                                         </label>
                                     </div>
                                     <div className={cx('forgot')}>
-                                        <Link to="/forgot" onClick={closeModal} className={cx('forgot-link')}>
+                                        <Link to="/password/forgot" onClick={closeModal} className={cx('forgot-link')}>
                                             Forgot password?
                                         </Link>
                                     </div>

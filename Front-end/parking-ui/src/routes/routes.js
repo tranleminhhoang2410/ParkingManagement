@@ -12,8 +12,9 @@ import Parking from '~/pages/Parking';
 import ParkingDetail from '~/pages/Parking/ParkingDetail';
 import Vehicles from '~/pages/Vehicles';
 import Profile from '~/pages/Profile';
-import Forgot from '~/pages/Security/Forgot';
-import ChangePassword from '~/pages/Security/ChangePassword/ChangePassword';
+import ForgotPassword from '~/pages/Security/ForgotPassword';
+import ChangePassword from '~/pages/Security/ChangePassword';
+import ResetPassword from '~/pages/Security/ResetPassword'
 import Invoices from '~/pages/Invoices';
 import Admin from '~/pages/Admin';
 import { AdminVehicles } from '~/pages/Admin/Vehicles';
@@ -33,8 +34,9 @@ const publicRoutes = [
     { path: config.routes.enrollVehicle, component: Vehicles },
     { path: config.routes.profile, component: Profile },
     { path: config.routes.invoices, component: Invoices },
-    { path: config.routes.forgot, component: Forgot },
+    { path: config.routes.forgotPassword, component: ForgotPassword },
     { path: config.routes.changePassword, component: ChangePassword },
+    { path: config.routes.resetPassword, component: ResetPassword },
     { path: config.routes.admin, component: Admin, guard: AdminGuard, layout: AdminLayout },
     { path: config.routes.adminProfile, component: Profile, layout: AdminLayout },
     { path: config.routes.adminVehicles, component: AdminVehicles, layout: AdminLayout },

@@ -1,11 +1,32 @@
+import { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 
 import Button from '~/components/Button';
 
+import { getLoggedUser } from '~/services/userService'
+
+import { AuthContext } from '~/context/AuthContextProvider';
+
 const cx = classNames.bind(styles);
 
 function Profile() {
+    const [user, setUser] = useState({});
+    const [fullname, setFullname] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [street, setStreet] = useState('');
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            const user = await getLoggedUser();
+            setUser(user);
+            setFullname(user.name);
+            setEmail(user.email);
+            setPhone(user.phone);
+        }
+        fetchCurrentUser();
+    }, [])
+
     return (
         <div className={cx('wrapper')}>
             <form id={cx('info-form')}>
@@ -13,19 +34,19 @@ function Profile() {
                     <label htmlFor="fullname" className={cx('input-label')}>
                         Full name
                     </label>
-                    <input type="text" name="fullname" id="fullname" className={cx('input-text')} />
+                    <input type="text" name="fullname" id="fullname" className={cx('input-text')} value={fullname} onChange={(e) => setFullname(e.target.value)} />
                 </div>
                 <div className={cx('input-group')}>
                     <label htmlFor="email" className={cx('input-label')}>
                         Email
                     </label>
-                    <input type="email" name="email" id="email" className={cx('input-text')} />
+                    <input type="email" name="email" id="email" className={cx('input-text')} value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className={cx('input-group')}>
                     <label htmlFor="phone" className={cx('input-label')}>
                         Phone
                     </label>
-                    <input type="text" name="phone" id="phone" className={cx('input-text')} />
+                    <input type="text" name="phone" id="phone" className={cx('input-text')} value={phone} onChage={(e) => setPhone(e.target.value)} />
                 </div>
                 <div className={cx('input-group')}>
                     <label htmlFor="address" className={cx('input-label')}>
@@ -36,7 +57,7 @@ function Profile() {
                             <label htmlFor="street" className={cx('street-label')}>
                                 Street
                             </label>
-                            <input type="text" name="street" id="street" className={cx('street-txt')} />
+                            <input type="text" name="street" id="street" className={cx('street-txt')} value={street} onChange={(e) => setStreet(e.target.value)} />
                         </div>
                         <div className={cx('city')}>
                             <label htmlFor="city" className={cx('city-label')}>
