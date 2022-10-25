@@ -4,7 +4,7 @@
     {
         public static string ForgotPassword(string username, string token)
         {
-            string forgotLink = "http://localhost:3000/password/forgot?token=" + token;
+            string forgotLink = "http://localhost:3000/password/reset?token=" + token;
             return
                 "<p>Hello <span style='font-weight: bold'>" + username + "</span><p></hr>" +
                 "<p>Click here to reset your password:</p>" +

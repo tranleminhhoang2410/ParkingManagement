@@ -57,8 +57,15 @@ namespace Parking.Service.Implements
 
         public async Task<AccountDTO> GetAccountByUser(string username)
         {
-            AccountDTO accountDTO = ToDTO.Map(await _db.Accounts.Include(c => c.User).FirstOrDefaultAsync(c => c.Username.Equals(username)));
-            return accountDTO;
+            try
+            {
+                AccountDTO accountDTO = ToDTO.Map(await _db.Accounts.Include(c => c.User).FirstOrDefaultAsync(c => c.Username.Equals(username)));
+                return accountDTO;
+            }
+            catch
+            {
+                throw new Exception("Error!!! Username is not exist.");
+            }
         }
 
         public async Task<bool> UpdateAccount(AccountDTO accountDTO)

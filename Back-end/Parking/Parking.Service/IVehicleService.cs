@@ -10,7 +10,7 @@ namespace Parking.Service
         public Task<VehicleDTO> GetById(string Id);
         public Task<IEnumerable<VehicleDTO>> GetAll();
         public Task<string> AddNewUserVehicle(VehicleDTO vehicleDTO, int userID);
-        public Task<Boolean> Remove(string Id);
+        public Task Remove(string Id);
         public Task<string> SetVehicleIsParking(string Id, bool isParkingStatus); 
     }
 }

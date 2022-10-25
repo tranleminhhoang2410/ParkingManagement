@@ -47,7 +47,7 @@ namespace Parking.API.Controllers
 
                 return Ok(new
                 {
-                    Success = "send email success"
+                    Success = "A confirmation email has been sent to email "+ account.User.Email + ". Please, check "+ account.User.Email + " to reset password!"
                 });
             }
             catch (Exception e)

@@ -86,6 +86,23 @@ namespace Parking.API.Controllers
             );
         }
 
+        //[AuthorizationFilter]
+        //[Authorize(Roles = "User, Admin")]
+        [HttpDelete("Remove/{id}")]
+        public async Task<ActionResult> Remove(string id)
+        {
+            try
+            {               
+                await vehicleService.Remove(id);
+                return Ok(new { Success = "Remove success!!!" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
+        }
+
         [AuthorizationFilter]
         [Authorize(Roles = "User")]
         [HttpPost("CheckIn")]

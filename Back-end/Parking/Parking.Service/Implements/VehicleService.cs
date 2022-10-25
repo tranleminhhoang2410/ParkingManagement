@@ -69,16 +69,31 @@ namespace Parking.Service.Implements
             return vehicle;
         }
 
-        public Task<bool> Remove(string Id)
+        public async Task Remove(string Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Vehicle vehicle = await _db.Vehicles.Include(c => c.Invoices).FirstOrDefaultAsync(i => i.Id == Id && i.IsParking == false);
+                if (vehicle == null)
+                {
+                    throw new Exception("No vehicle found or your vehicle is parking. Action denied!");
+                }
+                _db.Invoices.RemoveRange(vehicle.Invoices);
+                _db.Vehicles.Remove(vehicle);
+                _db.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
         }
 
         public async Task<string> SetVehicleIsParking(string Id, bool isParkingStatus)
         {
             try
             {
-                Vehicle? v = await _db.Vehicles.FirstOrDefaultAsync(c => c.Id.Equals(Id));
+                Vehicle? v = await _db.Vehicles.Include(c => c.Invoices).FirstOrDefaultAsync(c => c.Id.Equals(Id));
                 if (v == null) throw new Exception("no vehicle found");
 
                 v.IsParking = isParkingStatus;
