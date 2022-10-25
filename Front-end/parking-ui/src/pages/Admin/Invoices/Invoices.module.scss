@@ -1,37 +1,4 @@
-.tab-title{
-    display:flex;
-    align-items: center;
-
-    .tab-button{
-        flex: 1;
-        color: var(--white-color);
-        padding: 12px 20px;
-    }
-
-    .car{
-        background-color: var(--car-color);
-        
-        &.active{
-            border: 2px solid blue;
-        }
-    }
-
-    .bus{
-        background-color: var(--bus-color);
-        &.active{
-            border: 2px solid var(--primary-border-color);
-        }
-    }
-
-    .truck{
-        background-color: var(--truck-color);
-        &.active{
-            border: 2px solid green;
-        }
-    }
-}
-
-.tab-content{
+.content{
     height: calc(100vh - 52px - 48px - 52px - 52px);
     margin-top: 16px;
 
@@ -45,36 +12,12 @@
             padding: 8px;
             border-radius: 4px;
             background-color: var(--white-color);
-
-            &.car{
-                border: 2px solid var(--car-color);
-            }
-
-            &.bus{
-                border: 2px solid var(--bus-color);
-            }
-
-            &.truck{
-                border: 2px solid var(--truck-color);
-            }
+            border: 2px solid #F08080;
 
             .search-input{
                 background-color: transparent;
             }
         }
-    }
-
-    .car{
-        background-color: var(--car-color);
-    
-    }
-
-    .bus{
-        background-color: var(--bus-color);
-    }
-
-    .truck{
-        background-color: var(--truck-color);
     }
 
     .content{
@@ -100,54 +43,8 @@
 	border-collapse: collapse;
 	color: var(--text-color);
 
-    .slot-txt{
-        color: var(--text-color);
-        font-weight: bold;
-    }
-
-    .car-txt {
-        color: var(--car-color);
-        font-weight: bold;
-    }
-
-    .bus-txt {
-        color: var(--bus-color);
-        font-weight: bold;
-    }
-
-    .truck-txt {
-        color: var(--truck-color);
-        font-weight: bold;
-    }
-
-    .checkout-btn{
-        background-color: green;
-        color: var(--white-color);
-        width: 150px;
-
-        &:hover{
-            opacity: 0.6;
-        }
-    }
-
-    .fixed-btn{
-        background-color: var(--primary-color);
-        color: var(--white-color);
-        width: 150px;
-
-        &:hover{
-            opacity: 0.6;
-        }
-    }
-
-    .maintenance-btn{
-        background-color: red;
-        color: var(--white-color);
-        width: 150px;
-
-        &:hover{
-            opacity: 0.6;
-        }
+    .table-header{
+        background-color:#F08080;
     }
 
 	table-layout: fixed;

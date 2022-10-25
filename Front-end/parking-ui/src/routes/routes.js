@@ -19,7 +19,6 @@ import Admin from '~/pages/Admin';
 import { AdminVehicles } from '~/pages/Admin/Vehicles';
 import Slots from '~/pages/Admin/Slots';
 import { AdminInvoices } from '~/pages/Admin/Invoices';
-import { AdminProfile } from '~/pages/Admin/Profile';
 
 //layouts
 import AdminLayout from '~/layouts/AdminLayout';
@@ -37,9 +36,10 @@ const publicRoutes = [
     { path: config.routes.forgot, component: Forgot },
     { path: config.routes.changePassword, component: ChangePassword },
     { path: config.routes.admin, component: Admin, guard: AdminGuard, layout: AdminLayout },
-    { path: config.routes.adminProfile, component: AdminProfile, layout: AdminLayout },
+    { path: config.routes.adminProfile, component: Profile, layout: AdminLayout },
     { path: config.routes.adminVehicles, component: AdminVehicles, layout: AdminLayout },
     { path: config.routes.adminSlots, component: Slots, layout: AdminLayout },
+    { path: config.routes.adminChangePassword, component: ChangePassword, layout: AdminLayout },
     { path: config.routes.adminInvoices, component: AdminInvoices, layout: AdminLayout },
 ];
 

@@ -1,14 +1,14 @@
 import axios from '~/api/axios';
 
-const END_POINT = {
+const END_POINTS = {
     GET_BY_ID: 'User/Get/Id',
     GET_LOGGED_USER: 'User/GetLoggedUser',
 };
 
 export const getUserById = (userId) => {
-    return axios.get(`${END_POINT.GET_BY_ID}/${userId}`);
+    return axios.get(`${END_POINTS.GET_BY_ID}/${userId}`);
 };
 
 export const getLoggedUser = () => {
-    return axios.get(END_POINT.GET_LOGGED_USER);
+    return axios.get(END_POINTS.GET_LOGGED_USER);
 };

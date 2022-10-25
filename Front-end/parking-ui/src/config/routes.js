@@ -4,6 +4,7 @@ const adminRoutes = {
     adminVehicles: '/admin/vehicles',
     adminSlots: '/admin/slots',
     adminInvoices: '/admin/invoices',
+    adminChangePassword: '/admin/password/change'
 };
 
 const routes = {

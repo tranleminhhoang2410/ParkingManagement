@@ -4,9 +4,14 @@
     align-items:center;
     background-color: #f8f8fb;
     min-height: calc(100vh - var(--default-header-height) - var(--default-footer-height));
+    background-image: url('../../assets/images/parking3.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;       
 
     .content{
         padding: 16px 0;
+        width: var(--default-layout-max-width);
         max-width: var(--default-layout-max-width);
     }
 }

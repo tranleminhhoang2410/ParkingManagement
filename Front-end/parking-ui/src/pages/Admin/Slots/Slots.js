@@ -241,12 +241,12 @@ function Slots() {
                                 <th>Slot Id</th>
                                 <th>Vehicle Id</th>
                                 <th>Status</th>
-                                <th>Check in Time</th>
+                                <th>Checked in</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {slots.map((slot) => (
+                            {slots && slots.map((slot) => (
                                 <tr key={slot}>
                                     <td className={cx('slot-txt')}>
                                         {slot.area}

@@ -90,8 +90,8 @@
         overflow: auto;
     }
 
-    .invoice-table {
-	--bgColorDarker: #ececec;
+    .vehicle-table {
+    --bgColorDarker: #ececec;
 	--bgColorLighter: #fcfcfc;
 	--insideBorderColor: lightgray;
 	width: 100%;
@@ -105,50 +105,6 @@
         font-weight: bold;
     }
 
-    .car-txt {
-        color: var(--car-color);
-        font-weight: bold;
-    }
-
-    .bus-txt {
-        color: var(--bus-color);
-        font-weight: bold;
-    }
-
-    .truck-txt {
-        color: var(--truck-color);
-        font-weight: bold;
-    }
-
-    .checkout-btn{
-        background-color: green;
-        color: var(--white-color);
-        width: 150px;
-
-        &:hover{
-            opacity: 0.6;
-        }
-    }
-
-    .fixed-btn{
-        background-color: var(--primary-color);
-        color: var(--white-color);
-        width: 150px;
-
-        &:hover{
-            opacity: 0.6;
-        }
-    }
-
-    .maintenance-btn{
-        background-color: red;
-        color: var(--white-color);
-        width: 150px;
-
-        &:hover{
-            opacity: 0.6;
-        }
-    }
 
 	table-layout: fixed;
         thead { 

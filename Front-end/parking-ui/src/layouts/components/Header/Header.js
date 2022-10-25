@@ -36,6 +36,19 @@ function Header() {
     const [errorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
 
+    //UI Tabs
+
+    const [toggleState, setToggleState] = useState(1);
+    const [toggleNavLink, setToggleNavLink] = useState(1);
+
+    const toggleTab = (index) => {
+        setToggleState(index);
+    };
+
+    const ToggleNavLink = (index) => {
+        setToggleNavLink(index);
+    };
+
     //validate form
 
     //User menu
@@ -53,7 +66,7 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faKey} />,
             title: 'Change Password',
-            to: '/password/change',
+            to: authState.role !== config.roles.ADMIN ? '/password/change' : '/admin/password/change',
         },
         {
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
@@ -108,18 +121,6 @@ function Header() {
         dispatch({ type: AUTH_ACTION.CLOSE_MODAL });
     }
 
-    //UI Tabs
-
-    const [toggleState, setToggleState] = useState(1);
-    const [toggleNavLink, setToggleNavLink] = useState(1);
-
-    const toggleTab = (index) => {
-        setToggleState(index);
-    };
-
-    const ToggleNavLink = (index) => {
-        setToggleNavLink(index);
-    };
 
     //handle auth
     useEffect(() => {
@@ -140,7 +141,7 @@ function Header() {
             dispatch({ type: AUTH_ACTION.LOGOUT });
             LS.removeLocalStorage('auth');
         }
-        return () => {};
+        return () => { };
     }, [dispatch]);
 
     //get account of user
@@ -247,9 +248,9 @@ function Header() {
                                 style={
                                     toggleNavLink === 2
                                         ? {
-                                              color: 'var(--primary-color)',
-                                              borderBottom: '2px solid var(--primary-color)',
-                                          }
+                                            color: 'var(--primary-color)',
+                                            borderBottom: '2px solid var(--primary-color)',
+                                        }
                                         : {}
                                 }
                             >
@@ -264,9 +265,9 @@ function Header() {
                                     style={
                                         toggleNavLink === 3
                                             ? {
-                                                  color: 'var(--primary-color)',
-                                                  borderBottom: '2px solid var(--primary-color)',
-                                              }
+                                                color: 'var(--primary-color)',
+                                                borderBottom: '2px solid var(--primary-color)',
+                                            }
                                             : {}
                                     }
                                 >
@@ -279,9 +280,9 @@ function Header() {
                                     style={
                                         toggleNavLink === 4
                                             ? {
-                                                  color: 'var(--primary-color)',
-                                                  borderBottom: '2px solid var(--primary-color)',
-                                              }
+                                                color: 'var(--primary-color)',
+                                                borderBottom: '2px solid var(--primary-color)',
+                                            }
                                             : {}
                                     }
                                 >
@@ -294,9 +295,9 @@ function Header() {
                                     style={
                                         toggleNavLink === 5
                                             ? {
-                                                  color: 'var(--primary-color)',
-                                                  borderBottom: '2px solid var(--primary-color)',
-                                              }
+                                                color: 'var(--primary-color)',
+                                                borderBottom: '2px solid var(--primary-color)',
+                                            }
                                             : {}
                                     }
                                 >

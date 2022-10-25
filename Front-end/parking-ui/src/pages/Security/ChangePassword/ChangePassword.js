@@ -94,7 +94,7 @@ function ChangePassword() {
                     <input type="password" name="confirm-new-password" id="confirm-new-password" className={cx('input-text')} />
                 </div>
                 <Button primary className={cx('change-btn')}>
-                    change password
+                    save
                 </Button>
             </form>
         </div>

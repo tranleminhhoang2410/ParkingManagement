@@ -66,27 +66,6 @@ function Admin() {
         }
     };
 
-    const data = [
-        {
-            name: 'January',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
-        },
-        {
-            name: 'February',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
-        },
-        {
-            name: 'March',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
-        },
-    ];
-
     return (
         <div className={cx('wrapper', 'mt-4')}>
             <div className={cx('statistic')}>
@@ -120,7 +99,7 @@ function Admin() {
                                             />
                                         </div>
                                         <h5 className={cx('font-size-15', 'text-truncate')}>Hoang Tran</h5>
-                                        <p className={cx('text-muted', 'mb-0', 'text-truncate')}>UI/UX Designer</p>
+                                        <p className={cx('text-muted', 'mb-0', 'text-truncate')}>Manager</p>
                                     </div>
                                     <div className={cx('col-sm-8')}>
                                         <div className={cx('pt-4')}>
