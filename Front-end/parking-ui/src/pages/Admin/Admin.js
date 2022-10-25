@@ -10,7 +10,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 
 import Button from '~/components/Button';
 
-import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
+import { getAllVehicleTypesApi, updateVehicleTypePrice } from '~/services/vehicleTypeService';
 import { getHighestParking, getLastedCheckout, getMonthlyParkingType } from '~/services/invoiceService';
 
 const cx = classNames.bind(styles);
@@ -20,7 +20,7 @@ function Admin() {
     const [highestIncome, setHighestIncome] = useState({});
     const [lastedCheckout, setLastedCheckout] = useState([]);
     const [monthlyParking, setMonthlyParking] = useState([]);
-
+    const [editRow, setEditRow] = useState(null);
     useEffect(() => {
         const getPriceTable = async () => {
             const price = await getAllVehicleTypesApi();
@@ -49,9 +49,9 @@ function Admin() {
         const fetchMonthlyParkingType = async () => {
             const monthlyParking = await getMonthlyParkingType();
             setMonthlyParking(monthlyParking);
-        }
+        };
         fetchMonthlyParkingType();
-    })
+    }, []);
 
     const renderVehicleTypeColor = (type) => {
         switch (type) {
@@ -66,6 +66,35 @@ function Admin() {
         }
     };
 
+    const handleEditRow = (rowId) => {
+        setEditRow(rowId);
+    };
+
+    const handleCancelEditRow = () => {
+        setEditRow(null);
+    };
+
+    const handleSavePrice = async () => {
+        const submittedRow = priceTable.find((p) => p.id === editRow);
+        try {
+            const response = await updateVehicleTypePrice(submittedRow);
+            setPriceTable(response);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setEditRow(null);
+        }
+    };
+
+    const handleDataOnBlur = (e, rowId, field) => {
+        const data = e.target.querySelector('span').innerText;
+        const price = Number(data.replace(/\./g, ''));
+        const rowIndex = priceTable.findIndex((p) => p.id === rowId);
+        const updatedRow = { ...priceTable[rowIndex], [field]: price };
+        const updatedPricetable = [...priceTable];
+        updatedPricetable[rowIndex] = updatedRow;
+        setPriceTable(updatedPricetable);
+    };
     return (
         <div className={cx('wrapper', 'mt-4')}>
             <div className={cx('statistic')}>
@@ -140,7 +169,11 @@ function Admin() {
                                         <p className={cx('text-muted')}>
                                             <span className={cx('text-success', 'me-2')}>
                                                 {highestIncome.data &&
-                                                    Math.round(((highestIncome.data.total / highestIncome.monthTotalPrice) * 100) * 100) / 100}
+                                                    Math.round(
+                                                        (highestIncome.data.total / highestIncome.monthTotalPrice) *
+                                                            100 *
+                                                            100,
+                                                    ) / 100}
                                                 %
                                                 <i className={cx('mdi', 'mdi-arrow-up')} />
                                             </span>
@@ -152,7 +185,11 @@ function Admin() {
                                             <CircularProgressbarWithChildren
                                                 value={
                                                     highestIncome.data &&
-                                                    Math.round(((highestIncome.data.total / highestIncome.monthTotalPrice) * 100) * 100) / 100
+                                                    Math.round(
+                                                        (highestIncome.data.total / highestIncome.monthTotalPrice) *
+                                                            100 *
+                                                            100,
+                                                    ) / 100
                                                 }
                                                 styles={{
                                                     root: {},
@@ -196,7 +233,12 @@ function Admin() {
                                                 <div style={{ fontSize: 12, marginTop: -5 }}>
                                                     <strong>
                                                         {highestIncome.data &&
-                                                            Math.round(((highestIncome.data.total / highestIncome.monthTotalPrice) * 100) * 100) / 100}
+                                                            Math.round(
+                                                                (highestIncome.data.total /
+                                                                    highestIncome.monthTotalPrice) *
+                                                                    100 *
+                                                                    100,
+                                                            ) / 100}
                                                         %
                                                     </strong>
                                                 </div>
@@ -303,13 +345,13 @@ function Admin() {
                                         }}
                                     >
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey='month' />
+                                        <XAxis dataKey="month" />
                                         <YAxis />
                                         <Tooltip />
                                         <Legend />
-                                        <Bar dataKey="car" stackId="a" fill='var(--car-color)' />
-                                        <Bar dataKey="bus" stackId="a" fill='var(--bus-color)' />
-                                        <Bar dataKey="truck" stackId="a" fill='var(--truck-color)' />
+                                        <Bar dataKey="car" stackId="a" fill="var(--car-color)" />
+                                        <Bar dataKey="bus" stackId="a" fill="var(--bus-color)" />
+                                        <Bar dataKey="truck" stackId="a" fill="var(--truck-color)" />
                                     </BarChart>
                                 </div>
                             </div>
@@ -343,19 +385,31 @@ function Admin() {
                                                         <span className={cx('text-body', 'fw-bold')}>#{item.id}</span>
                                                     </td>
                                                     <td>{item.typeName}</td>
-                                                    <td>
+                                                    <td
+                                                        contentEditable={editRow === item.id}
+                                                        suppressContentEditableWarning
+                                                        onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerHour')}
+                                                    >
                                                         <span className={cx('p-1')}>
                                                             {item.pricePerHour.toLocaleString('it-It')}
                                                         </span>
                                                         VNĐ
                                                     </td>
-                                                    <td>
+                                                    <td
+                                                        contentEditable={editRow === item.id}
+                                                        suppressContentEditableWarning
+                                                        onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerDay')}
+                                                    >
                                                         <span className={cx('p-1')}>
                                                             {item.pricePerDay.toLocaleString('it-It')}
                                                         </span>{' '}
                                                         VNĐ
                                                     </td>
-                                                    <td>
+                                                    <td
+                                                        contentEditable={editRow === item.id}
+                                                        suppressContentEditableWarning
+                                                        onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerWeek')}
+                                                    >
                                                         <span className={cx('p-1')}>
                                                             {item.pricePerWeek.toLocaleString('it-It')}
                                                         </span>{' '}
@@ -363,31 +417,38 @@ function Admin() {
                                                     </td>
 
                                                     <td>
-                                                        {/* <Button
-                                                            style={{ with: '100%', textTransform: 'uppercase' }}
-                                                            className={cx('btn', 'btn-success', 'edit-btn')}
-                                                            leftIcon={<FontAwesomeIcon icon={faEdit} />}
-                                                            type="submit"
-                                                        >
-                                                            edit
-                                                        </Button> */}
+                                                        {!editRow && (
+                                                            <Button
+                                                                s
+                                                                style={{ with: '100%', textTransform: 'uppercase' }}
+                                                                className={cx('btn', 'btn-success', 'edit-btn')}
+                                                                leftIcon={<FontAwesomeIcon icon={faEdit} />}
+                                                                onClick={() => handleEditRow(item.id)}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                        )}
 
-                                                        <Button
-                                                            style={{ width: '45%', textTransform: 'uppercase' }}
-                                                            className={cx('btn', 'btn-success', 'save-btn')}
-                                                            leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                                                            type="submit"
-                                                        >
-                                                            save
-                                                        </Button>
-                                                        <Button
-                                                            style={{ width: '45%', textTransform: 'uppercase' }}
-                                                            className={cx('btn', 'btn-danger', 'cancel-btn')}
-                                                            leftIcon={<FontAwesomeIcon icon={faX} />}
-                                                            type="submit"
-                                                        >
-                                                            cancel
-                                                        </Button>
+                                                        {editRow === item.id && (
+                                                            <>
+                                                                <Button
+                                                                    style={{ width: '45%', textTransform: 'uppercase' }}
+                                                                    className={cx('btn', 'btn-success', 'save-btn')}
+                                                                    leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                                                                    onClick={() => handleSavePrice()}
+                                                                >
+                                                                    Save
+                                                                </Button>
+                                                                <Button
+                                                                    style={{ width: '45%', textTransform: 'uppercase' }}
+                                                                    className={cx('btn', 'btn-danger', 'cancel-btn')}
+                                                                    leftIcon={<FontAwesomeIcon icon={faX} />}
+                                                                    onClick={() => handleCancelEditRow()}
+                                                                >
+                                                                    Cancel
+                                                                </Button>
+                                                            </>
+                                                        )}
                                                     </td>
                                                 </tr>
                                             ))}

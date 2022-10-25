@@ -20,12 +20,15 @@ const cx = classNames.bind(styles);
 function Invoices() {
     const [authState] = useContext(AuthContext);
     const [invoices, setInvoices] = useState([]);
-
+    const [searchValue, setSearchValue] = useState('');
+    const invoicesRef = useRef(null);
+    const debounceTimeoutRef = useRef(null);
     useEffect(() => {
         if (!authState.user.id) return;
         const getInvoiceByUserId = async () => {
             const invoices = await getInvoiceByUserIdApi(authState.user.id);
             setInvoices(invoices);
+            invoicesRef.current = invoices;
         };
         try {
             getInvoiceByUserId();
@@ -68,9 +71,9 @@ function Invoices() {
     };
 
     //Confirm Modal
-    const ref = useRef()
+    const ref = useRef();
 
-    const invoiceIdDelete = invoices.find(invoice => invoice.id === ref.current)?.id;
+    const invoiceIdDelete = invoices.find((invoice) => invoice.id === ref.current)?.id;
 
     function openModal(e, id) {
         e.preventDefault();
@@ -81,7 +84,6 @@ function Invoices() {
     function closeModal() {
         setIsOpen(false);
     }
-
 
     const handleDeleteInvoice = async (e) => {
         try {
@@ -102,12 +104,23 @@ function Invoices() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        const TIME = 500;
+        setSearchValue(value);
+        if (debounceTimeoutRef?.current) clearTimeout(debounceTimeoutRef.current);
+        debounceTimeoutRef.current = setTimeout(() => {
+            const updatedInvoices = invoicesRef.current.filter((i) => i.vehicleId.includes(value));
+            setInvoices(updatedInvoices);
+        }, TIME);
+    };
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('search-bar')}>
-                <input type="text" className={cx('search-input')} />
+                <input type="text" className={cx('search-input')} onChange={handleSearch} value={searchValue} />
                 <FontAwesomeIcon icon={faMagnifyingGlass} className={cx('search-icon')} />
             </div>
             <ul className={cx('invoices-list')}>
@@ -170,11 +183,13 @@ function Invoices() {
                         </li>
                     ))}
             </ul>
-            <Pagination className={cx('pagination-bar')}
+            <Pagination
+                className={cx('pagination-bar')}
                 currentPage={currentPage}
                 totalCount={invoices.length}
                 pageSize={pageSize}
-                onPageChange={page => setCurrentPage(page)} />
+                onPageChange={(page) => setCurrentPage(page)}
+            />
             <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
                 <div>
                     {/* Confirm Form */}
