@@ -67,6 +67,7 @@ namespace Parking.Service.Implements
             _user.CityId = userDTO.CityId;
             _user.DistrictId = userDTO.DistrictId;
             _user.WardId = userDTO.WardId;
+            _user.Street = userDTO.Street;
 
             await _db.SaveChangesAsync();
             return true;

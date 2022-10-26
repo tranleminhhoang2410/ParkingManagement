@@ -43,7 +43,8 @@ namespace Paking.DTO.Mapper
                     Phone = user.Phone,
                     CityId = user.CityId,
                     DistrictId = user.DistrictId,
-                    WardId = user.WardId
+                    WardId = user.WardId,
+                    Street = user.Street
                 };
 
                 foreach (Vehicle vehicle in user.Vehicles)

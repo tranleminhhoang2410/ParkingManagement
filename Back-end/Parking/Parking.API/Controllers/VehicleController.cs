@@ -34,8 +34,8 @@ namespace Parking.API.Controllers
             this.managerInvoiceService = managerInvoiceService;
         }
 
-        [AuthorizationFilter]
-        [Authorize(Roles = "User")]
+        //[AuthorizationFilter]
+        //[Authorize(Roles = "User")]
         [HttpPost("AddVehicle")]
         public async Task<ActionResult<string>> AddVehicle(int userID, string vehicleId, string name, string brand, int typeId)
         {
@@ -57,7 +57,7 @@ namespace Parking.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Error = e });
+                return BadRequest(e.Message);
             }
         }
 
@@ -204,6 +204,7 @@ namespace Parking.API.Controllers
                 Dictionary<string, int> parkingTime = await invoiceService.CalculateparkingTime(invoiceDTO.CheckinTime, invoiceDTO.CheckoutTime);
 
                 VehicleTypeDTO parkingType = await vehicleTypeService.GetById((await slotService.GetByID(invoiceDTO.SlotId)).VehicleTypeId);
+                VehicleDTO parkingVehicle = await vehicleService.GetById(invoiceDTO.VehicleId);
 
                 invoiceDTO.TotalPaid = CalulateParkingPrice(invoiceDTO, parkingType).Result;
 
@@ -219,7 +220,7 @@ namespace Parking.API.Controllers
                     CheckoutTime = invoiceDTO.CheckoutTime,
                     SlotId = invoiceDTO.SlotId,
                     TotalPaid = invoiceDTO.TotalPaid,
-                    UserName = (await userService.GetUserById(getLoggedUserId())).Name,
+                    UserName = (await userService.GetUserById(parkingVehicle.UserId)).Name,
                     VehicleId = invoiceDTO.VehicleId
                 });
 
