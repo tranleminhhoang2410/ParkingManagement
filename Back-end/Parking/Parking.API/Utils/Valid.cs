@@ -30,5 +30,12 @@ namespace Parking.API.Utils
             if (strPhoneNumber != null) return Regex.IsMatch(strPhoneNumber, MatchPhoneNumberPattern);
             else return false;
         }
+
+        public static bool vehicleId(string vehicleId)
+        {
+            string MatchVehicleIdPattern = "^\\(?([0-9]{2})[A-Z]\\)?[-]?([0-9]{6})$";
+            if (vehicleId != null) return Regex.IsMatch(vehicleId, MatchVehicleIdPattern);
+            else return false;
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Paking.Data.Constant;
 using Paking.DTO.DTOs;
 using Parking.API.Filter;
+using Parking.API.Utils;
 using Parking.Service;
 using Parking.ViewModel.Vehicle;
 using System.Security.Claims;
@@ -41,6 +42,7 @@ namespace Parking.API.Controllers
         {
             try
             {
+                if (!Valid.vehicleId(vehicleId)) throw new Exception("Vehicle id not right format");
                 if((await vehicleService.GetAll()).FirstOrDefault(v => v.Id.Equals(vehicleId))!= null)
                 {
                     throw new Exception("Your vehicle id is existed! try again.");
