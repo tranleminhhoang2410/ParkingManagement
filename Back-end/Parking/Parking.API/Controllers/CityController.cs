@@ -22,10 +22,7 @@ namespace Parking.API.Controllers
         [HttpGet("GetAll"), AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CityDTO>>> GetCities()
         {
-            return Ok(new
-            {
-                Cities = await cityService.GetAllCities()
-            });
+            return Ok(await cityService.GetAllCities());
         }
 
         [HttpGet("Get/{Id}"), AllowAnonymous]

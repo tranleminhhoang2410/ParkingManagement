@@ -39,14 +39,26 @@ namespace Parking.API.Controllers
         [HttpPost("AddVehicle")]
         public async Task<ActionResult<string>> AddVehicle(int userID, string vehicleId, string name, string brand, int typeId)
         {
-            VehicleDTO vehicle = new VehicleDTO
+            try
             {
-                Id = vehicleId,
-                VehicleName = name,
-                VehicleBrand = brand,
-                VehicleTypeId = typeId
-            };
-            return await vehicleService.AddNewUserVehicle(vehicle, userID);
+                if((await vehicleService.GetAll()).FirstOrDefault(v => v.Id.Equals(vehicleId))!= null)
+                {
+                    throw new Exception("Your vehicle id is existed! try again.");
+                }
+
+                VehicleDTO vehicle = new VehicleDTO
+                {
+                    Id = vehicleId,
+                    VehicleName = name,
+                    VehicleBrand = brand,
+                    VehicleTypeId = typeId
+                };
+                return await vehicleService.AddNewUserVehicle(vehicle, userID);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Error = e });
+            }
         }
 
         [AuthorizationFilter]
