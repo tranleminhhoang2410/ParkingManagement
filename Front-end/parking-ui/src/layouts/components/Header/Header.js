@@ -311,9 +311,6 @@ function Header() {
                             </>
                         )}
 
-                        <span className={cx('nav-link-item')} style={{ cursor: 'pointer' }}>
-                            Notifications
-                        </span>
                     </nav>
                 </div>
                 <div className={cx('social-and-login')}>

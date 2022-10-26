@@ -72,7 +72,7 @@ function Vehicles() {
         setToggleState(1);
         toast.success('Enroll a vehicle successfully!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -104,7 +104,7 @@ function Vehicles() {
             setVehicles(await getVehicleByUserId(authState.user.id));
             toast.success(`Delete vehicle '${vehicleRef.current}' successfully!`, {
                 position: 'top-right',
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,

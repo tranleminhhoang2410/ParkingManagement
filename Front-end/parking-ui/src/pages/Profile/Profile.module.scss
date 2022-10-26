@@ -8,11 +8,18 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            width: var(--default-layout-max-width);
 
             .input-group{
                 display: flex;
                 align-items: center;
                 margin: 24px 0;
+
+                .input-label{
+                    min-width: 100px;
+                    color: #000;
+                    font-weight: 600;
+                }
 
                 .address-info,
                 .street,
@@ -23,18 +30,12 @@
                     align-items: center;
                 }
 
-                .input-label{
-                    min-width: 100px;
-                    color: #000;
-                    font-weight: 600;
+                .address-info{
+                    flex: 1;
                 }
 
-                .street, .city, .district{
-                    padding: 0 8px;
-                }
-
-                .ward{
-                    padding-left: 8px;
+                .street, .city, .district, .ward{
+                    margin: 0 8px;
                 }
 
                 .street-label,.city-label,.district-label,.ward-label{

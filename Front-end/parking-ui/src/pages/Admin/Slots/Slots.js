@@ -138,7 +138,7 @@ function Slots() {
             closeModal();
             toast.success(`Slot ${slotRef.current} is maintaining!`, {
                 position: 'top-right',
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
@@ -160,7 +160,7 @@ function Slots() {
             });
             toast.success(`Slot ${slotRef.current} was fixed!`, {
                 position: 'top-right',
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
@@ -188,7 +188,7 @@ function Slots() {
             });
             toast.success(`Check out slot ${slotRef.current} successfully!`, {
                 position: 'top-right',
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,

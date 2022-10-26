@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useTable } from 'react-table';
+import { useState, useEffect } from 'react';
 import styles from './Price.module.scss';
 import classNames from 'classnames/bind';
 
@@ -8,63 +7,38 @@ import { getAllVehicleTypesApi } from '~/services/vehicleTypeService';
 const cx = classNames.bind(styles);
 
 function Price() {
-    const [data, setData] = useState([]);
+    const [price, setPrice] = useState([]);
 
     useEffect(() => {
         const fetchVehicleTypesData = async () => {
-            setData(await getAllVehicleTypesApi());
+            setPrice(await getAllVehicleTypesApi());
         };
 
         fetchVehicleTypesData();
     }, []);
 
-    const columns = useMemo(
-        () => [
-            {
-                Header: 'Type',
-                accessor: 'typeName',
-            },
-            {
-                Header: 'Price Per Hour',
-                accessor: 'pricePerHour',
-            },
-            {
-                Header: 'Price Per Day',
-                accessor: 'pricePerDay',
-            },
-            {
-                Header: 'Price Per Week',
-                accessor: 'pricePerWeek',
-            },
-        ],
-        [],
-    );
-
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
-
     return (
-        <div className={cx('price-table')}>
-            <table {...getTableProps()}>
+        <div className={cx('wrapper')}>
+            <table>
                 <thead>
-                    {headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map((column) => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                            ))}
-                        </tr>
-                    ))}
+                    <tr>
+                        <th>Type</th>
+                        <th>Price Per Hour</th>
+                        <th>Price Per Day</th>
+                        <th>Price Per Week</th>
+                    </tr>
                 </thead>
-                <tbody {...getTableBodyProps()}>
-                    {rows.map((row) => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map((cell) => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                })}
+                <tbody>
+                    {
+                        price.map(price =>
+                            <tr key={price.id}>
+                                <td>{price.typeName}</td>
+                                <td>{price.pricePerHour.toLocaleString('it-IT')} VNĐ</td>
+                                <td>{price.pricePerDay.toLocaleString('it-IT')} VNĐ</td>
+                                <td>{price.pricePerWeek.toLocaleString('it-IT')} VNĐ</td>
                             </tr>
-                        );
-                    })}
+                        )
+                    }
                 </tbody>
             </table>
         </div>

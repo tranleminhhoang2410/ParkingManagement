@@ -94,7 +94,7 @@ function Invoices() {
             setCurrentPage(1);
             toast.success(`Delete invoice '${ref.current}' successfully!`, {
                 position: 'top-right',
-                autoClose: 2000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
