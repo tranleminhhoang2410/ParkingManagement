@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './Vehicles.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faBus, faTruck, faCheck, faX, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCar, faBus, faTruck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

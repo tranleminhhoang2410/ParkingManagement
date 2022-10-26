@@ -45,9 +45,15 @@ function Parking() {
         fetchSlotsData();
     }, []);
 
-
     return (
-        <div style={{ display: 'flex', alignItems: 'center', margin: 'auto', height: '100%' }}>
+        <div
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                margin: 'auto',
+                height: 'calc(var(--default-content-min-height) - 64px);',
+            }}
+        >
             <div className={cx('wrapper')}>
                 <div className={cx('parking-diagram')}>
                     <div className={cx('parking-area')}>
