@@ -116,6 +116,22 @@ namespace Parking.API.Controllers
                 }    
             );
         }
+        
+        [HttpGet("Admin/InvoiceStatistic")]
+        public async Task<IActionResult> Statistic()
+        {
+            IEnumerable<ManagerInvoiceDTO> list = await managerInvoiceService.GetAll();
+            double revenue = list
+                .Where(i => i.CheckoutTime.Value.Year == DateTime.Now.Year)
+                .Sum(i => i.TotalPaid);
+            double average = revenue / 12;
+            return Ok(new
+            {
+                totalInvoice = list.Count(),
+                revenue = revenue,
+                average = average
+            });
+        }
 
         #region Statistic calculate
         private MonthlyParking calculateMonthlyParking(int month, IEnumerable<ManagerInvoiceDTO> thisYearInvoices)

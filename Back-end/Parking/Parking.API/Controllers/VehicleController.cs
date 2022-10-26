@@ -228,6 +228,8 @@ namespace Parking.API.Controllers
                         + parkingTime.GetValueOrDefault("days") * vehicleType.PricePerDay
                         + parkingTime.GetValueOrDefault("weeks") * vehicleType.PricePerWeek;
 
+            total = total == 0 ? vehicleType.PricePerHour : total;
+
             return total;
         }
 
