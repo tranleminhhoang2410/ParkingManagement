@@ -63,6 +63,7 @@ namespace Parking.Service.Implements
             User? _user = await _db.Users.FirstOrDefaultAsync(c => c.Id.Equals(userDTO.Id));
             if (_user == null) return false;
 
+            _user.Email = userDTO.Email;
             _user.Phone = userDTO.Phone;
             _user.CityId = userDTO.CityId;
             _user.DistrictId = userDTO.DistrictId;

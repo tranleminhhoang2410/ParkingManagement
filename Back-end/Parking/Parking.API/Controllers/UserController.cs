@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Paking.DTO.DTOs;
 using Parking.API.Filter;
 using Parking.Service;
+using Parking.ViewModel.User;
 using System.Security.Claims;
 
 namespace Parking.API.Controllers
@@ -64,13 +65,23 @@ namespace Parking.API.Controllers
         [AuthorizationFilter]
         [Authorize(Roles = "User")]
         [HttpPut("Update")]
-        public async Task<ActionResult<UserDTO>> Update(UserDTO userDTO)
+        public async Task<ActionResult<UserDTO>> Update(UserUpdateModel user)
         {
-            Boolean updated = await userService.UpdateUser(userDTO);
+            UserDTO updateUser = new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Phone = user.Phone,
+                Street = user.Street,
+                CityId = user.CityId,
+                DistrictId = user.DistrictId,
+                WardId = user.WardId
+            };
+            Boolean updated = await userService.UpdateUser(updateUser);
             if (updated)
             {
-                UserDTO user = await userService.GetUserById(userDTO.Id);
-                return Ok(user);
+                UserDTO updatedUser = await userService.GetUserById(user.Id);
+                return Ok(updatedUser);
             }
             else
             {
