@@ -98,6 +98,7 @@ namespace Parking.API.Controllers
             {
                 if (!ConfirmPassword.Equals(password)) throw new Exception(Message.NOT_MATCH_CONFIRM_PASSWORD);
                 if ((await accountService.GetAccountByUser(username)) != null) throw new Exception(Message.EXISTED_USERNAME);
+                if (fullname.Trim().Equals("")) throw new Exception("Username must not be empty!");
                 if (!Valid.email(email)) throw new Exception(Message.INVALID_EMAIL);
                 if (!Valid.phone(phone)) throw new Exception(Message.INVALID_PHONE);
 
@@ -122,10 +123,7 @@ namespace Parking.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    Fail = ex.Message
-                });
+                return BadRequest(ex.Message);
             }
         }
 
