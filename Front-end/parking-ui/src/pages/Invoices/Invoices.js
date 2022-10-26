@@ -168,7 +168,9 @@ function Invoices() {
                                     <label htmlFor="" className={cx('info-label')}>
                                         Total Price
                                     </label>
-                                    <span className={cx('info-content')}>{invoice.totalPaid}</span>
+                                    <span className={cx('info-content')}>
+                                        {invoice.totalPaid.toLocaleString('it-IT')} VNĐ
+                                    </span>
                                 </div>
                             </div>
                             <div className={cx('info', 'series-code')}>

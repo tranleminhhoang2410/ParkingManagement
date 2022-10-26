@@ -2,7 +2,7 @@
     display: flex;
     padding: 32px 0;
     justify-content: space-between;
-    height: 100%;
+    height: calc(var(--default-content-min-height) - 64px);
 
         #info-form{
             display: flex;

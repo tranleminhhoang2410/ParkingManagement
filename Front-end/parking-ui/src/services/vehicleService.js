@@ -6,7 +6,8 @@ const END_POINTS = {
     GET_BY_TYPE_ID: 'Vehicle/GetByType',
     CHECK_IN: 'Vehicle/CheckIn',
     CHECK_OUT: 'Vehicle/CheckOut',
-    GET_CHECKED_IN_VEHICLE: 'Vehicle/CheckedIn'
+    GET_CHECKED_IN_VEHICLE: 'Vehicle/CheckedIn',
+    DELETE: '/Vehicle/Remove',
 };
 
 export const enrollVehicle = (vehicle) => {
@@ -19,16 +20,20 @@ export const getVehicleByUserId = (id) => {
 
 export const getVehicleByTypeId = (typeId) => {
     return axios.get(`${END_POINTS.GET_BY_TYPE_ID}/${typeId}`);
-}
+};
 
 export const checkIn = (vehicle) => {
     return axios.post(END_POINTS.CHECK_IN, null, { params: vehicle });
 };
 
 export const getCheckedInVehicle = (slotId) => {
-    return axios.get(`${END_POINTS.GET_CHECKED_IN_VEHICLE}/${slotId}`)
-}
+    return axios.get(`${END_POINTS.GET_CHECKED_IN_VEHICLE}/${slotId}`);
+};
 
 export const checkOut = (vehicle) => {
-    return axios.post(END_POINTS.CHECK_OUT, vehicle)
-}
+    return axios.post(END_POINTS.CHECK_OUT, vehicle);
+};
+
+export const deleteVehicle = (id) => {
+    return axios.delete(`${END_POINTS.DELETE}/${id}`);
+};

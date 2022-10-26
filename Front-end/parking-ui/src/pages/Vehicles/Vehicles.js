@@ -1,61 +1,43 @@
-import { useState, useEffect, useContext, useMemo } from 'react';
+import { useState, useEffect, useContext, useMemo, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './Vehicles.module.scss';
 
-import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faBus, faTruck, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faCar, faBus, faTruck, faCheck, faX, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Button from '~/components/Button';
-import { enrollVehicle, getVehicleByUserId } from '~/services/vehicleService';
-import { AuthContext } from '~/context/AuthContextProvider';
-import { useLocation } from 'react-router-dom';
+import ConfirmModal from '~/components/Modal/ConfirmModal';
 
-import Pagination from '~/components/Pagination'
+import { enrollVehicle, getVehicleByUserId, deleteVehicle } from '~/services/vehicleService';
+import { AuthContext } from '~/context/AuthContextProvider';
+
+import Pagination from '~/components/Pagination';
 
 const cx = classNames.bind(styles);
-
-
 
 function Vehicles() {
     let pageSize = 32;
     const location = useLocation();
     const isEnroll = location.state?.isEnroll;
-    const [modalIsOpen, setIsOpen] = useState(false);
 
-    //Custom Style for Modal
-    const customStyles = {
-        overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        },
+    //Modal
+    const vehicleRef = useRef();
 
-        content: {
-            width: '40%',
-            maxWidth: '100%',
-            top: '40%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            background: 'none',
-            border: 'none',
-        },
+    const [modalType, setModalType] = useState(null);
+
+    const openModal = (e, type, vehicleId) => {
+        e.preventDefault();
+        vehicleRef.current = vehicleId;
+        setModalType(type);
     };
 
-    //Confirm Modal
-    function openModal(e) {
-        e.preventDefault();
-        setIsOpen(true);
-    }
-
-    function closeModal() {
-        setIsOpen(false);
-    }
-
+    const closeModal = () => {
+        setModalType(null);
+    };
     //UI Tabs
 
     const [toggleState, setToggleState] = useState(isEnroll ? 2 : 1);
@@ -88,7 +70,15 @@ function Vehicles() {
         setVehicles(vehicles);
         closeModal();
         setToggleState(1);
-        notifyEnrollSuccess();
+        toast.success('Enroll a vehicle successfully!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
     };
 
     //Get Vehicles By User Id
@@ -105,6 +95,28 @@ function Vehicles() {
         }
     }, [authState.user.id]);
 
+    //Delete Vehicle
+    const handleDeleteVehicle = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await deleteVehicle(vehicleRef.current);
+            closeModal();
+            setVehicles(await getVehicleByUserId(authState.user.id));
+            toast.success(`Delete vehicle '${vehicleRef.current}' successfully!`, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     //Pagtination
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -113,7 +125,6 @@ function Vehicles() {
         const lastPageIndex = firstPageIndex + pageSize;
         return vehicles.slice(firstPageIndex, lastPageIndex);
     }, [currentPage, pageSize, vehicles]);
-
 
     const getIconOfVehicle = (id) => {
         switch (id) {
@@ -128,16 +139,27 @@ function Vehicles() {
         }
     };
 
-    const notifyEnrollSuccess = () => {
-        toast.success('Enroll a vehicle successfully!', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
+    const renderConfirmModal = (type) => {
+        switch (type) {
+            case 'enroll':
+                return (
+                    <ConfirmModal
+                        onClose={closeModal}
+                        content={`enroll vehicle '${vehicleRef.current}'`}
+                        onConfirm={handleEnrollVehicle}
+                    />
+                );
+            case 'delete':
+                return (
+                    <ConfirmModal
+                        onClose={closeModal}
+                        content={`delete vehicle '${vehicleRef.current}'`}
+                        onConfirm={handleDeleteVehicle}
+                    />
+                );
+            default:
+                return;
+        }
     };
 
     return (
@@ -164,7 +186,6 @@ function Vehicles() {
                 <div className={toggleState === 1 ? cx('content', 'active-content') : cx('content')}>
                     {/* Have Vehicles */}
                     {vehicles && vehicles.length > 0 ? (
-
                         <div className={cx('vehicle')}>
                             <ul className={cx('vehicle-list')}>
                                 {currentVehiclesPagination.map((vehicle) => (
@@ -178,17 +199,23 @@ function Vehicles() {
                                                 <span className={cx('vehicle-name')}>{vehicle.vehicleName}</span>
                                                 <span className={cx('vehicle-registrationPlate')}>{vehicle.id}</span>
                                             </div>
+                                            <FontAwesomeIcon
+                                                className={cx('delete-btn')}
+                                                icon={faTrash}
+                                                onClick={(e) => openModal(e, 'delete', vehicle.id)}
+                                            />
                                         </div>
                                     </li>
                                 ))}
                             </ul>
-                            <Pagination className={cx('pagination-bar')}
+                            <Pagination
+                                className={cx('pagination-bar')}
                                 currentPage={currentPage}
                                 totalCount={vehicles.length}
                                 pageSize={pageSize}
-                                onPageChange={page => setCurrentPage(page)} />
+                                onPageChange={(page) => setCurrentPage(page)}
+                            />
                         </div>
-
                     ) : (
                         /* Don't have vehicle */
                         <div className={cx('no-vehicle')}>
@@ -254,58 +281,13 @@ function Vehicles() {
                                 <option value="3">Truck</option>
                             </select>
                         </div>
-                        <Button className={cx('action-btn')} primary onClick={openModal}>
+                        <Button className={cx('action-btn')} primary onClick={(e) => openModal(e, 'enroll', vehicleId)}>
                             Enroll a vehicle
                         </Button>
                     </form>
                 </div>
                 {/* Modal */}
-                <div className={cx('modal')}>
-                    <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-                        {/* Confirm Form */}
-                        <div>
-                            <form
-                                style={{
-                                    padding: '16px',
-                                    borderRadius: '8px',
-                                    border: '2px solid var(--primary-border-color)',
-                                    backgroundColor: '#ffffe0',
-                                }}
-                                id="confirm-form"
-                                className={cx('confirm-form')}
-                                onSubmit={handleEnrollVehicle}
-                            >
-                                <h1 style={{ fontSize: '3rem', fontWeight: '500', color: 'var(--primary-color)' }}>
-                                    Do you want to enroll this vehicle ?
-                                </h1>
-                                <div
-                                    style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}
-                                    className="action-btn"
-                                >
-                                    <Button
-                                        style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'green' }}
-                                        className={cx('confirm-btn')}
-                                        primary
-                                        leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                                        type="submit"
-                                    >
-                                        confirm
-                                    </Button>
-                                    <Button
-                                        style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'red' }}
-                                        className={cx('cancel-btn')}
-                                        primary
-                                        leftIcon={<FontAwesomeIcon icon={faX} />}
-                                        type="button"
-                                        onClick={closeModal}
-                                    >
-                                        cancel
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
-                    </Modal>
-                </div>
+                {renderConfirmModal(modalType)}
             </div>
         </div>
     );

@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 100%;
+    height: calc(var(--default-content-min-height) - 64px);
 
     .introduction-title{
         font-family: 'Playfair Display', serif;
@@ -22,7 +22,7 @@
     .nav-item-list{
         display: flex;
         justify-content: space-between;
-        width: 100%;
+        // width: 100%;
     }
 }
 

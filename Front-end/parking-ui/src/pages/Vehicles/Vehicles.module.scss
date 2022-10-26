@@ -97,8 +97,9 @@
         padding-right: 4px;
         margin-top: 4px;
         margin-bottom: 4px;
-
+        
         .vehicle-wrapper {
+            position: relative;
             display: flex;
             align-items: center;
             background-color: var(--white-color);
@@ -113,6 +114,14 @@
         .vehicle-info {
             display: flex;
             flex-direction: column;
+        }
+
+        .delete-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            color: red;
+            cursor: pointer;
         }
     }
 }
