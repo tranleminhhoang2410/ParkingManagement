@@ -3,7 +3,15 @@ import classNames from 'classnames/bind';
 import styles from './Admin.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faCheck, faX, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+    faEdit,
+    faCheck,
+    faX,
+    faUser,
+    faWallet,
+    faFileInvoiceDollar,
+    faDivide,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
@@ -11,7 +19,12 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 import Button from '~/components/Button';
 
 import { getAllVehicleTypesApi, updateVehicleTypePrice } from '~/services/vehicleTypeService';
-import { getHighestParking, getLastedCheckout, getMonthlyParkingType } from '~/services/invoiceService';
+import {
+    getHighestParking,
+    getLastedCheckout,
+    getMonthlyParkingType,
+    invoiceStatistic,
+} from '~/services/invoiceService';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +33,9 @@ function Admin() {
     const [highestIncome, setHighestIncome] = useState({});
     const [lastedCheckout, setLastedCheckout] = useState([]);
     const [monthlyParking, setMonthlyParking] = useState([]);
+    const [statistic, setStatistic] = useState({});
     const [editRow, setEditRow] = useState(null);
+
     useEffect(() => {
         const getPriceTable = async () => {
             const price = await getAllVehicleTypesApi();
@@ -95,6 +110,15 @@ function Admin() {
         updatedPricetable[rowIndex] = updatedRow;
         setPriceTable(updatedPricetable);
     };
+
+    useEffect(() => {
+        const fetchStatistic = async (e) => {
+            const statistic = await invoiceStatistic();
+            setStatistic(statistic);
+        };
+        fetchStatistic();
+    }, []);
+
     return (
         <div className={cx('wrapper', 'mt-4')}>
             <div className={cx('statistic')}>
@@ -171,8 +195,8 @@ function Admin() {
                                                 {highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                        100 *
-                                                        100,
+                                                            100 *
+                                                            100,
                                                     ) / 100}
                                                 %
                                                 <i className={cx('mdi', 'mdi-arrow-up')} />
@@ -187,8 +211,8 @@ function Admin() {
                                                     highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                        100 *
-                                                        100,
+                                                            100 *
+                                                            100,
                                                     ) / 100
                                                 }
                                                 styles={{
@@ -236,8 +260,8 @@ function Admin() {
                                                             Math.round(
                                                                 (highestIncome.data.total /
                                                                     highestIncome.monthTotalPrice) *
-                                                                100 *
-                                                                100,
+                                                                    100 *
+                                                                    100,
                                                             ) / 100}
                                                         %
                                                     </strong>
@@ -257,20 +281,18 @@ function Admin() {
                                         <div className={cx('d-flex')}>
                                             <div className={cx('flex-grow-1')}>
                                                 <p className={cx('text-muted', 'fw-medium')}>Orders</p>
-                                                <h4 className={cx('mb-0')}>1,235</h4>
+                                                <h4 className={cx('mb-0')}>{statistic && statistic.totalInvoice}</h4>
                                             </div>
                                             <div
                                                 className={cx(
                                                     'mini-stat-icon',
-                                                    'avatar-sm',
+                                                    'statistic-icon-wrapper',
                                                     'rounded-circle',
                                                     'bg-primary',
                                                     'align-self-center',
                                                 )}
                                             >
-                                                <span className={cx('avatar-title')}>
-                                                    <i className={cx('bx', 'bx-copy-alt', 'font-size-24')} />
-                                                </span>
+                                                <FontAwesomeIcon className={cx('statistic-icon')} icon={faWallet} />
                                             </div>
                                         </div>
                                     </div>
@@ -282,20 +304,23 @@ function Admin() {
                                         <div className={cx('d-flex')}>
                                             <div className={cx('flex-grow-1')}>
                                                 <p className={cx('text-muted', 'fw-medium')}>Revenue</p>
-                                                <h4 className={cx('mb-0')}>$35, 723</h4>
+                                                <h4 className={cx('mb-0')}>
+                                                    {statistic.revenue && statistic.revenue.toLocaleString('it-IT')} VNĐ
+                                                </h4>
                                             </div>
                                             <div
                                                 className={cx(
                                                     'mini-stat-icon',
-                                                    'avatar-sm',
+                                                    'statistic-icon-wrapper',
                                                     'rounded-circle',
                                                     'bg-primary',
                                                     'align-self-center',
                                                 )}
                                             >
-                                                <span className={cx('avatar-title')}>
-                                                    <i className={cx('bx', 'bx-archive-in', 'font-size-24')} />
-                                                </span>
+                                                <FontAwesomeIcon
+                                                    className={cx('statistic-icon')}
+                                                    icon={faFileInvoiceDollar}
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -307,20 +332,20 @@ function Admin() {
                                         <div className={cx('d-flex')}>
                                             <div className={cx('flex-grow-1')}>
                                                 <p className={cx('text-muted', 'fw-medium')}>Average Price</p>
-                                                <h4 className={cx('mb-0')}>$16.2</h4>
+                                                <h4 className={cx('mb-0')}>
+                                                    {statistic.average && statistic.average.toLocaleString('it-IT')} VNĐ
+                                                </h4>
                                             </div>
                                             <div
                                                 className={cx(
                                                     'mini-stat-icon',
-                                                    'avatar-sm',
+                                                    'statistic-icon-wrapper',
                                                     'rounded-circle',
                                                     'bg-primary',
                                                     'align-self-center',
                                                 )}
                                             >
-                                                <span className={cx('avatar-title')}>
-                                                    <i className={cx('bx', 'bx-purchase-tag-alt', 'font-size-24')} />
-                                                </span>
+                                                <FontAwesomeIcon className={cx('statistic-icon')} icon={faDivide} />
                                             </div>
                                         </div>
                                     </div>
@@ -389,7 +414,8 @@ function Admin() {
                                                         contentEditable={editRow === item.id}
                                                         suppressContentEditableWarning
                                                     >
-                                                        <span className={cx('p-1')}
+                                                        <span
+                                                            className={cx('p-1')}
                                                             onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerHour')}
                                                         >
                                                             {item.pricePerHour.toLocaleString('it-It')}
@@ -399,10 +425,11 @@ function Admin() {
                                                     <td
                                                         contentEditable={editRow === item.id}
                                                         suppressContentEditableWarning
-
                                                     >
-                                                        <span className={cx('p-1')}
-                                                            onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerDay')}>
+                                                        <span
+                                                            className={cx('p-1')}
+                                                            onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerDay')}
+                                                        >
                                                             {item.pricePerDay.toLocaleString('it-It')}
                                                         </span>{' '}
                                                         VNĐ
@@ -410,10 +437,11 @@ function Admin() {
                                                     <td
                                                         contentEditable={editRow === item.id}
                                                         suppressContentEditableWarning
-
                                                     >
-                                                        <span className={cx('p-1')}
-                                                            onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerWeek')}>
+                                                        <span
+                                                            className={cx('p-1')}
+                                                            onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerWeek')}
+                                                        >
                                                             {item.pricePerWeek.toLocaleString('it-It')}
                                                         </span>{' '}
                                                         VNĐ
