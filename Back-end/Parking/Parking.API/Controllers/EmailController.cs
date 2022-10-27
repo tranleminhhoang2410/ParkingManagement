@@ -31,6 +31,8 @@ namespace Parking.API.Controllers
 
                 AccountDTO account = await accountService.GetAccountByUser(username);
 
+                if (account == null) throw new Exception("Username is not existed!");
+
                 if (tokenManager.GetUserValidTokenStorage(account.User.Id) == null)
                 {
                     await tokenManager.AddUserValidTokenStorage(account.User.Id);
