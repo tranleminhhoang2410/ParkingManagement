@@ -59,13 +59,13 @@ namespace Parking.API.Controllers
                     }
                     else
                     {
-                        throw new Exception(Message.WRONG_PASSWORD);
+                        throw new Exception("Wrong password! Try again.");
                     }
 
                 }
                 else
                 {
-                    throw new Exception(Message.WRONG_USERNAME);
+                    throw new Exception("Wrong username or password! Try again.");
                 }
             }
             catch(Exception ex)
@@ -96,11 +96,11 @@ namespace Parking.API.Controllers
         {
             try
             {
-                if (!ConfirmPassword.Equals(password)) throw new Exception(Message.NOT_MATCH_CONFIRM_PASSWORD);
-                if ((await accountService.GetAccountByUser(username)) != null) throw new Exception(Message.EXISTED_USERNAME);
+                if (!ConfirmPassword.Equals(password)) throw new Exception("Confirm Password must match with Password! Try again.");
+                if ((await accountService.GetAccountByUser(username)) != null) throw new Exception("Username existed! Try another.");
                 if (fullname.Trim().Equals("")) throw new Exception("Username must not be empty!");
-                if (!Valid.email(email)) throw new Exception(Message.INVALID_EMAIL);
-                if (!Valid.phone(phone)) throw new Exception(Message.INVALID_PHONE);
+                if (!Valid.email(email)) throw new Exception("Invalid email. Try again!");
+                if (!Valid.phone(phone)) throw new Exception("Invalid phone. Try ### ### #### or ###-###-####.");
 
                 AccountDTO accountDTO = new AccountDTO
                 {
@@ -145,8 +145,8 @@ namespace Parking.API.Controllers
         {
             try
             {
-                if (newPassword.Equals(oldPassword)) throw new Exception(Message.ERR_MATCH_OLDPASSWORD);
-                if (!confirmNewPassword.Equals(newPassword)) throw new Exception(Message.NOT_MATCH_CONFIRM_NEWPASSWORD);
+                if (newPassword.Equals(oldPassword)) throw new Exception("New password must not match with Old password! Try again.");
+                if (!confirmNewPassword.Equals(newPassword)) throw new Exception("Confirm New Password must match with New Password! Try again.");
 
                 AccountDTO user = await accountService.GetAccountByUser(username);
                 if (user != null)
@@ -168,12 +168,12 @@ namespace Parking.API.Controllers
                     }
                     else
                     {
-                        throw new Exception(Message.WRONG_PASSWORD);
+                        throw new Exception("Wrong password! Try again.");
                     }
                 }
                 else
                 {
-                    throw new Exception(Message.WRONG_USERNAME);
+                    throw new Exception("Wrong username or password! Try again.");
                 }
 
                 return Ok(new
@@ -268,7 +268,7 @@ namespace Parking.API.Controllers
         {
             try
             {
-                if (!confirmNewPassword.Equals(newPassword)) throw new Exception(Message.NOT_MATCH_CONFIRM_NEWPASSWORD);
+                if (!confirmNewPassword.Equals(newPassword)) throw new Exception("Confirm New Password must match with New Password! Try again.");
 
                 AccountDTO user = await accountService.GetAccountByUser(username);
                 if (user != null)
@@ -284,7 +284,7 @@ namespace Parking.API.Controllers
                 }
                 else
                 {
-                    throw new Exception(Message.WRONG_USERNAME);
+                    throw new Exception("Wrong password! Try again.");
                 }
 
                 return Ok(new
