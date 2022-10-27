@@ -63,7 +63,7 @@ namespace Parking.API.Controllers
         }
 
         [AuthorizationFilter]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         [HttpPut("Update")]
         public async Task<ActionResult<UserDTO>> Update(UserUpdateModel user)
         {

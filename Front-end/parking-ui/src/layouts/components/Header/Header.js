@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitterSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
@@ -10,6 +10,8 @@ import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
+
+import { toast } from 'react-toastify';
 
 import { getAccountByUserId } from '~/services/accountService';
 import { signIn, signUp } from '~/services/authService';
@@ -39,15 +41,11 @@ function Header() {
     //UI Tabs
 
     const [toggleState, setToggleState] = useState(1);
-    const [toggleNavLink, setToggleNavLink] = useState(1);
 
     const toggleTab = (index) => {
         setToggleState(index);
     };
 
-    const ToggleNavLink = (index) => {
-        setToggleNavLink(index);
-    };
 
     //validate form
 
@@ -165,37 +163,90 @@ function Header() {
         const [{ value: username }, { value: password }] = e.target;
         const data = { username, password };
         try {
-            const response = await signIn(data);
-            const token = response.token;
-            if (!token) return;
+            if (username !== '' && password !== '') {
+                const response = await signIn(data);
+                const token = response.token;
+                if (!token) return;
 
-            const result = parseJwt(token);
-            const jwt = {
-                token: token,
-                expired: result.exp,
-            };
-            const authData = { jwt, user: {}, role: result.role };
-            LS.setLocalStorage('auth', authData);
-            const user = await getLoggedUser();
-            authData.user = user;
-            dispatch({
-                type: AUTH_ACTION.LOGIN,
-                payload: authData,
+                const result = parseJwt(token);
+                const jwt = {
+                    token: token,
+                    expired: result.exp,
+                };
+                const authData = { jwt, user: {}, role: result.role };
+                LS.setLocalStorage('auth', authData);
+                const user = await getLoggedUser();
+                authData.user = user;
+                dispatch({
+                    type: AUTH_ACTION.LOGIN,
+                    payload: authData,
+                });
+
+                if (result.role === config.roles.ADMIN) {
+                    navigate('/admin');
+                }
+
+                if (window.location.href === 'http://localhost:3000/password/forgot') {
+                    navigate('/')
+                }
+
+                LS.setLocalStorage('auth', authData);
+                closeModal();
+                toast.success('Login successfully!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                if (username === '' && password === '') {
+                    toast.error('All field must not be empty!', {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                } else {
+                    if (username === '') {
+                        toast.error('Username must not be empty!', {
+                            position: 'top-right',
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    }
+                    if (password === '') {
+                        toast.error('Password must not be empty!', {
+                            position: 'top-right',
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    }
+                }
+            }
+        } catch (error) {
+            toast.error(`${error}`, {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
             });
-
-            if (result.role === config.roles.ADMIN) {
-                navigate('/admin');
-            }
-
-            if (window.location.href === 'http://localhost:3000/password/forgot') {
-                navigate('/')
-            }
-
-            LS.setLocalStorage('auth', authData);
-            setErrorMsg('');
-            closeModal();
-        } catch (err) {
-            setErrorMsg(err);
         }
     }
 
@@ -211,10 +262,51 @@ function Header() {
         ] = e.target;
         const data = { username, fullname, email, phone, password, ConfirmPassword };
         try {
-            await signUp(data);
-            toggleTab(1);
-        } catch (err) {
-            setErrorMsg(err);
+            if (username !== '' && fullname !== '' && email !== '' && phone !== '' && password !== '' && ConfirmPassword !== '') {
+                if (ConfirmPassword === password) {
+                    await signUp(data);
+                    toast.success('Sign up successfully!', {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    toggleTab(1);
+                } else {
+                    toast.error('Confirm password does not match password!', {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+            } else {
+                toast.error('All field must not be empty!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        } catch (error) {
+            toast.error(`${error}`, {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
 
@@ -222,7 +314,6 @@ function Header() {
         dispatch({ type: AUTH_ACTION.LOGOUT });
         LS.removeLocalStorage('auth');
         navigate('/');
-        // window.location.href = '/'
     }
 
     return (
@@ -230,28 +321,27 @@ function Header() {
             <div className={cx('wrapper')}>
                 <div className={cx('logo-and-nav')}>
                     <div className={cx('logo')}>
-                        <img className={cx('logo-img')} src={require('~/assets/images/logo.png')} />
+                        <img alt='logo' className={cx('logo-img')} src={require('~/assets/images/logo.png')} />
                     </div>
                     <nav className={cx('nav-link')}>
-                        <Link
-                            onClick={() => ToggleNavLink(1)}
+                        <NavLink
                             className={cx('nav-link-item')}
                             to={authState.role === config.roles.ADMIN ? '/admin' : '/'}
+                            end
                             style={
-                                toggleNavLink === 1
+                                ({ isActive }) => isActive
                                     ? { color: 'var(--primary-color)', borderBottom: '2px solid var(--primary-color)' }
                                     : {}
                             }
                         >
                             Home
-                        </Link>
+                        </NavLink>
                         {authState.role !== config.roles.ADMIN ? (
-                            <Link
+                            <NavLink
                                 className={cx('nav-link-item')}
                                 to="/about"
-                                onClick={() => ToggleNavLink(2)}
                                 style={
-                                    toggleNavLink === 2
+                                    ({ isActive }) => isActive
                                         ? {
                                             color: 'var(--primary-color)',
                                             borderBottom: '2px solid var(--primary-color)',
@@ -260,15 +350,14 @@ function Header() {
                                 }
                             >
                                 About Us
-                            </Link>
+                            </NavLink>
                         ) : (
                             <>
-                                <Link
+                                <NavLink
                                     className={cx('nav-link-item')}
                                     to="/admin/vehicles"
-                                    onClick={() => ToggleNavLink(3)}
                                     style={
-                                        toggleNavLink === 3
+                                        ({ isActive }) => isActive
                                             ? {
                                                 color: 'var(--primary-color)',
                                                 borderBottom: '2px solid var(--primary-color)',
@@ -277,37 +366,37 @@ function Header() {
                                     }
                                 >
                                     Vehicles
-                                </Link>
-                                <Link
+                                </NavLink>
+                                <NavLink
                                     className={cx('nav-link-item')}
                                     to="/admin/slots"
-                                    onClick={() => ToggleNavLink(4)}
                                     style={
-                                        toggleNavLink === 4
+                                        ({ isActive }) => isActive
                                             ? {
                                                 color: 'var(--primary-color)',
                                                 borderBottom: '2px solid var(--primary-color)',
                                             }
                                             : {}
                                     }
+
                                 >
                                     Slots
-                                </Link>
-                                <Link
+                                </NavLink>
+                                <NavLink
                                     className={cx('nav-link-item')}
                                     to="/admin/invoices"
-                                    onClick={() => ToggleNavLink(5)}
                                     style={
-                                        toggleNavLink === 5
+                                        ({ isActive }) => isActive
                                             ? {
                                                 color: 'var(--primary-color)',
                                                 borderBottom: '2px solid var(--primary-color)',
                                             }
                                             : {}
                                     }
+
                                 >
                                     Invoices
-                                </Link>
+                                </NavLink>
                             </>
                         )}
 
@@ -317,13 +406,13 @@ function Header() {
                     <nav className={cx('nav-social')}>
                         {socialIcons.map((socialIcon, index) => {
                             return (
-                                <Link key={index} to="/" className={cx('social-link')}>
+                                <NavLink key={index} to="/" className={cx('social-link')}>
                                     <FontAwesomeIcon
                                         icon={socialIcon.name}
                                         className={cx('social-icon')}
                                         style={{ color: socialIcon.color }}
                                     />
-                                </Link>
+                                </NavLink>
                             );
                         })}
                     </nav>
@@ -397,9 +486,9 @@ function Header() {
                                         </label>
                                     </div>
                                     <div className={cx('forgot')}>
-                                        <Link to="/password/forgot" onClick={closeModal} className={cx('forgot-link')}>
+                                        <NavLink to="/password/forgot" onClick={closeModal} className={cx('forgot-link')}>
                                             Forgot password?
-                                        </Link>
+                                        </NavLink>
                                     </div>
                                 </div>
                                 <Button className={cx('action-btn')} primary type="submit">

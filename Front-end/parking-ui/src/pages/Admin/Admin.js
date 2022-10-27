@@ -10,7 +10,7 @@ import {
     faUser,
     faWallet,
     faFileInvoiceDollar,
-    faDivide,
+    faChartSimple,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
@@ -102,7 +102,7 @@ function Admin() {
     };
 
     const handleDataOnBlur = (e, rowId, field) => {
-        const data = e.target.querySelector('span').innerText;
+        const data = e.target.innerText;
         const price = Number(data.replace(/\./g, ''));
         const rowIndex = priceTable.findIndex((p) => p.id === rowId);
         const updatedRow = { ...priceTable[rowIndex], [field]: price };
@@ -112,7 +112,7 @@ function Admin() {
     };
 
     useEffect(() => {
-        const fetchStatistic = async (e) => {
+        const fetchStatistic = async () => {
             const statistic = await invoiceStatistic();
             setStatistic(statistic);
         };
@@ -195,8 +195,8 @@ function Admin() {
                                                 {highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                            100 *
-                                                            100,
+                                                        100 *
+                                                        100,
                                                     ) / 100}
                                                 %
                                                 <i className={cx('mdi', 'mdi-arrow-up')} />
@@ -211,8 +211,8 @@ function Admin() {
                                                     highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                            100 *
-                                                            100,
+                                                        100 *
+                                                        100,
                                                     ) / 100
                                                 }
                                                 styles={{
@@ -260,8 +260,8 @@ function Admin() {
                                                             Math.round(
                                                                 (highestIncome.data.total /
                                                                     highestIncome.monthTotalPrice) *
-                                                                    100 *
-                                                                    100,
+                                                                100 *
+                                                                100,
                                                             ) / 100}
                                                         %
                                                     </strong>
@@ -345,7 +345,7 @@ function Admin() {
                                                     'align-self-center',
                                                 )}
                                             >
-                                                <FontAwesomeIcon className={cx('statistic-icon')} icon={faDivide} />
+                                                <FontAwesomeIcon className={cx('statistic-icon')} icon={faChartSimple} />
                                             </div>
                                         </div>
                                     </div>
@@ -411,22 +411,22 @@ function Admin() {
                                                     </td>
                                                     <td>{item.typeName}</td>
                                                     <td
-                                                        contentEditable={editRow === item.id}
-                                                        suppressContentEditableWarning
                                                     >
                                                         <span
-                                                            className={cx('p-1')}
+                                                            contentEditable={editRow === item.id}
+                                                            suppressContentEditableWarning
                                                             onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerHour')}
+                                                            className={cx('p-1')}
                                                         >
                                                             {item.pricePerHour.toLocaleString('it-It')}
                                                         </span>
                                                         VNĐ
                                                     </td>
                                                     <td
-                                                        contentEditable={editRow === item.id}
-                                                        suppressContentEditableWarning
                                                     >
                                                         <span
+                                                            contentEditable={editRow === item.id}
+                                                            suppressContentEditableWarning
                                                             className={cx('p-1')}
                                                             onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerDay')}
                                                         >
@@ -435,10 +435,10 @@ function Admin() {
                                                         VNĐ
                                                     </td>
                                                     <td
-                                                        contentEditable={editRow === item.id}
-                                                        suppressContentEditableWarning
                                                     >
                                                         <span
+                                                            contentEditable={editRow === item.id}
+                                                            suppressContentEditableWarning
                                                             className={cx('p-1')}
                                                             onBlur={(e) => handleDataOnBlur(e, item.id, 'pricePerWeek')}
                                                         >

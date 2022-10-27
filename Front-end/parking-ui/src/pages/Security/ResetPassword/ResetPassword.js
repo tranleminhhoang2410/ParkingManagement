@@ -34,21 +34,45 @@ function ResetPassword() {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         try {
-            await resetPassword({
-                username: user.username,
-                newPassword: newPassword,
-                confirmNewPassword: confirmNewPassword,
-            })
-            toast.success('Reset password successfully!', {
-                position: 'top-right',
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-            });
-            navigate('/');
+            if (newPassword !== '' && confirmNewPassword !== '') {
+                if (confirmNewPassword === newPassword) {
+                    await resetPassword({
+                        username: user.username,
+                        newPassword: newPassword,
+                        confirmNewPassword: confirmNewPassword,
+                    })
+                    toast.success('Reset your password successfully!', {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    navigate('/');
+                } else {
+                    toast.error('Confirm password does not match password!', {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+            } else {
+                toast.error('All field must not be empty!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         } catch (error) {
             console.log(error);
         }

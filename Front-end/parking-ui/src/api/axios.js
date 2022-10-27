@@ -24,9 +24,8 @@ instance.interceptors.response.use(
                 const message401 = error.response.data.error;
                 return Promise.reject(message401);
             case 400:
-                const message400 = error.response.data.fail;
+                const message400 = error.response.data.fail || error.response.data;
                 return Promise.reject(message400);
-
             default:
                 break;
         }

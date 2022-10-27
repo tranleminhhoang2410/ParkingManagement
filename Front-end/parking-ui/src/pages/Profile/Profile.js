@@ -88,7 +88,6 @@ function Profile() {
                 draggable: true,
                 progress: undefined,
             });
-            // setUser(await getLoggedUser());
         } catch (error) {
             console.log(error);
         }
@@ -133,7 +132,7 @@ function Profile() {
                         id="phone"
                         className={cx('input-text')}
                         value={phone}
-                        onChage={(e) => setPhone(e.target.value)}
+                        onChange={(e) => setPhone(e.target.value)}
                     />
                 </div>
                 <div className={cx('input-group')}>

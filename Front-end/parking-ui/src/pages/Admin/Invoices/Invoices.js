@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Invoices.module.scss';
 
@@ -11,25 +11,40 @@ const cx = classNames.bind(styles);
 
 function Invoices() {
     const [invoices, setInvoices] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const invoicesRef = useRef(null);
+    const debounceTimeoutRef = useRef(null);
 
     useEffect(() => {
         const fetchAllInvoice = async () => {
             const invoices = await getAllInvoices();
             setInvoices(invoices);
+            invoicesRef.current = invoices;
         };
         fetchAllInvoice();
-    }, [])
+    }, []);
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        const TIME = 500;
+        setSearchValue(value);
+        if (debounceTimeoutRef?.current) clearTimeout(debounceTimeoutRef.current);
+        debounceTimeoutRef.current = setTimeout(() => {
+            const updatedInvoices = invoicesRef.current.filter((i) => i.vehicleId.includes(value));
+            setInvoices(updatedInvoices);
+        }, TIME);
+    };
 
     return (
         <div className={cx('content')}>
             <div className={cx('search-wrapper')}>
-                <form action="" className={cx('search-form')}>
-                    <input type="text" placeholder="Enter Vehicle Id" className={cx('search-input')} />
+                <div action="" className={cx('search-form')}>
+                    <input type="text" placeholder="Enter Vehicle Id" className={cx('search-input')} onChange={handleSearch} value={searchValue} />
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </form>
+                </div>
             </div>
             <div className={cx('table-wrapper')}>
-                <table className={cx('invoice-table')}>
+                <table id={cx('invoice-table')}>
                     <thead className={cx('table-header')}>
                         <tr>
                             <th>Id</th>
@@ -44,7 +59,7 @@ function Invoices() {
                     <tbody>
                         {invoices && invoices.length > 0 &&
                             invoices.map(invoice =>
-                                <tr key={invoice}>
+                                <tr key={invoice.id}>
                                     <td>{invoice.id}</td>
                                     <td>{invoice.userName}</td>
                                     <td>{invoice.vehicleId}</td>

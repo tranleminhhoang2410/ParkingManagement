@@ -72,7 +72,7 @@ namespace Parking.API.Controllers
         }
 
         [AuthorizationFilter]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User, Admin")]
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<VehicleDTO>>> GetAll()
         {

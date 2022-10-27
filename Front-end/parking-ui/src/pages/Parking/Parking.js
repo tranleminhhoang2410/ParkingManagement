@@ -51,7 +51,7 @@ function Parking() {
                 display: 'flex',
                 alignItems: 'center',
                 margin: 'auto',
-                height: 'calc(var(--default-content-min-height) - 64px);',
+                height: 'calc(var(--default-content-min-height) - 64px)',
             }}
         >
             <div className={cx('wrapper')}>

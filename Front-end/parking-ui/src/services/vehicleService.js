@@ -2,13 +2,18 @@ import axios from '~/api/axios';
 
 const END_POINTS = {
     ADD_VEHICLE: 'Vehicle/AddVehicle',
+    GET_ALL_VEHICLE: 'Vehicle/GetAll',
     GET_VEHICLE_BY_USER_ID: 'Vehicle/Get/UserVehicle',
     GET_BY_TYPE_ID: 'Vehicle/GetByType',
     CHECK_IN: 'Vehicle/CheckIn',
     CHECK_OUT: 'Vehicle/CheckOut',
     GET_CHECKED_IN_VEHICLE: 'Vehicle/CheckedIn',
     DELETE: '/Vehicle/Remove',
-};
+}
+
+export const getAllVehicle = () => {
+    return axios.get(END_POINTS.GET_ALL_VEHICLE);
+}
 
 export const enrollVehicle = (vehicle) => {
     return axios.post(END_POINTS.ADD_VEHICLE, null, { params: vehicle });

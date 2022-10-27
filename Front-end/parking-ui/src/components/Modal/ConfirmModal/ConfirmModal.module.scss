@@ -22,13 +22,16 @@
             padding: 16px 0;
 
             .confirm-title{
-                font-size: 30px;
+                font-size: 3rem;
                 font-weight: 500;
             }
         
             .action-btn{
                 Button{
-                    min-width: 120px;
+                    min-width: 160px;
+                    padding: 8px;
+                    font-size: 1.6rem;
+                    font-weight: 500;
                 }
             }
         }

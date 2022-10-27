@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Vehicles.module.scss';
 
@@ -14,11 +14,15 @@ const cx = classNames.bind(styles);
 function Vehicles() {
     const [tab, setTab] = useState(1);
     const [vehicles, setVehicles] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const vehiclesRef = useRef(null);
+    const debounceTimeoutRef = useRef(null);
 
     useEffect(() => {
         const fetchVehicleByTypeId = async () => {
             const vehicles = await getVehicleByTypeId(tab);
             setVehicles(vehicles);
+            vehiclesRef.current = vehicles;
         };
         fetchVehicleByTypeId();
     }, [tab]);
@@ -34,6 +38,17 @@ function Vehicles() {
             default:
                 return;
         }
+    };
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        const TIME = 500;
+        setSearchValue(value);
+        if (debounceTimeoutRef?.current) clearTimeout(debounceTimeoutRef.current);
+        debounceTimeoutRef.current = setTimeout(() => {
+            const updatedVehicles = vehiclesRef.current.filter((i) => i.vehicleId.includes(value));
+            setVehicles(updatedVehicles);
+        }, TIME);
     };
 
     return (
@@ -63,13 +78,13 @@ function Vehicles() {
             </div>
             <div className={cx('tab-content')}>
                 <div className={cx('search-wrapper')}>
-                    <form action="" className={cx('search-form', getClassOfVehicle(tab))}>
-                        <input type="text" placeholder="Enter Vehicle Id" className={cx('search-input')} />
+                    <div action="" className={cx('search-form', getClassOfVehicle(tab))}>
+                        <input type="text" placeholder="Enter Vehicle's Id" className={cx('search-input')} onChange={handleSearch} value={searchValue} />
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </form>
+                    </div>
                 </div>
                 <div className={cx('table-wrapper')}>
-                    <table className={cx('vehicle-table')}>
+                    <table id={cx('vehicle-table')}>
                         <thead className={cx(getClassOfVehicle(tab))}>
                             <tr>
                                 <th>Id</th>
@@ -82,7 +97,7 @@ function Vehicles() {
                         <tbody>
                             {vehicles && vehicles.length > 0 ? (
                                 vehicles.map((vehicle) => (
-                                    <tr key={vehicle}>
+                                    <tr key={vehicle.vehicleId}>
                                         <td>{vehicle.vehicleId}</td>
                                         <td>{vehicle.owner}</td>
                                         <td>{vehicle.vehicleName}</td>
@@ -98,7 +113,7 @@ function Vehicles() {
                                 ))
                             ) : (
                                 <tr style={{ backgroundColor: 'transparent' }}>
-                                    <td colspan="5">
+                                    <td colSpan="5">
                                         <h1
                                             style={{
                                                 textAlign: 'center',

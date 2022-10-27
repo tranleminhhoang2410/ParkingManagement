@@ -44,7 +44,7 @@ function ChangePassword() {
         const data = { username, oldPassword, newPassword, confirmNewPassword };
         try {
             await changePassword(data);
-            toast.success('Change password successfully!', {
+            toast.success('Change your password successfully!', {
                 position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: false,

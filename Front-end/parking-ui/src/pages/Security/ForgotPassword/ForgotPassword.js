@@ -3,6 +3,8 @@ import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import styles from './ForgotPassword.module.scss';
 
+import { toast } from 'react-toastify';
+
 import { forgotPassword } from '~/services/emailService'
 
 const cx = classNames.bind(styles);
@@ -14,11 +16,36 @@ function ForgotPassword() {
     const handleSendEmail = async (e) => {
         e.preventDefault();
         try {
-            const response = await forgotPassword({ username: username });
-            setMessage(response.success);
+            if (username !== '') {
+                const response = await forgotPassword({ username: username });
+                setMessage(response.success);
+            } else {
+                toast.error('Username must not be empty!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         } catch (error) {
-            console.log(error)
+            toast.error(`${error.error}`, {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
         }
+    }
+
+    const handleChangeInput = (e) => {
+        setUsername(e.target.value);
+        setMessage('');
     }
 
     return (
@@ -28,7 +55,7 @@ function ForgotPassword() {
                     <label htmlFor="username" className={cx('input-label')}>
                         Username
                     </label>
-                    <input type="text" id="username" name="username" className={cx('input-text')} value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type="text" id="username" name="username" className={cx('input-text')} value={username} onChange={handleChangeInput} />
                 </div>
                 {message && <span style={{ textAlign: 'center', color: 'var(--primary-color)' }}>{message}</span>}
                 <Button primary className={cx('send-btn')} onClick={handleSendEmail}>Send Email</Button>

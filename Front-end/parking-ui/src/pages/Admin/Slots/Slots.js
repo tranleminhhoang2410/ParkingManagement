@@ -19,6 +19,11 @@ const cx = classNames.bind(styles);
 function Slots() {
     const [tab, setTab] = useState(1);
     const [slots, setSlots] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const slotsRef = useRef(null);
+    const tableRef = useRef(null);
+    const debounceTimeoutRef = useRef(null);
+
 
     //Modal
     const slotRef = useRef();
@@ -53,6 +58,7 @@ function Slots() {
         const getAllSlotsByVehicleType = async () => {
             const slots = await getSlotByVehicleTypeId(tab);
             setSlots(slots);
+            slotsRef.current = slots;
         };
         getAllSlotsByVehicleType();
     }, [tab]);
@@ -136,7 +142,7 @@ function Slots() {
                 status: -1,
             });
             closeModal();
-            toast.success(`Slot ${slotRef.current} is maintaining!`, {
+            toast.success(`Slot '${slotRef.current}' is maintaining!`, {
                 position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -158,7 +164,7 @@ function Slots() {
                 slotId: slotRef.current,
                 status: 0,
             });
-            toast.success(`Slot ${slotRef.current} was fixed!`, {
+            toast.success(`Slot '${slotRef.current}' was fixed!`, {
                 position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -186,7 +192,7 @@ function Slots() {
                 vehicleId: vehicle.vehicleId,
                 slotId: slotRef.current,
             });
-            toast.success(`Check out slot ${slotRef.current} successfully!`, {
+            toast.success(`Checked out slot '${slotRef.current}' successfully!`, {
                 position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -202,25 +208,36 @@ function Slots() {
         }
     };
 
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        const TIME = 500;
+        setSearchValue(value);
+        if (debounceTimeoutRef?.current) clearTimeout(debounceTimeoutRef.current);
+        debounceTimeoutRef.current = setTimeout(() => {
+            const updatedSlots = slotsRef.current.filter((i) => i.vehicleID.includes(value));
+            setSlots(updatedSlots);
+        }, TIME);
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('tab-title')}>
                 <Button
-                    onClick={() => setTab(1)}
+                    onClick={() => { setTab(1); tableRef.current.scrollTo(0, 0) }}
                     leftIcon={<FontAwesomeIcon icon={faCar} />}
                     className={tab === 1 ? cx('tab-button', 'car', 'active') : cx('tab-button', 'car')}
                 >
                     Car
                 </Button>
                 <Button
-                    onClick={() => setTab(2)}
+                    onClick={() => { setTab(2); tableRef.current.scrollTo(0, 0) }}
                     leftIcon={<FontAwesomeIcon icon={faBus} />}
                     className={tab === 2 ? cx('tab-button', 'bus', 'active') : cx('tab-button', 'bus')}
                 >
                     Bus
                 </Button>
                 <Button
-                    onClick={() => setTab(3)}
+                    onClick={() => { setTab(3); tableRef.current.scrollTo(0, 0) }}
                     leftIcon={<FontAwesomeIcon icon={faTruck} />}
                     className={tab === 3 ? cx('tab-button', 'truck', 'active') : cx('tab-button', 'truck')}
                 >
@@ -229,13 +246,13 @@ function Slots() {
             </div>
             <div className={cx('tab-content')}>
                 <div className={cx('search-wrapper')}>
-                    <form action="" className={cx('search-form', getClassOfVehicle(tab))}>
-                        <input type="text" placeholder="Enter Vehicle Id" className={cx('search-input')} />
+                    <div action="" className={cx('search-form', getClassOfVehicle(tab))}>
+                        <input type="text" placeholder="Enter Vehicle's Id" className={cx('search-input')} onChange={handleSearch} value={searchValue} />
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </form>
+                    </div>
                 </div>
-                <div className={cx('table-wrapper')}>
-                    <table className={cx('invoice-table')}>
+                <div className={cx('table-wrapper')} ref={tableRef}>
+                    <table id={cx('slot-table')}>
                         <thead className={cx(getClassOfVehicle(tab))}>
                             <tr>
                                 <th>Slot Id</th>
@@ -246,22 +263,24 @@ function Slots() {
                             </tr>
                         </thead>
                         <tbody>
-                            {slots && slots.map((slot) => (
-                                <tr key={slot}>
-                                    <td className={cx('slot-txt')}>
-                                        {slot.area}
-                                        {slot.position}
-                                    </td>
-                                    <td className={cx(`${slot.vehicleTypeName.toLowerCase()}-txt`)}>
-                                        {slot.status === 1 && slot.vehicleID}
-                                    </td>
-                                    <td style={slot.status ? { color: 'var(--parked-color)' } : { color: '#333' }}>
-                                        {renderStatus(slot.status)}
-                                    </td>
-                                    <td>{slot.status === 1 && slot.checkInTime}</td>
-                                    <td>{renderAction(slot.status, slot.area + slot.position)}</td>
-                                </tr>
-                            ))}
+                            {slots && slots.map((slot) => {
+                                const slotId = slot.area + slot.position;
+                                return (
+                                    <tr key={slotId}>
+                                        <td className={cx('slot-txt')}>
+                                            {slotId}
+                                        </td>
+                                        <td className={cx(`${slot.vehicleTypeName.toLowerCase()}-txt`)}>
+                                            {slot.status === 1 && slot.vehicleID}
+                                        </td>
+                                        <td style={slot.status ? { color: 'var(--parked-color)' } : { color: '#333' }}>
+                                            {renderStatus(slot.status)}
+                                        </td>
+                                        <td>{slot.status === 1 && slot.checkInTime}</td>
+                                        <td>{renderAction(slot.status, slot.area + slot.position)}</td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                     {renderConfirmModal(modalType)}

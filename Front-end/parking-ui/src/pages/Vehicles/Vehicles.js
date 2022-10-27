@@ -7,12 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faBus, faTruck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import Button from '~/components/Button';
 import ConfirmModal from '~/components/Modal/ConfirmModal';
 
-import { enrollVehicle, getVehicleByUserId, deleteVehicle } from '~/services/vehicleService';
+import { getAllVehicle, enrollVehicle, getVehicleByUserId, deleteVehicle } from '~/services/vehicleService';
 import { AuthContext } from '~/context/AuthContextProvider';
 
 import Pagination from '~/components/Pagination';
@@ -23,6 +22,7 @@ function Vehicles() {
     let pageSize = 32;
     const location = useLocation();
     const isEnroll = location.state?.isEnroll;
+    const [vehicleList, setVehicleList] = useState([]);
 
     //Modal
     const vehicleRef = useRef();
@@ -45,40 +45,143 @@ function Vehicles() {
         setToggleState(index);
     };
 
+    //Get All Vehicles
+    useEffect(() => {
+        const fetchAllVehicle = async () => {
+            const vehicleList = await getAllVehicle();
+            setVehicleList(vehicleList);
+        };
+
+        fetchAllVehicle()
+    })
+
     //Get user Id
     const [authState] = useContext(AuthContext);
     const [vehicles, setVehicles] = useState([]);
+
 
     //Get form input
     const [vehicleId, setVehicleId] = useState('');
     const [vehicleName, setVehicleName] = useState('');
     const [vehicleBrand, setVehicleBrand] = useState('');
-    const [vehicleTypeId, setVehicleTypeId] = useState(1);
+    const [vehicleTypeId, setVehicleTypeId] = useState(null);
 
     //Enroll Vehicles
-    const handleEnrollVehicle = async (event) => {
-        event.preventDefault();
 
-        await enrollVehicle({
-            userID: authState.user.id,
-            vehicleId: vehicleId,
-            name: vehicleName,
-            brand: vehicleBrand,
-            typeId: vehicleTypeId,
-        });
-        const vehicles = await getVehicleByUserId(authState.user.id);
-        setVehicles(vehicles);
-        closeModal();
-        setToggleState(1);
-        toast.success('Enroll a vehicle successfully!', {
-            position: 'top-right',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
+    const handleClickEnrollBtn = (e, vehicleId) => {
+        e.preventDefault();
+        const vehicleEnroll = vehicles.find((vehicle) => vehicle.id === vehicleId)
+        const otherVehicleExisted = vehicleList.find((vehicle) => vehicle.id === vehicleId && vehicle.userId !== authState.user.id)
+        if (vehicleId !== '' && vehicleName !== '' && vehicleBrand !== '' && vehicleTypeId !== null) {
+            if (vehicleEnroll) {
+                toast.error(`You have already enrolled '${vehicleId}'!`, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else if (otherVehicleExisted) {
+                toast.error(`Vehicle '${vehicleId}' was enrolled by another person!`, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                openModal(e, 'enroll', vehicleId)
+            }
+        } else {
+            if (vehicleId === '' && vehicleName === '' && vehicleBrand === '' && vehicleTypeId === null) {
+                toast.error('All field must not be empty!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                if (vehicleId === '') {
+                    toast.error(`Vehicle's Id must not be empty!`, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+                if (vehicleName === '') {
+                    toast.error(`Vehicle's name must not be empty!`, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+                if (vehicleBrand === '') {
+                    toast.error(`Vehicle's brand must not be empty!`, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+                if (vehicleTypeId === null) {
+                    toast.error(`Please select type of vehicle`, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+            }
+        }
+    }
+    const handleEnrollVehicle = async (e) => {
+        e.preventDefault();
+        try {
+            await enrollVehicle({
+                userID: authState.user.id,
+                vehicleId: vehicleId,
+                name: vehicleName,
+                brand: vehicleBrand,
+                typeId: vehicleTypeId,
+            });
+            const vehicles = await getVehicleByUserId(authState.user.id);
+            setVehicles(vehicles);
+            closeModal();
+            setToggleState(1);
+            toast.success(`Enroll vehicle '${vehicleId}' successfully!`, {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     //Get Vehicles By User Id
@@ -96,10 +199,37 @@ function Vehicles() {
     }, [authState.user.id]);
 
     //Delete Vehicle
+    const handleClickDeleteBtn = (e, vehicleId) => {
+        e.preventDefault();
+        const vehicleIdDelete = vehicles.find((vehicle) => vehicle.id === vehicleId && vehicle.isParking === false)?.id;
+        const vehicleIdParking = vehicles.find((vehicle) => vehicle.id === vehicleId && vehicle.isParking === true)?.id;
+        switch (vehicleId) {
+            case vehicleIdDelete: {
+                openModal(e, 'delete', vehicleIdDelete);
+                break;
+            }
+            case vehicleIdParking: {
+                toast.error(`Vehicle '${vehicleIdParking}' is parking. Please check out before delete!`, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+                break;
+            }
+            default:
+                return;
+        }
+    }
     const handleDeleteVehicle = async (e) => {
         e.preventDefault();
         try {
+
             const response = await deleteVehicle(vehicleRef.current);
+            console.log(response);
             closeModal();
             setVehicles(await getVehicleByUserId(authState.user.id));
             toast.success(`Delete vehicle '${vehicleRef.current}' successfully!`, {
@@ -111,11 +241,12 @@ function Vehicles() {
                 draggable: true,
                 progress: undefined,
             });
-            console.log(response);
+
         } catch (error) {
             console.log(error);
         }
     };
+
 
     //Pagtination
     const [currentPage, setCurrentPage] = useState(1);
@@ -146,7 +277,7 @@ function Vehicles() {
                     <ConfirmModal
                         onClose={closeModal}
                         content={`enroll vehicle '${vehicleRef.current}'`}
-                        onConfirm={handleEnrollVehicle}
+                        onConfirm={(e) => handleEnrollVehicle(e)}
                     />
                 );
             case 'delete':
@@ -202,7 +333,7 @@ function Vehicles() {
                                             <FontAwesomeIcon
                                                 className={cx('delete-btn')}
                                                 icon={faTrash}
-                                                onClick={(e) => openModal(e, 'delete', vehicle.id)}
+                                                onClick={(e) => handleClickDeleteBtn(e, vehicle.id)}
                                             />
                                         </div>
                                     </li>
@@ -281,7 +412,7 @@ function Vehicles() {
                                 <option value="3">Truck</option>
                             </select>
                         </div>
-                        <Button className={cx('action-btn')} primary onClick={(e) => openModal(e, 'enroll', vehicleId)}>
+                        <Button className={cx('action-btn')} primary onClick={(e) => handleClickEnrollBtn(e, vehicleId)}>
                             Enroll a vehicle
                         </Button>
                     </form>

@@ -3,26 +3,27 @@ import classNames from 'classnames/bind';
 import styles from './Invoices.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faMagnifyingGlass, faTrash, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faCar, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from '~/context/AuthContextProvider';
 import { getInvoiceByUserIdApi, deleteInvoiceApi } from '~/services/invoiceService';
 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import Modal from 'react-modal';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import Pagination from '~/components/Pagination';
-import Button from '~/components/Button';
+import ConfirmModal from '~/components/Modal/ConfirmModal';
 
 const cx = classNames.bind(styles);
 
 function Invoices() {
     const [authState] = useContext(AuthContext);
     const [invoices, setInvoices] = useState([]);
+    const [modalType, setModalType] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const invoicesRef = useRef(null);
     const debounceTimeoutRef = useRef(null);
+
+
     useEffect(() => {
         if (!authState.user.id) return;
         const getInvoiceByUserId = async () => {
@@ -47,60 +48,40 @@ function Invoices() {
         return invoices.slice(firstPageIndex, lastPageIndex);
     }, [currentPage, pageSize, invoices]);
 
-    //Modal
-    const [modalIsOpen, setIsOpen] = useState(false);
-
-    //Custom Style for Modal
-    const customStyles = {
-        overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        },
-
-        content: {
-            width: '40%',
-            maxWidth: '100%',
-            top: '40%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            background: 'none',
-            border: 'none',
-        },
-    };
-
     //Confirm Modal
     const ref = useRef();
 
-    const invoiceIdDelete = invoices.find((invoice) => invoice.id === ref.current)?.id;
-
-    function openModal(e, id) {
+    function openModal(e, type, id) {
         e.preventDefault();
         ref.current = id;
-        setIsOpen(true);
+        setModalType(type);
     }
 
     function closeModal() {
-        setIsOpen(false);
+        setModalType(null);
     }
 
+    const invoiceIdDelete = invoices.find((invoice) => invoice.id === ref.current)?.id;
     const handleDeleteInvoice = async (e) => {
+        e.preventDefault();
         try {
-            e.preventDefault();
-            await deleteInvoiceApi(ref.current);
-            closeModal();
-            setInvoices(await getInvoiceByUserIdApi(authState.user.id));
-            setCurrentPage(1);
-            toast.success(`Delete invoice '${ref.current}' successfully!`, {
-                position: 'top-right',
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                progress: undefined,
-            });
+            if (invoiceIdDelete) {
+                await deleteInvoiceApi(invoiceIdDelete);
+                closeModal();
+                setInvoices(await getInvoiceByUserIdApi(authState.user.id));
+                setCurrentPage(1);
+                toast.success(`Delete invoice '${invoiceIdDelete}' successfully!`, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                });
+            } else {
+                return
+            }
         } catch (error) {
             console.log(error);
         }
@@ -179,7 +160,7 @@ function Invoices() {
                                     <span className={cx('info-content')}>{invoice.id}</span>
                                 </div>
                             </div>
-                            <div className={cx('delete-btn')} onClick={(e) => openModal(e, invoice.id)}>
+                            <div className={cx('delete-btn')} onClick={(e) => openModal(e, 'delete', invoice.id)}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </div>
                         </li>
@@ -192,50 +173,7 @@ function Invoices() {
                 pageSize={pageSize}
                 onPageChange={(page) => setCurrentPage(page)}
             />
-            <Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-                <div>
-                    {/* Confirm Form */}
-                    <form
-                        style={{
-                            padding: '16px',
-                            borderRadius: '8px',
-                            border: '2px solid var(--primary-border-color)',
-                            backgroundColor: '#ffffe0',
-                        }}
-                        id="confirm-form"
-                        className={cx('confirm-form')}
-                        onSubmit={handleDeleteInvoice}
-                    >
-                        <h1 style={{ fontSize: '3rem', fontWeight: '500', color: 'var(--primary-color)' }}>
-                            Do you want to delete invoice {invoiceIdDelete}?
-                        </h1>
-                        <div
-                            style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}
-                            className="action-btn"
-                        >
-                            <Button
-                                style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'green' }}
-                                className={cx('confirm-btn')}
-                                primary
-                                leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                                type="submit"
-                            >
-                                confirm
-                            </Button>
-                            <Button
-                                style={{ flex: '50%', textTransform: 'uppercase', backgroundColor: 'red' }}
-                                className={cx('cancel-btn')}
-                                primary
-                                leftIcon={<FontAwesomeIcon icon={faX} />}
-                                type="button"
-                                onClick={closeModal}
-                            >
-                                cancel
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-            </Modal>
+            {modalType === 'delete' && <ConfirmModal onClose={closeModal} onConfirm={handleDeleteInvoice} content={`delete invoice '${invoiceIdDelete}'`} />}
         </div>
     );
 }

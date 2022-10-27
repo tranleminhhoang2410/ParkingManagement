@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import { Link } from 'react-router-dom';
 
-import { faSquareParking, faMoneyCheckDollar, faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import { faSquareParking, faMoneyCheckDollar, faCar } from '@fortawesome/free-solid-svg-icons';
 
 import NavItems from '~/components/NavItem';
 
@@ -25,11 +25,11 @@ function Home() {
         {
             icon: faMoneyCheckDollar,
             title: 'Pricing',
-            description: 'Price for hours, months, years',
+            description: 'Price for hours, days, weeks',
             to: '/price',
         },
         {
-            icon: faCommentDots,
+            icon: faCar,
             title: 'Vehicles',
             description: 'Manage your vehicles in parking area',
             to: isLoggedIn && '/vehicles',
