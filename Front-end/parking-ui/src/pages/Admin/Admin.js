@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Admin.module.scss';
 
@@ -26,6 +26,8 @@ import {
     invoiceStatistic,
 } from '~/services/invoiceService';
 
+import { AuthContext } from '~/context/AuthContextProvider';
+
 const cx = classNames.bind(styles);
 
 function Admin() {
@@ -35,6 +37,7 @@ function Admin() {
     const [monthlyParking, setMonthlyParking] = useState([]);
     const [statistic, setStatistic] = useState({});
     const [editRow, setEditRow] = useState(null);
+    const [authState] = useContext(AuthContext);
 
     useEffect(() => {
         const getPriceTable = async () => {
@@ -151,19 +154,19 @@ function Admin() {
                                                 icon={faUser}
                                             />
                                         </div>
-                                        <h5 className={cx('font-size-15', 'text-truncate')}>Hoang Tran</h5>
-                                        <p className={cx('text-muted', 'mb-0', 'text-truncate')}>Manager</p>
+                                        <h5 className={cx('font-size-15', 'text-truncate')}>{authState.user.name}</h5>
+                                        <p className={cx('text-muted', 'mb-0', 'text-truncate')}>{authState.role}</p>
                                     </div>
                                     <div className={cx('col-sm-8')}>
                                         <div className={cx('pt-4')}>
                                             <div className={cx('row')}>
                                                 <div className={cx('col-6')}>
-                                                    <h5 className={cx('font-size-15')}>125</h5>
-                                                    <p className={cx('text-muted', 'mb-0')}>Projects</p>
+                                                    <h5 className={cx('font-size-15')}>{authState.user.id}</h5>
+                                                    <p className={cx('text-muted', 'mb-0')}>ID</p>
                                                 </div>
                                                 <div className={cx('col-6')}>
-                                                    <h5 className={cx('font-size-15')}>$1245</h5>
-                                                    <p className={cx('text-muted', 'mb-0')}>Revenue</p>
+                                                    <h5 className={cx('font-size-15')}>{authState.user.phone}</h5>
+                                                    <p className={cx('text-muted', 'mb-0')}>Phone</p>
                                                 </div>
                                             </div>
                                             <div className={cx('mt-4')}>

@@ -53,7 +53,7 @@ function Vehicles() {
         };
 
         fetchAllVehicle()
-    })
+    }, [])
 
     //Get user Id
     const [authState] = useContext(AuthContext);
@@ -64,7 +64,7 @@ function Vehicles() {
     const [vehicleId, setVehicleId] = useState('');
     const [vehicleName, setVehicleName] = useState('');
     const [vehicleBrand, setVehicleBrand] = useState('');
-    const [vehicleTypeId, setVehicleTypeId] = useState(null);
+    const [vehicleTypeId, setVehicleTypeId] = useState(0);
 
     //Enroll Vehicles
 
@@ -72,6 +72,7 @@ function Vehicles() {
         e.preventDefault();
         const vehicleEnroll = vehicles.find((vehicle) => vehicle.id === vehicleId)
         const otherVehicleExisted = vehicleList.find((vehicle) => vehicle.id === vehicleId && vehicle.userId !== authState.user.id)
+        const vehicleIdRegex = /^\(?([0-9]{2})[A-Z]\)?[-]?([0-9]{6})$/
         if (vehicleId !== '' && vehicleName !== '' && vehicleBrand !== '' && vehicleTypeId !== null) {
             if (vehicleEnroll) {
                 toast.error(`You have already enrolled '${vehicleId}'!`, {
@@ -83,6 +84,10 @@ function Vehicles() {
                     draggable: true,
                     progress: undefined,
                 });
+                setVehicleId('');
+                setVehicleName('');
+                setVehicleBrand('');
+                setVehicleTypeId(0);
             } else if (otherVehicleExisted) {
                 toast.error(`Vehicle '${vehicleId}' was enrolled by another person!`, {
                     position: 'top-right',
@@ -93,6 +98,24 @@ function Vehicles() {
                     draggable: true,
                     progress: undefined,
                 });
+                setVehicleId('');
+                setVehicleName('');
+                setVehicleBrand('');
+                setVehicleTypeId(0);
+            } else if (!vehicleIdRegex.test(vehicleId)) {
+                toast.error(`'${vehicleId}' is not right format! Please follow xxA-xxxx or xxB-xxxxx`, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+                setVehicleId('');
+                setVehicleName('');
+                setVehicleBrand('');
+                setVehicleTypeId(0);
             } else {
                 openModal(e, 'enroll', vehicleId)
             }
@@ -178,8 +201,12 @@ function Vehicles() {
                 draggable: true,
                 progress: undefined,
             });
+            setVehicleId('');
+            setVehicleName('');
+            setVehicleBrand('');
+            setVehicleTypeId(0);
         } catch (error) {
-            console.log(error);
+            return error;
         }
 
     };
@@ -402,9 +429,9 @@ function Vehicles() {
                                 id=""
                                 className={cx('input-text')}
                                 onChange={(e) => setVehicleTypeId(e.target.value)}
-                                defaultValue={'DEFAULT'}
+                                defaultValue="0"
                             >
-                                <option value="DEFAULT" disabled hidden>
+                                <option value="0" disabled hidden>
                                     -- Select type of vehicle --
                                 </option>
                                 <option value="1">Car</option>
