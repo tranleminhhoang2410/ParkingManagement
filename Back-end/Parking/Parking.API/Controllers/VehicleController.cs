@@ -35,8 +35,8 @@ namespace Parking.API.Controllers
             this.managerInvoiceService = managerInvoiceService;
         }
 
-        //[AuthorizationFilter]
-        //[Authorize(Roles = "User")]
+        [AuthorizationFilter]
+        [Authorize(Roles = "User")]
         [HttpPost("AddVehicle")]
         public async Task<ActionResult<string>> AddVehicle(int userID, string vehicleId, string name, string brand, int typeId)
         {
@@ -79,8 +79,8 @@ namespace Parking.API.Controllers
             return Ok(await vehicleService.GetAll());
         }
 
-        //[AuthorizationFilter]
-        //[Authorize(Roles = "Admin")]
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetByType/{typeId}")]
         public async Task<ActionResult<IEnumerable<VehicleVM1>>> GetByType(int typeId)
         {
@@ -100,8 +100,8 @@ namespace Parking.API.Controllers
             );
         }
 
-        //[AuthorizationFilter]
-        //[Authorize(Roles = "User, Admin")]
+        [AuthorizationFilter]
+        [Authorize(Roles = "User")]
         [HttpDelete("Remove/{id}")]
         public async Task<ActionResult> Remove(string id)
         {
@@ -233,7 +233,6 @@ namespace Parking.API.Controllers
                 return BadRequest("ERROR: " + e.Message);
             }
         }
-
 
         private async Task<double> CalulateParkingPrice(InvoiceDTO ParkedInvoice, VehicleTypeDTO vehicleType)
         {

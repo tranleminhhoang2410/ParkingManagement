@@ -33,7 +33,7 @@ namespace Parking.API.Utils
 
         public static bool vehicleId(string vehicleId)
         {
-            string MatchVehicleIdPattern = "^\\(?([0-9]{2})[A-Z]\\)?[-]?([0-9]{6})$";
+            string MatchVehicleIdPattern = "\\(?([0-9]{2})[A-Z]\\)?[-]?([0-9]{4}||[0-9]{5})$";
             if (vehicleId != null) return Regex.IsMatch(vehicleId, MatchVehicleIdPattern);
             else return false;
         }

@@ -32,7 +32,7 @@ namespace Parking.Service.Implements
             VehicleType? _type = await _db.VehicleTypes.FirstOrDefaultAsync(c => c.Id.Equals(vehicleTypeDTO.Id));
             if (_type == null) return false;
 
-            _type.PricePerHour = vehicleTypeDTO.PricePerDay;
+            _type.PricePerHour = vehicleTypeDTO.PricePerHour;
             _type.PricePerDay = vehicleTypeDTO.PricePerDay;
             _type.PricePerWeek = vehicleTypeDTO.PricePerWeek;
 
