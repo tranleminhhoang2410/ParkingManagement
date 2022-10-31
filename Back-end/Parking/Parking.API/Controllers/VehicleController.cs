@@ -234,6 +234,7 @@ namespace Parking.API.Controllers
             }
         }
 
+        #region Utils
         private async Task<double> CalulateParkingPrice(InvoiceDTO ParkedInvoice, VehicleTypeDTO vehicleType)
         {
             Dictionary<string, int> parkingTime = await invoiceService.CalculateparkingTime(ParkedInvoice.CheckinTime, ParkedInvoice.CheckoutTime);
@@ -250,7 +251,7 @@ namespace Parking.API.Controllers
         private int getLoggedUserId() => int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         private string getLoggedUserRole() => httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
-
+        #endregion
 
     }
 }

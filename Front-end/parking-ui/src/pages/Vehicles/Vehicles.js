@@ -72,7 +72,7 @@ function Vehicles() {
         e.preventDefault();
         const vehicleEnroll = vehicles.find((vehicle) => vehicle.id === vehicleId)
         const otherVehicleExisted = vehicleList.find((vehicle) => vehicle.id === vehicleId && vehicle.userId !== authState.user.id)
-        const vehicleIdRegex = /^\(?([0-9]{2})[A-Z]\)?[-]?([0-9]{6})$/
+        const vehicleIdRegex = /^\(?([0-9]{2})[A-Z]\)?[-]?([0-9]{4}||[0-9]{5})$/
         if (vehicleId !== '' && vehicleName !== '' && vehicleBrand !== '' && vehicleTypeId !== null) {
             if (vehicleEnroll) {
                 toast.error(`You have already enrolled '${vehicleId}'!`, {

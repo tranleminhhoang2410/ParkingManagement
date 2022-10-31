@@ -64,8 +64,10 @@ namespace Parking.API.Controllers
             {
                 return BadRequest(e.Message);
             }
-        } 
+        }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Admin/GetAll")]
         public async Task<ActionResult<IEnumerable<ManagerInvoiceDTO>>> GetAllManagerInvoice()
         {
@@ -76,12 +78,16 @@ namespace Parking.API.Controllers
             return Ok(List);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Admin/GetByID/{id}")]
         public async Task<ActionResult<ManagerInvoiceDTO>> GetManagerInvoiceById(int id)
         {
             return Ok(await managerInvoiceService.GetById(id));
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Admin/GetMonthlyParkingType")]
         public async Task<ActionResult<IEnumerable<MonthlyParking>>> GetMonthlyParkingType()
         {
@@ -98,6 +104,8 @@ namespace Parking.API.Controllers
             return Ok(monthlyParkings);
         }
 
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Admin/GetHighestParkingType")]
         public async Task<ActionResult> HighestParkingType()
         {
@@ -116,7 +124,9 @@ namespace Parking.API.Controllers
                 }    
             );
         }
-        
+
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Admin/InvoiceStatistic")]
         public async Task<IActionResult> Statistic()
         {

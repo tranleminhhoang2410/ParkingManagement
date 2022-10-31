@@ -134,8 +134,8 @@ namespace Parking.API.Controllers
         /// <param name="password"></param>
         /// <param name="newPassword"></param>
         /// <returns></returns>
-        //[AuthorizationFilter]
-        //[Authorize]
+        [AuthorizationFilter]
+        [Authorize]
         [HttpPut("ChangePassword")]
         public async Task<IActionResult> ChangePassword(
             string username, 
