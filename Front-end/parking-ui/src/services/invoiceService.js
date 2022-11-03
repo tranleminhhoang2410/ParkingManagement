@@ -5,7 +5,7 @@ const END_POINTS = {
     GET_BY_ID: '/Invoice/Get',
     DELETE: 'Invoice/Delete',
     GET_HIGHEST_PARKING: 'Invoice/Admin/GetHighestParkingType',
-    GET_LASTED_CHECKOUT: 'Invoice/Admin/GetAll',
+    GET_LASTED_CHECKOUT: 'Invoice/Admin/GetLastest',
     GET_MONTHLY_PARKING_TYPE: 'Invoice/Admin/GetMonthlyParkingType',
     STATISTIC: '/Invoice/Admin/InvoiceStatistic',
 };
