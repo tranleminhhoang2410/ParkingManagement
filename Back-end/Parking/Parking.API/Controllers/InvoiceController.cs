@@ -72,7 +72,18 @@ namespace Parking.API.Controllers
         public async Task<ActionResult<IEnumerable<ManagerInvoiceDTO>>> GetAllManagerInvoice()
         {
             List<ManagerInvoiceDTO> List = (await managerInvoiceService.GetAll())
-                .OrderByDescending(i => i.Id)
+                .OrderByDescending(i => i.CheckoutTime)
+                .ToList();
+            return Ok(List);
+        }
+
+        [AuthorizationFilter]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Admin/GetLastest")]
+        public async Task<ActionResult<IEnumerable<ManagerInvoiceDTO>>> GetlastestManagerInvoice()
+        {
+            List<ManagerInvoiceDTO> List = (await managerInvoiceService.GetAll())
+                .OrderByDescending(i => i.CheckoutTime)
                 .Take(6)
                 .ToList();
             return Ok(List);
