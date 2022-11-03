@@ -198,8 +198,8 @@ function Admin() {
                                                 {highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                        100 *
-                                                        100,
+                                                            100 *
+                                                            100,
                                                     ) / 100}
                                                 %
                                                 <i className={cx('mdi', 'mdi-arrow-up')} />
@@ -214,8 +214,8 @@ function Admin() {
                                                     highestIncome.data &&
                                                     Math.round(
                                                         (highestIncome.data.total / highestIncome.monthTotalPrice) *
-                                                        100 *
-                                                        100,
+                                                            100 *
+                                                            100,
                                                     ) / 100
                                                 }
                                                 styles={{
@@ -263,8 +263,8 @@ function Admin() {
                                                             Math.round(
                                                                 (highestIncome.data.total /
                                                                     highestIncome.monthTotalPrice) *
-                                                                100 *
-                                                                100,
+                                                                    100 *
+                                                                    100,
                                                             ) / 100}
                                                         %
                                                     </strong>
@@ -348,7 +348,10 @@ function Admin() {
                                                     'align-self-center',
                                                 )}
                                             >
-                                                <FontAwesomeIcon className={cx('statistic-icon')} icon={faChartSimple} />
+                                                <FontAwesomeIcon
+                                                    className={cx('statistic-icon')}
+                                                    icon={faChartSimple}
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -372,9 +375,15 @@ function Admin() {
                                             bottom: 5,
                                         }}
                                     >
-                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <CartesianGrid strokeDasharray="3 3" />s
                                         <XAxis dataKey="month" />
-                                        <YAxis />
+                                        <YAxis
+                                            label={{
+                                                value: 'Vehicles parked this year',
+                                                angle: -90,
+                                                position: 'insideBottomLeft',
+                                            }}
+                                        />
                                         <Tooltip />
                                         <Legend />
                                         <Bar dataKey="car" stackId="a" fill="var(--car-color)" />
@@ -413,8 +422,7 @@ function Admin() {
                                                         <span className={cx('text-body', 'fw-bold')}>#{item.id}</span>
                                                     </td>
                                                     <td>{item.typeName}</td>
-                                                    <td
-                                                    >
+                                                    <td>
                                                         <span
                                                             contentEditable={editRow === item.id}
                                                             suppressContentEditableWarning
@@ -425,8 +433,7 @@ function Admin() {
                                                         </span>
                                                         VNĐ
                                                     </td>
-                                                    <td
-                                                    >
+                                                    <td>
                                                         <span
                                                             contentEditable={editRow === item.id}
                                                             suppressContentEditableWarning
@@ -437,8 +444,7 @@ function Admin() {
                                                         </span>{' '}
                                                         VNĐ
                                                     </td>
-                                                    <td
-                                                    >
+                                                    <td>
                                                         <span
                                                             contentEditable={editRow === item.id}
                                                             suppressContentEditableWarning

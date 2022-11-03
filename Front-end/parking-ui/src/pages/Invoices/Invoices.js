@@ -23,7 +23,6 @@ function Invoices() {
     const invoicesRef = useRef(null);
     const debounceTimeoutRef = useRef(null);
 
-
     useEffect(() => {
         if (!authState.user.id) return;
         const getInvoiceByUserId = async () => {
@@ -80,7 +79,7 @@ function Invoices() {
                     progress: undefined,
                 });
             } else {
-                return
+                return;
             }
         } catch (error) {
             console.log(error);
@@ -101,7 +100,13 @@ function Invoices() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('search-bar')}>
-                <input type="text" className={cx('search-input')} onChange={handleSearch} value={searchValue} />
+                <input
+                    placeholder="Enter Vehicle's Id"
+                    type="text"
+                    className={cx('search-input')}
+                    onChange={handleSearch}
+                    value={searchValue}
+                />
                 <FontAwesomeIcon icon={faMagnifyingGlass} className={cx('search-icon')} />
             </div>
             <ul className={cx('invoices-list')}>
@@ -173,7 +178,13 @@ function Invoices() {
                 pageSize={pageSize}
                 onPageChange={(page) => setCurrentPage(page)}
             />
-            {modalType === 'delete' && <ConfirmModal onClose={closeModal} onConfirm={handleDeleteInvoice} content={`delete invoice '${invoiceIdDelete}'`} />}
+            {modalType === 'delete' && (
+                <ConfirmModal
+                    onClose={closeModal}
+                    onConfirm={handleDeleteInvoice}
+                    content={`delete invoice '${invoiceIdDelete}'`}
+                />
+            )}
         </div>
     );
 }

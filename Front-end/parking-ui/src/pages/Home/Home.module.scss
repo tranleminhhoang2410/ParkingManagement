@@ -6,23 +6,18 @@
     justify-content: space-evenly;
     height: calc(var(--default-content-min-height) - 64px);
 
-    .introduction-title{
-        font-family: 'Playfair Display', serif;
-        text-align: center;
-        color: #fbc4a6;
-        font-size: 6rem;
-        font-weight: 600;
-    }
+   .logo-wrapper{
+    display: flex;
 
-    .introduction-description{
-        text-align: center;
+    img{
+        margin: auto;
     }
+   }
 
 
     .nav-item-list{
         display: flex;
         justify-content: space-between;
-        // width: 100%;
     }
 }
 

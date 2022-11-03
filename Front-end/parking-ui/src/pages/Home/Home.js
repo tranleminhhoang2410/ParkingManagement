@@ -38,11 +38,8 @@ function Home() {
     ];
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('introduction')}>
-                <h2 className={cx('introduction-title')}>Parallel</h2>
-                <p className={cx('introduction-description')}>
-                    Sample text. Click to select text box. Click again or double click to start editing the text
-                </p>
+            <div className={cx('logo-wrapper')}>
+                <img src={require('~/assets/images/logo.png')} alt="logo" />
             </div>
             <div className={cx('nav-item-list')}>
                 {menuItems.map((menuItem, index) => (
